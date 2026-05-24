@@ -622,11 +622,40 @@ function Tip({active,payload,label}){if(!active||!payload||!payload.length)retur
 const MB=9, MF=6;
 
 /* ================================================================== */
+/*  ROUTING — SEO-friendly URLs backed by the History API            */
+/* ================================================================== */
+const WS_IDS=["command","fintel","reports","forecast","goals","bills","credit","tools","invest","market","books","agents","wellness","settings"];
+const authFromPath=(p)=>{
+  if(p==="/login")return "login";
+  if(p==="/register")return "register";
+  if(p==="/logoff")return "logoff";
+  if(p==="/app"||p.startsWith("/app/"))return "app";
+  return "landing";
+};
+const wsFromPath=(p)=>{const m=p.match(/^\/app\/([a-z-]+)/);return m&&WS_IDS.includes(m[1])?m[1]:"command";};
+const pathForAuth=(a)=>a==="login"?"/login":a==="register"?"/register":a==="logoff"?"/logoff":a==="app"?"/app":"/";
+
+/* ================================================================== */
 /*  ROOT — theme + auth + state                                       */
 /* ================================================================== */
 export default function App(){
   const [themeId,setThemeId]=useState("light");
-  const [auth,setAuth]=useState("landing");
+  const [auth,setAuth]=useState(()=>authFromPath(window.location.pathname));
+  const navigate=(a)=>{
+    setAuth(a);
+    if(a!=="app"){ const path=pathForAuth(a); if(window.location.pathname!==path) window.history.pushState({},"",path); }
+  };
+  useEffect(()=>{
+    const onPop=()=>setAuth(authFromPath(window.location.pathname));
+    window.addEventListener("popstate",onPop);
+    return ()=>window.removeEventListener("popstate",onPop);
+  },[]);
+  useEffect(()=>{
+    document.title = auth==="app" ? "Pixii — Dashboard"
+      : auth==="login" ? "Sign in · Pixii"
+      : auth==="register" ? "Create your account · Pixii"
+      : "Pixii — The Autonomous Finance OS";
+  },[auth]);
   const [user,setUser]=useState({name:"Jordan Reyes",email:"jordan.reyes@email.com"});
   const [cfg,setCfg]=useState({
     modules:{command:true,fintel:true,reports:true,forecast:true,goals:true,bills:true,credit:true,tools:true,invest:true,market:true,books:true,agents:true,wellness:true,copilot:true},
@@ -664,11 +693,11 @@ export default function App(){
   return (
     <div className="pixii-root" style={active.vars}>
       <style>{STYLES}</style>
-      {auth==="landing"  && <Landing dark={dark} toggleTheme={toggleTheme} go={setAuth} cfg={cfg}/>}
-      {auth==="login"    && <AuthPage mode="login" dark={dark} toggleTheme={toggleTheme} go={setAuth} setUser={setUser} cfg={cfg}/>}
-      {auth==="register" && <AuthPage mode="register" dark={dark} toggleTheme={toggleTheme} go={setAuth} setUser={setUser} cfg={cfg}/>}
-      {auth==="logoff"   && <Logoff go={setAuth}/>}
-      {auth==="app"      && <OS {...themeProps} user={user} setUser={setUser} cfg={cfg} setCfg={setCfg} logout={()=>setAuth("logoff")}/>}
+      {auth==="landing"  && <Landing dark={dark} toggleTheme={toggleTheme} go={navigate} cfg={cfg}/>}
+      {auth==="login"    && <AuthPage mode="login" dark={dark} toggleTheme={toggleTheme} go={navigate} setUser={setUser} cfg={cfg}/>}
+      {auth==="register" && <AuthPage mode="register" dark={dark} toggleTheme={toggleTheme} go={navigate} setUser={setUser} cfg={cfg}/>}
+      {auth==="logoff"   && <Logoff go={navigate}/>}
+      {auth==="app"      && <OS {...themeProps} user={user} setUser={setUser} cfg={cfg} setCfg={setCfg} logout={()=>navigate("logoff")}/>}
     </div>
   );
 }
@@ -1015,7 +1044,7 @@ function Logoff({ go }){
 /*  OS — the cockpit                                                  */
 /* ================================================================== */
 function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser, cfg, setCfg }){
-  const [ws,setWs]=useState("command");
+  const [ws,setWs]=useState(()=>wsFromPath(window.location.pathname));
   const [fintelFocus,setFintelFocus]=useState(null);
   const [accounts,setAccounts]=useState(seedAccounts);
   const [tx,setTx]=useState(seedTx);
@@ -1178,6 +1207,20 @@ function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser, 
   function ask(text){if(!text.trim())return;setFeed(f=>[{id:"q"+Date.now(),q:text},...f]);setThinking(true);setTimeout(()=>{setFeed(f=>[{id:"a"+Date.now(),...answer(text)},...f]);setThinking(false);},700);}
 
   const WS=[{id:"command",icon:Gauge,label:"Command",grp:"overview"},{id:"fintel",icon:BarChart3,label:"Financial Intelligence",grp:"insight"},{id:"reports",icon:FileText,label:"Reports & Trends",grp:"insight"},{id:"forecast",icon:Activity,label:"Forecast & Scenarios",grp:"plan"},{id:"goals",icon:Target,label:"Goals & Savings",grp:"plan"},{id:"bills",icon:CalendarDays,label:"Bills & Calendar",grp:"plan"},{id:"credit",icon:CreditCard,label:"Credit & Borrowing",grp:"plan"},{id:"tools",icon:Boxes,label:"Tools & Calculators",grp:"plan"},{id:"invest",icon:LineChart,label:"Investments",grp:"invest"},{id:"market",icon:Coins,label:"Markets & Tools",grp:"invest"},{id:"books",icon:BookOpen,label:"The Books",grp:"operate"},{id:"agents",icon:Bot,label:"AI Agents",grp:"operate"},{id:"wellness",icon:GraduationCap,label:"Wellness & Learn",grp:"grow"}];
+
+  /* keep the URL in sync with the active workspace (SEO + refresh-safe) */
+  useEffect(()=>{
+    const path="/app/"+ws;
+    if(window.location.pathname!==path) window.history.pushState({},"",path);
+    const lbl=(WS.find(w=>w.id===ws)||{}).label||(ws==="settings"?"Settings":ws);
+    document.title="Pixii — "+lbl;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[ws]);
+  useEffect(()=>{
+    const onPop=()=>{ const m=window.location.pathname.match(/^\/app\/([a-z-]+)/); if(m) setWs(wsFromPath(window.location.pathname)); };
+    window.addEventListener("popstate",onPop);
+    return ()=>window.removeEventListener("popstate",onPop);
+  },[]);
   const intel={fiNumber,fiProgress,yearsToFI,efMonths,efTarget,util,payoffMonths,taxSetAside,freelance,annualExp,card:card||{name:"—",balance:0,limit:0,apr:0,type:"credit"}};
   const smart={recurring,recurringTotal,lowBal,velocity,projMonth,budgetTotal:BUDGET_TOTAL,cashDrag,topMerchant,checking};
   const ctx={c,dark,toggleTheme,themeId,setThemeId,accounts,setAccounts,tx,setTx,goals,setGoals,scenario,setScenario,scrub,setScrub,agents,setAgents,income,expense,saved,netWorth,liquid,spentByCat,discSpend,burn,baseNet,projNet,runway,savingsRate,adjIncome,adjExpense,series,yDomain,scrubPoint,scrubVal,isFuture,setWs,setAddOpen,intel,smart,freelance,plan,setPlan,prefs,setPrefs,savedScenarios,setSavedScenarios,user,setUser,cfg,setCfg,themeId,setThemeId,fintelFocus,live,goFintel:(sec)=>{setFintelFocus({sec,t:Date.now()});setWs("fintel");},openWizard:()=>setWizardOpen(true)};

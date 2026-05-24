@@ -10,7 +10,7 @@ use sha2::{Digest, Sha256};
 use sqlx::postgres::PgPoolOptions;
 use sqlx::{PgPool, Row};
 use std::net::SocketAddr;
-use tower_http::services::{ServeDir, ServeFile};
+use tower_http::services::ServeDir;
 
 mod live;
 
@@ -50,8 +50,13 @@ async fn main() {
 
     let app_state = App { db };
 
-    let index = format!("{static_dir}/index.html");
-    let spa = ServeDir::new(&static_dir).not_found_service(ServeFile::new(index));
+    // Serve real files from dist; for any unmatched route (SPA deep links like
+    // /app/forecast) fall back to index.html with a 200 so crawlers/refresh work.
+    let index_html = std::fs::read_to_string(format!("{static_dir}/index.html")).unwrap_or_default();
+    let spa = ServeDir::new(&static_dir).fallback(get(move || {
+        let html = index_html.clone();
+        async move { axum::response::Html(html) }
+    }));
 
     let api = Router::new()
         .route("/health", get(health))
@@ -65,6 +70,7 @@ async fn main() {
         .route("/plaid/link_token", post(live::plaid_link_token))
         .route("/plaid/exchange", post(live::plaid_exchange))
         .route("/plaid/accounts", get(live::plaid_accounts))
+        .fallback(|| async { (StatusCode::NOT_FOUND, Json(json!({"error": "not found"}))) })
         .with_state(app_state);
 
     let app = Router::new().nest("/api", api).fallback_service(spa);

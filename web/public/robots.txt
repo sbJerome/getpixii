@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /$
+Allow: /login
+Allow: /register
+# Authenticated app views carry no public content
+Disallow: /app
+
+Sitemap: https://getpixii.ai/sitemap.xml
