@@ -137,15 +137,20 @@ pub async fn ai_chat(Json(body): Json<Value>) -> impl IntoResponse {
     }
     let c = client();
 
-    if let Some(key) = env("ANTHROPIC_API_KEY") {
-        let model = env("AI_MODEL").unwrap_or_else(|| "claude-opus-4-7".into());
+    // AI_BASE_URL lets us point at an Anthropic-compatible proxy (e.g. the
+    // in-cluster Meridian proxy at http://10.50.0.40 which needs no real key).
+    let ai_base = env("AI_BASE_URL").map(|b| b.trim_end_matches('/').to_string());
+    let anthropic_key = env("ANTHROPIC_API_KEY").or_else(|| ai_base.as_ref().map(|_| "x".to_string()));
+    if let Some(key) = anthropic_key {
+        let base = ai_base.clone().unwrap_or_else(|| "https://api.anthropic.com".into());
+        let model = env("AI_MODEL").unwrap_or_else(|| "claude-sonnet-4-6".into());
         let payload = json!({
             "model": model,
             "max_tokens": 1024,
             "messages": [{"role": "user", "content": prompt}]
         });
         if let Ok(resp) = c
-            .post("https://api.anthropic.com/v1/messages")
+            .post(format!("{base}/v1/messages"))
             .header("x-api-key", key)
             .header("anthropic-version", "2023-06-01")
             .json(&payload)
