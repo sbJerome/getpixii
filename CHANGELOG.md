@@ -2,6 +2,28 @@
 
 All notable changes to getpixii.ai are documented here.
 
+## [1.1.0] - 2026-05-24
+
+### Changed
+- Updated to the expanded Pixii template (FinIntel, Goals, Bills, Credit,
+  Reports, Markets, Wellness, Tools/calculators, Admin) — ~2950 lines.
+- Removed the white page border (global `html/body/#root` reset).
+
+### Added
+- **Live-data connectors** (`server/src/live.rs`) reading API keys from env:
+  - `GET /api/live/markets`, `GET /api/live/quotes` — Finnhub quotes
+  - `GET /api/live/news` — NewsAPI (Marketaux fallback)
+  - `POST /api/ai/chat` — Anthropic (OpenRouter fallback)
+  - `POST /api/plaid/link_token`, `/api/plaid/exchange`, `GET /api/plaid/accounts`
+- `getpixii-secrets` secret (envFrom, optional) for the live-data keys.
+
+### Removed
+- **All dummy/seed data.** Accounts, transactions, holdings, goals, budgets,
+  history, invoices, institution balances, landing stats, and the illustrative
+  arrays in Bills/Credit/Markets/Wellness/Admin are now empty by default. Data
+  comes from Postgres (per-user) and the live connectors; the Markets index
+  band and news pull live when keys are present.
+
 ## [1.0.2] - 2026-05-24
 
 ### Added

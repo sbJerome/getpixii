@@ -56,6 +56,31 @@ export const api = {
     }
   },
 
+  // Live data from real providers (empty when keys not configured).
+  async live(path) {
+    try {
+      const r = await fetch("/api/live/" + path);
+      if (!r.ok) return null;
+      return await r.json();
+    } catch {
+      return null;
+    }
+  },
+
+  async aiChat(prompt) {
+    try {
+      const r = await fetch("/api/ai/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt }),
+      });
+      if (!r.ok) return null;
+      return await r.json();
+    } catch {
+      return null;
+    }
+  },
+
   async putCatalog(data) {
     try {
       await fetch("/api/catalog", {

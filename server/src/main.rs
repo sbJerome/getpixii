@@ -12,9 +12,11 @@ use sqlx::{PgPool, Row};
 use std::net::SocketAddr;
 use tower_http::services::{ServeDir, ServeFile};
 
+mod live;
+
 #[derive(Clone)]
-struct App {
-    db: PgPool,
+pub struct App {
+    pub db: PgPool,
 }
 
 #[tokio::main]
@@ -56,6 +58,13 @@ async fn main() {
         .route("/auth", post(auth))
         .route("/state", get(get_state).put(put_state))
         .route("/catalog", get(get_catalog).put(put_catalog))
+        .route("/live/markets", get(live::markets))
+        .route("/live/quotes", get(live::quotes))
+        .route("/live/news", get(live::news))
+        .route("/ai/chat", post(live::ai_chat))
+        .route("/plaid/link_token", post(live::plaid_link_token))
+        .route("/plaid/exchange", post(live::plaid_exchange))
+        .route("/plaid/accounts", get(live::plaid_accounts))
         .with_state(app_state);
 
     let app = Router::new().nest("/api", api).fallback_service(spa);

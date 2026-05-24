@@ -11,7 +11,12 @@ import {
   LineChart, Sun, Moon, LogOut, Lock, Mail, User, ArrowRight, Layers, Percent, Flame,
   Settings as SettingsIcon, CreditCard as CardIcon, Bell, Globe, Trash2, Link2,
   Star, Check, ChevronDown, Receipt, BarChart3, Store, CircleDollarSign, Quote,
-  Eye, EyeOff, Fingerprint, Save, Users, KeyRound
+  Eye, EyeOff, Fingerprint, Save, Users, KeyRound,
+  LayoutDashboard, SlidersHorizontal, LayoutTemplate, ScrollText, FlaskConical,
+  Webhook, Shield, ShieldAlert, Server, Languages, FileCheck, LifeBuoy, Plug,
+  ToggleRight, Database, Megaphone, Network, Boxes, CircleGauge, Download,
+  Calendar, CalendarDays, CalendarClock, FileText, GraduationCap, Award, Leaf,
+  Clock, Home, Banknote, Trophy, Coins, Wind, Gift, HandCoins, Sprout, BadgeCheck
 } from "lucide-react";
 import { api } from "./api.js";
 
@@ -60,7 +65,8 @@ const STYLES = `
 .icobtn{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--panel-2);display:grid;place-items:center;cursor:pointer;color:var(--ink-2);transition:.15s;}
 .icobtn:hover{color:var(--ink);border-color:var(--ink-3);}
 
-.rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:6px;}
+.rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:6px;overflow-y:auto;min-height:0;}
+.rail::-webkit-scrollbar{width:0;}
 .rail-btn{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;cursor:pointer;color:var(--ink-3);position:relative;transition:all .16s;}
 .rail-btn:hover{background:var(--panel-2);color:var(--ink);}
 .rail-btn.on{background:var(--primary);color:var(--pri-fg);}
@@ -372,6 +378,82 @@ const STYLES = `
 .ent-v{font-size:14px;font-weight:600;margin-top:3px;}
 .ent-v.mono{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:500;}
 
+/* ---- disabled states ---- */
+.cop-disabled{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--ink-3);font-size:13px;text-align:center;padding:24px;}
+.auth-disabled{display:flex;align-items:center;gap:8px;background:var(--down-bg);color:var(--down);border:1px solid var(--down);border-radius:10px;padding:9px 12px;font-size:12.5px;font-weight:600;margin-bottom:10px;}
+.maint-banner{display:flex;align-items:center;gap:8px;background:var(--down-bg);color:var(--down);border:1px solid var(--down);border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;margin-bottom:16px;}
+
+/* ---- admin console ---- */
+.adm-wrap{display:grid;grid-template-columns:212px 1fr;gap:18px;align-items:start;}
+.adm-nav{position:sticky;top:0;display:flex;flex-direction:column;gap:3px;max-height:calc(100vh - 110px);overflow-y:auto;padding-right:4px;}
+.adm-nav .grp{font-family:'JetBrains Mono';font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding:12px 8px 5px;}
+.adm-nav button{display:flex;align-items:center;gap:9px;width:100%;text-align:left;background:none;border:none;cursor:pointer;font-family:'Sora';font-size:13px;font-weight:500;color:var(--ink-2);padding:8px 10px;border-radius:9px;transition:.13s;}
+.adm-nav button:hover{background:var(--panel-2);color:var(--ink);}
+.adm-nav button.on{background:var(--primary);color:var(--pri-fg);font-weight:600;}
+.adm-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+.akpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 15px;}
+.akpi .kl{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);}
+.akpi .kv{font-family:'JetBrains Mono';font-weight:700;font-size:24px;letter-spacing:-.02em;margin-top:7px;}
+.akpi .kd{font-size:11.5px;margin-top:3px;}
+.barlist{display:flex;flex-direction:column;gap:9px;margin-top:4px;}
+.barrow{display:flex;align-items:center;gap:10px;font-size:12.5px;}
+.barrow .bl{width:120px;flex-shrink:0;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.barrow .bt{flex:1;height:8px;border-radius:5px;background:var(--panel-2);overflow:hidden;}
+.barrow .bt i{display:block;height:100%;border-radius:5px;}
+.barrow .bv{width:54px;text-align:right;font-family:'JetBrains Mono';font-weight:600;flex-shrink:0;}
+.heat{width:100%;border-collapse:collapse;font-size:12px;}
+.heat th{padding:5px;color:var(--ink-3);font-weight:500;}
+.heat td{padding:3px;text-align:center;}
+.heat td:first-child,.heat th:first-child{text-align:left;}
+.heat-c{display:block;border-radius:6px;padding:7px 4px;font-family:'JetBrains Mono';font-size:10.5px;font-weight:600;}
+.prov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:6px 0 4px;}
+.prov-card{border:1px solid var(--line);border-radius:13px;padding:13px;cursor:pointer;transition:.14s;background:var(--panel);}
+.prov-card:hover{border-color:var(--ink-3);}
+.prov-card.on{border-color:var(--primary);box-shadow:0 0 0 2px var(--primary);}
+.prov-card .pn{font-weight:700;font-size:13.5px;margin-top:8px;}
+.prov-card .pd{font-size:11px;color:var(--ink-3);margin-top:2px;}
+.prov-ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff;}
+.seg2{display:inline-flex;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px;}
+.seg2 button{border:none;background:none;cursor:pointer;font-family:'Sora';font-size:12.5px;font-weight:600;color:var(--ink-2);padding:7px 14px;border-radius:7px;}
+.seg2 button.on{background:var(--primary);color:var(--pri-fg);}
+.masked{font-family:'JetBrains Mono';letter-spacing:.06em;}
+.legend-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;font-size:11.5px;color:var(--ink-2);}
+.lg-dot{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:-1px;}
+.adm-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.adm-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.pii-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;}
+.tag{display:inline-block;font-family:'JetBrains Mono';font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:5px;border:1px solid var(--line);color:var(--ink-2);}
+.tag.g{background:var(--up-bg);color:var(--up);border-color:transparent;}
+.tag.r{background:var(--down-bg);color:var(--down);border-color:transparent;}
+.tag.b{background:var(--primary);color:var(--pri-fg);border-color:transparent;}
+
+/* ---- financial intelligence page ---- */
+.fi-anchor{scroll-margin-top:14px;}
+.intel-clk{cursor:pointer;border-radius:10px;transition:background .14s;}
+.intel-clk:hover{background:var(--panel-2);}
+.pbar{height:9px;border-radius:6px;background:var(--panel-2);overflow:hidden;}
+.pbar i{display:block;height:100%;border-radius:6px;background:var(--primary);transition:width .3s;}
+.mrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line-2);font-size:13px;}
+.mrow:last-child{border-bottom:none;}
+.mrow .ml{color:var(--ink-2);}
+.mrow .mv{font-family:'JetBrains Mono';font-weight:600;white-space:nowrap;}
+.bench{font-size:11px;color:var(--ink-3);margin-top:4px;line-height:1.4;}
+.fi-score{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.fi-comp{flex:1;min-width:260px;display:flex;flex-direction:column;gap:11px;}
+.scorebar{display:flex;align-items:center;gap:10px;font-size:12.5px;}
+.scorebar .sl{width:130px;flex-shrink:0;color:var(--ink-2);}
+.scorebar .sv{width:42px;text-align:right;font-family:'JetBrains Mono';font-weight:600;flex-shrink:0;}
+.mir-clk{cursor:pointer;border-radius:10px;transition:background .14s;}
+.mir-clk:hover{background:var(--panel-2);}
+.link-panel{cursor:pointer;transition:border-color .14s;}
+.link-panel:hover{border-color:var(--primary)!important;}
+.rail-sep{width:22px;height:1px;background:var(--line);margin:5px 0;flex-shrink:0;}
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.tool-card{border:1px solid var(--line);border-radius:13px;padding:13px;cursor:pointer;transition:.14s;background:var(--panel);}
+.tool-card:hover{border-color:var(--ink-3);transform:translateY(-1px);}
+.tool-card.on{border-color:var(--primary);box-shadow:0 0 0 2px var(--primary);}
+.tool-ic{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--ai);color:#fff;margin-bottom:8px;}
+
 /* ---- responsive / mobile ---- */
 .cop-toggle,.cop-close{display:none;}
 .cop-backdrop{display:none;}
@@ -420,6 +502,12 @@ const STYLES = `
   .modal{max-width:none;}
   .stmt,.tbl{display:block;overflow-x:auto;}
   .stmt thead,.stmt tbody,.tbl thead,.tbl tbody{display:table;width:100%;min-width:560px;}
+  .adm-wrap{grid-template-columns:1fr!important;}
+  .adm-nav{position:static;flex-direction:row;overflow-x:auto;max-height:none;padding-bottom:6px;}
+  .adm-nav .grp{display:none;}
+  .adm-nav button{white-space:nowrap;}
+  .adm-kpis{grid-template-columns:1fr 1fr!important;}
+  .adm-2,.adm-3,.pii-grid{grid-template-columns:1fr!important;}
 }
 @media (max-width:440px){
   .topbar .icobtn{width:32px;height:32px;}
@@ -438,44 +526,17 @@ const STYLES = `
 const CATS=["Income","Housing","Groceries","Dining","Transport","Utilities","Shopping","Health","Entertainment","Subscriptions","Coffee","Savings","Other"];
 const DISCRETIONARY=["Dining","Shopping","Entertainment","Coffee","Subscriptions"];
 
-let HOLDINGS=[
-  {sym:"VTI",name:"US Total Market ETF",cls:"US Stock",shares:38,price:285.40,cost:9200,day:0.62,yield:1.3},
-  {sym:"VXUS",name:"Intl Stock ETF",cls:"International",shares:90,price:64.10,cost:5400,day:-0.31,yield:2.9},
-  {sym:"AAPL",name:"Apple Inc.",cls:"US Stock",shares:22,price:214.30,cost:3800,day:1.12,yield:0.5},
-  {sym:"MSFT",name:"Microsoft Corp.",cls:"US Stock",shares:8,price:471.10,cost:3100,day:0.84,yield:0.7},
-  {sym:"NVDA",name:"NVIDIA Corp.",cls:"US Stock",shares:12,price:138.20,cost:900,day:2.41,yield:0.03},
-  {sym:"BND",name:"Total Bond ETF",cls:"Bonds",shares:30,price:72.40,cost:2250,day:-0.08,yield:3.8},
-  {sym:"VNQ",name:"Real Estate ETF",cls:"REIT",shares:14,price:89.30,cost:1300,day:0.44,yield:4.1},
-  {sym:"CASH",name:"Settlement Cash",cls:"Cash",shares:1,price:1231.98,cost:1231.98,day:0,yield:4.8},
-];
-const PORT_VALUE=HOLDINGS.reduce((s,h)=>s+h.shares*h.price,0); // 31410.18
+/* ---- live data: seeds emptied; hydrated from /api/state (per-user) and /api/live/* ---- */
+let HOLDINGS=[];
+let PORT_VALUE=0;
 
-const seedAccounts=[
-  {id:"a1",name:"Everyday Checking",inst:"Cedar Bank",type:"checking",balance:4820.55,icon:Landmark,reconciled:true,last:"May 21"},
-  {id:"a2",name:"Rainy-Day Savings",inst:"Cedar Bank",type:"savings",balance:18250.00,icon:PiggyBank,reconciled:true,last:"May 21"},
-  {id:"a3",name:"Sapphire Card",inst:"Visa",type:"credit",balance:-1264.32,limit:8000,apr:19.99,icon:CreditCard,reconciled:false,last:"May 09"},
-  {id:"a4",name:"Index Portfolio",inst:"Northstar",type:"investment",balance:PORT_VALUE,icon:Building2,reconciled:true,last:"May 20"},
-];
-const T=(id,day,merchant,category,amount,account="Everyday Checking",conf=0.99)=>({id,date:`2026-05-${String(day).padStart(2,"0")}`,merchant,category,amount,account,conf});
-const seedTx=[
-  T("t1",1,"Monthly Salary","Income",5400.00,"Everyday Checking",1),T("t2",1,"Sunrise Apartments","Housing",-1650.00,"Everyday Checking",1),
-  T("t3",2,"Whole Foods Market","Groceries",-128.43,"Everyday Checking",0.98),T("t4",2,"Blue Bottle Coffee","Coffee",-6.75,"Everyday Checking",0.97),
-  T("t5",3,"Metro Transit Pass","Transport",-90.00,"Everyday Checking",0.99),T("t6",4,"Netflix","Subscriptions",-15.49,"Everyday Checking",1),
-  T("t7",5,"Trader Joe's","Groceries",-74.20,"Everyday Checking",0.96),T("t8",6,"SQ *LUCIA","Dining",-42.10,"Sapphire Card",0.71),
-  T("t9",7,"Spotify","Subscriptions",-11.99,"Everyday Checking",1),T("t10",8,"Shell Gas","Transport",-54.30,"Sapphire Card",0.95),
-  T("t11",9,"Amazon","Shopping",-63.88,"Sapphire Card",0.82),T("t12",10,"Pharmacy Plus","Health",-28.40,"Everyday Checking",0.93),
-  T("t13",11,"Blue Bottle Coffee","Coffee",-5.50,"Everyday Checking",0.97),T("t14",12,"Electric Co.","Utilities",-96.74,"Everyday Checking",1),
-  T("t15",13,"Freelance Project","Income",620.00,"Everyday Checking",0.9),T("t16",14,"Whole Foods Market","Groceries",-91.05,"Everyday Checking",0.98),
-  T("t17",15,"AMC Theatres","Entertainment",-34.00,"Sapphire Card",0.94),T("t18",16,"UBER *TRIP","Transport",-22.60,"Sapphire Card",0.88),
-  T("t19",17,"Sushi Hana","Dining",-58.75,"Sapphire Card",0.92),T("t20",18,"Gym Membership","Health",-39.00,"Everyday Checking",1),
-  T("t21",19,"Blue Bottle Coffee","Coffee",-6.75,"Everyday Checking",0.97),T("t22",20,"TGT *00214","Shopping",-112.34,"Sapphire Card",0.64),
-  T("t23",21,"Internet Provider","Utilities",-69.99,"Everyday Checking",1),T("t24",22,"Trader Joe's","Groceries",-56.18,"Everyday Checking",0.96),
-  T("t25",22,"Transfer to Savings","Savings",-500.00,"Everyday Checking",1),
-];
-const seedGoals=[{id:"g1",name:"Emergency Fund",target:12000,saved:8400},{id:"g2",name:"Japan Trip",target:4500,saved:1820},{id:"g3",name:"Down Payment",target:40000,saved:11200}];
-const seedBudgets={Housing:1650,Groceries:520,Dining:250,Transport:220,Shopping:200,Coffee:60,Entertainment:120,Health:120,Utilities:280};
-const BUDGET_TOTAL=Object.values(seedBudgets).reduce((s,v)=>s+v,0);
-let history=[{m:"Jan",income:5980,expense:4120},{m:"Feb",income:5400,expense:4680},{m:"Mar",income:6210,expense:4310},{m:"Apr",income:5400,expense:5020}];
+const seedAccounts=[];
+const T=(id,day,merchant,category,amount,account="",conf=1)=>({id,date:`2026-05-${String(day).padStart(2,"0")}`,merchant,category,amount,account,conf});
+const seedTx=[];
+const seedGoals=[];
+let seedBudgets={};
+let BUDGET_TOTAL=0;
+let history=[];
 const ICOBYTYPE={checking:Landmark,savings:PiggyBank,credit:CreditCard,investment:Building2};
 let INSTITUTIONS=[
   {id:"chase",name:"Chase",color:"#117ACA"},{id:"bofa",name:"Bank of America",color:"#E11B3C"},
@@ -483,19 +544,15 @@ let INSTITUTIONS=[
   {id:"ally",name:"Ally Bank",color:"#6A1B9A"},{id:"capone",name:"Capital One",color:"#D03027"},
   {id:"fidelity",name:"Fidelity",color:"#468A41"},{id:"schwab",name:"Charles Schwab",color:"#00A0DF"},
 ];
-let INST_ACCOUNTS={
-  chase:[{name:"Chase Total Checking",type:"checking",balance:3240.18},{name:"Chase Sapphire Reserve",type:"credit",balance:-842.50,limit:18000,apr:21.99},{name:"Chase Savings",type:"savings",balance:9600.00}],
-  amex:[{name:"Amex Platinum",type:"credit",balance:-1980.44,limit:25000,apr:23.49},{name:"Amex High-Yield Savings",type:"savings",balance:14200.00}],
-  fidelity:[{name:"Fidelity Brokerage",type:"investment",balance:22480.10},{name:"Fidelity Cash Mgmt",type:"checking",balance:1820.00}],
-};
-const instAccounts=(inst)=>INST_ACCOUNTS[inst.id]||[{name:inst.name+" Checking",type:"checking",balance:2480.00},{name:inst.name+" Savings",type:"savings",balance:6100.00}];
+let INST_ACCOUNTS={};
+const instAccounts=(inst)=>INST_ACCOUNTS[inst.id]||[];
 let PLANS=[
   {id:"free",name:"Free",price:0,blurb:"The essentials, forever",feats:["2 linked accounts","Manual budgets","30-day history","Basic insights"]},
   {id:"plus",name:"Plus",price:9,blurb:"For everyday optimizers",feats:["Unlimited accounts","AI Copilot","Forecasting & scenarios","Investments tracking","2-year history"]},
   {id:"pro",name:"Pro",price:19,blurb:"Full autonomy",feats:["Everything in Plus","All 6 AI Agents","Tax & FI planning","Reconciliation & books","Priority support"]},
 ];
-let INVOICES=[{date:"May 1, 2026",amt:9,status:"Paid"},{date:"Apr 1, 2026",amt:9,status:"Paid"},{date:"Mar 1, 2026",amt:9,status:"Paid"},{date:"Feb 1, 2026",amt:9,status:"Paid"}];
-let LANDING_STATS=[["$2.4B","tracked on Pixii"],["180k+","people optimizing"],["12,000","institutions supported"],["4.9★","average rating"]];
+let INVOICES=[];
+let LANDING_STATS=[];
 let THEMES=[{"id": "light", "name": "Pixii Light", "type": "light", "vars": {"--canvas": "#EEF1F7", "--panel": "#FFFFFF", "--panel-2": "#F7F9FC", "--ink": "#0A0D18", "--ink-2": "#535D73", "--ink-3": "#8A93A8", "--faint": "#AAB2C4", "--line": "#E4E8F0", "--line-2": "#EEF1F6", "--primary": "#3F33F0", "--primary-2": "#6C5CFF", "--cyan": "#00C2D6", "--pri-fg": "#FFFFFF", "--up": "#0DA66B", "--up-bg": "#E2F6EE", "--down": "#E8453F", "--down-bg": "#FCE6E5", "--ai": "linear-gradient(125deg,#4F39FF 0%,#7C4DFF 45%,#00D5FF 100%)"}}, {"id": "dark", "name": "Pixii Dark", "type": "dark", "vars": {"--canvas": "#080B12", "--panel": "#121723", "--panel-2": "#1A2030", "--ink": "#EAEEF7", "--ink-2": "#9AA4BB", "--ink-3": "#697287", "--faint": "#4D5670", "--line": "#232B3B", "--line-2": "#1A2130", "--primary": "#7E6FFF", "--primary-2": "#9A8CFF", "--cyan": "#00C2D6", "--pri-fg": "#FFFFFF", "--up": "#2BD787", "--up-bg": "rgba(43,215,135,.14)", "--down": "#FF6259", "--down-bg": "rgba(255,98,89,.15)", "--ai": "linear-gradient(125deg,#4F39FF 0%,#7C4DFF 45%,#00D5FF 100%)"}}, {"id": "spectrum", "name": "Pixii Spectrum", "type": "dark", "vars": {"--canvas": "#222222", "--panel": "#2d2c2d", "--panel-2": "#373738", "--ink": "#f7f1ff", "--ink-2": "#8b888f", "--ink-3": "#525053", "--faint": "#414042", "--line": "#444345", "--line-2": "#333334", "--primary": "#948ae3", "--primary-2": "#5ad4e6", "--cyan": "#5ad4e6", "--pri-fg": "#222222", "--up": "#7bd88f", "--up-bg": "rgba(123,216,143,0.16)", "--down": "#fc618d", "--down-bg": "rgba(252,97,141,0.16)", "--ai": "linear-gradient(125deg, #948ae3 0%, #fc618d 45%, #5ad4e6 100%)"}}, {"id": "daylight", "name": "Pixii Daylight", "type": "light", "vars": {"--canvas": "#faf4f2", "--panel": "#fdfaf9", "--panel-2": "#fbf7f6", "--ink": "#29242a", "--ink-2": "#918c8e", "--ink-3": "#bfb9ba", "--faint": "#d4cece", "--line": "#d9d3d2", "--line-2": "#e9e3e2", "--primary": "#7058be", "--primary-2": "#1c8ca8", "--cyan": "#1c8ca8", "--pri-fg": "#ffffff", "--up": "#269d69", "--up-bg": "rgba(38,157,105,0.16)", "--down": "#e14775", "--down-bg": "rgba(225,71,117,0.16)", "--ai": "linear-gradient(125deg, #7058be 0%, #e14775 45%, #1c8ca8 100%)"}}];
 
 /* ---- persistence helpers (icons are component refs → strip on save, rehydrate on load) ---- */
@@ -571,6 +628,14 @@ export default function App(){
   const [themeId,setThemeId]=useState("light");
   const [auth,setAuth]=useState("landing");
   const [user,setUser]=useState({name:"Jordan Reyes",email:"jordan.reyes@email.com"});
+  const [cfg,setCfg]=useState({
+    modules:{command:true,fintel:true,reports:true,forecast:true,goals:true,bills:true,credit:true,tools:true,invest:true,market:true,books:true,agents:true,wellness:true,copilot:true},
+    home:{hero:true,stats:true,features:true,how:true,preview:true,pricing:true,testimonial:true,cta:true,footer:true},
+    auth:{login:true,register:true,google:true,apple:true,passkey:true,sso:false,mfa:false},
+    ai:{provider:"claude",mode:"api",model:"claude-opus-4-7",temp:0.4,maxTokens:1024,streaming:true,fallback:"gpt-4o",redactPrompts:true,ratePerMin:60},
+    telemetry:{pageviews:true,events:true,sessions:true,perf:true,errors:true,aiUsage:true,finEvents:true,clickstream:false,heatmap:false,sampling:100,retentionDays:90,redactPII:true,maskEmail:true,maskAmounts:true,anonIP:true,coarseGeo:true},
+    system:{maintenance:false,statusPage:true,signupsOpen:true},
+  });
   const [,setDataVer]=useState(0);
   useEffect(()=>{
     let on=true;
@@ -579,15 +644,17 @@ export default function App(){
       if(cat && Array.isArray(cat.themes) && cat.themes.length){
         if(Array.isArray(cat.plans)&&cat.plans.length) PLANS=cat.plans;
         THEMES=cat.themes;
-        if(Array.isArray(cat.institutions)&&cat.institutions.length) INSTITUTIONS=cat.institutions;
+        if(Array.isArray(cat.institutions)) INSTITUTIONS=cat.institutions;
         if(cat.instAccounts&&typeof cat.instAccounts==="object") INST_ACCOUNTS=cat.instAccounts;
-        if(Array.isArray(cat.landingStats)&&cat.landingStats.length) LANDING_STATS=cat.landingStats;
+        if(Array.isArray(cat.landingStats)) LANDING_STATS=cat.landingStats;
+        if(cat.cfg&&typeof cat.cfg==="object") setCfg(cat.cfg);
       } else {
-        api.putCatalog({plans:PLANS,themes:THEMES,institutions:INSTITUTIONS,instAccounts:INST_ACCOUNTS,landingStats:LANDING_STATS});
+        api.putCatalog({plans:PLANS,themes:THEMES,institutions:INSTITUTIONS,instAccounts:INST_ACCOUNTS,landingStats:LANDING_STATS,cfg});
       }
       setDataVer(v=>v+1);
     });
     return ()=>{on=false;};
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   const active=THEMES.find(t=>t.id===themeId)||THEMES[0];
   const dark=active.type==="dark";
@@ -597,11 +664,11 @@ export default function App(){
   return (
     <div className="pixii-root" style={active.vars}>
       <style>{STYLES}</style>
-      {auth==="landing"  && <Landing dark={dark} toggleTheme={toggleTheme} go={setAuth}/>}
-      {auth==="login"    && <AuthPage mode="login" dark={dark} toggleTheme={toggleTheme} go={setAuth} setUser={setUser}/>}
-      {auth==="register" && <AuthPage mode="register" dark={dark} toggleTheme={toggleTheme} go={setAuth} setUser={setUser}/>}
+      {auth==="landing"  && <Landing dark={dark} toggleTheme={toggleTheme} go={setAuth} cfg={cfg}/>}
+      {auth==="login"    && <AuthPage mode="login" dark={dark} toggleTheme={toggleTheme} go={setAuth} setUser={setUser} cfg={cfg}/>}
+      {auth==="register" && <AuthPage mode="register" dark={dark} toggleTheme={toggleTheme} go={setAuth} setUser={setUser} cfg={cfg}/>}
       {auth==="logoff"   && <Logoff go={setAuth}/>}
-      {auth==="app"      && <OS {...themeProps} user={user} setUser={setUser} logout={()=>setAuth("logoff")}/>}
+      {auth==="app"      && <OS {...themeProps} user={user} setUser={setUser} cfg={cfg} setCfg={setCfg} logout={()=>setAuth("logoff")}/>}
     </div>
   );
 }
@@ -609,7 +676,8 @@ export default function App(){
 /* ================================================================== */
 /*  LANDING                                                           */
 /* ================================================================== */
-function Landing({ dark, toggleTheme, go }){
+function Landing({ dark, toggleTheme, go, cfg }){
+  const H=(cfg&&cfg.home)||{};
   const FEATS=[
     {ic:Bot,t:"AI Copilot",d:"Ask anything in plain language. Pixii models cuts, projects goals, tests affordability and answers from your real data."},
     {ic:Activity,t:"Time-travel forecasting",d:"Scrub from recorded history into an AI-projected future with confidence bands. See where you're headed before you get there."},
@@ -630,7 +698,7 @@ function Landing({ dark, toggleTheme, go }){
       </div>
 
       {/* hero */}
-      <div className="land-hero">
+      {H.hero!==false && <div className="land-hero">
         <div>
           <div className="land-badge"><Sparkles size={14}/> The autonomous finance OS</div>
           <h1 className="land-h1">Your money,<br/><span className="grad">finally understood.</span></h1>
@@ -646,25 +714,25 @@ function Landing({ dark, toggleTheme, go }){
           </div>
         </div>
         <div className="land-art"><HeroArt/></div>
-      </div>
+      </div>}
 
       {/* stat band */}
-      <div className="statband">
+      {H.stats!==false && LANDING_STATS.length>0 && <div className="statband">
         {LANDING_STATS.map(([v,l])=>(
           <div className="st" key={l}><div className="stv">{v}</div><div className="stl">{l}</div></div>
         ))}
-      </div>
+      </div>}
 
       {/* features */}
-      <div className="lsec">
+      {H.features!==false && <div className="lsec">
         <div className="lsec-tag">Everything in one place</div>
         <div className="lsec-h">A complete financial operating system</div>
         <div className="lsec-sub">Most apps show you the past. Pixii runs the math on your future — and acts on it.</div>
         <div className="feat-grid">{FEATS.map(f=>(<div className="feat-card" key={f.t}><div className="feat-ic"><f.ic size={22}/></div><h3>{f.t}</h3><p>{f.d}</p></div>))}</div>
-      </div>
+      </div>}
 
       {/* how it works */}
-      <div className="lsec" style={{paddingTop:0}}>
+      {H.how!==false && <div className="lsec" style={{paddingTop:0}}>
         <div className="lsec-tag">How it works</div>
         <div className="lsec-h">Connected in two minutes</div>
         <div className="steps">
@@ -672,18 +740,18 @@ function Landing({ dark, toggleTheme, go }){
           <div className="step"><div className="num">2</div><h4>Pixii analyzes</h4><p>Every transaction is categorized, anomalies flagged, and your net worth projected six months out.</p></div>
           <div className="step"><div className="num">3</div><h4>You decide</h4><p>Ask the copilot, run what-if scenarios, and let agents surface savings automatically.</p></div>
         </div>
-      </div>
+      </div>}
 
       {/* preview */}
-      <div className="lsec" style={{paddingTop:0}}>
+      {H.preview!==false && <div className="lsec" style={{paddingTop:0}}>
         <div className="lsec-tag">A glimpse inside</div>
         <div className="lsec-h">Built-in financial intelligence</div>
         <div className="lsec-sub">Runway, FI number, emergency-fund coverage, anomaly detection, recurring charges and cash-flow forecasting — extrapolated automatically from your imported accounts.</div>
         <div style={{display:"grid",placeItems:"center",marginTop:36}}><ConsoleArt/></div>
-      </div>
+      </div>}
 
       {/* pricing */}
-      <div className="lsec" style={{paddingTop:0}}>
+      {H.pricing!==false && <div className="lsec" style={{paddingTop:0}}>
         <div className="lsec-tag">Pricing</div>
         <div className="lsec-h">Start free. Upgrade when it pays for itself.</div>
         <div className="price-grid">
@@ -698,10 +766,10 @@ function Landing({ dark, toggleTheme, go }){
             </div>
           ))}
         </div>
-      </div>
+      </div>}
 
       {/* testimonial */}
-      <div className="lsec">
+      {H.testimonial!==false && <div className="lsec">
         <div className="testimonial">
           <Quote size={32} color="var(--primary)" style={{margin:"0 auto 16px"}}/>
           <div className="q">“It's like having a CFO, an analyst and an accountant living in my pocket. I cancelled three apps and a spreadsheet habit.”</div>
@@ -713,22 +781,22 @@ function Landing({ dark, toggleTheme, go }){
           <div className="trust-pill">Powered by <b>Plaid</b></div>
           <div className="trust-pill">Billing by <b>Stripe</b></div>
         </div>
-      </div>
+      </div>}
 
       {/* CTA */}
-      <div className="lsec" style={{paddingTop:0}}>
+      {H.cta!==false && <div className="lsec" style={{paddingTop:0}}>
         <div className="cta-band">
           <h2>Meet the 22nd-century way to manage money.</h2>
           <p>Free to start. No card required. Connect your first account in under two minutes.</p>
           <button className="btn lg" style={{background:"#fff",color:"#3F33F0"}} onClick={()=>go("register")}>Create your free account <ArrowRight size={17}/></button>
         </div>
-      </div>
+      </div>}
 
-      <div className="ftr">
+      {H.footer!==false && <div className="ftr">
         <div className="logo"><LogoMark size={26}/><div className="logo-tx" style={{fontSize:16}}>Pix<span>ii</span></div></div>
         <div className="links"><span>Product</span><span>Security</span><span>Pricing</span><span>Privacy</span><span>Terms</span><span onClick={()=>go("login")}>Sign in</span></div>
         <div style={{fontSize:12,color:"var(--ink-3)"}}>© 2026 Pixii Labs · Made for the future of money</div>
-      </div>
+      </div>}
     </div>
   );
 }
@@ -784,8 +852,10 @@ function HeroArt(){
 /* ================================================================== */
 /*  AUTH (login / register)                                           */
 /* ================================================================== */
-function AuthPage({ mode, dark, toggleTheme, go, setUser }){
+function AuthPage({ mode, dark, toggleTheme, go, setUser, cfg }){
   const isReg=mode==="register";
+  const AU=(cfg&&cfg.auth)||{};
+  const modeOK=isReg?AU.register!==false:AU.login!==false;
   const [email,setEmail]=useState("");
   const [pw,setPw]=useState("");
   const [name,setName]=useState("");
@@ -862,14 +932,15 @@ function AuthPage({ mode, dark, toggleTheme, go, setUser }){
               {!isReg && <span className="flink">Forgot password?</span>}
             </div>
 
-            <button className="btn pri" style={{width:"100%",justifyContent:"center",padding:"12px"}} disabled={!valid} onClick={enter}>{isReg?"Create account":"Sign in"} <ArrowRight size={16}/></button>
+            {!modeOK && <div className="auth-disabled"><Lock size={13}/> {isReg?"New sign-ups are currently disabled by an administrator.":"Sign-in is temporarily disabled by an administrator."}</div>}
+            <button className="btn pri" style={{width:"100%",justifyContent:"center",padding:"12px"}} disabled={!valid||!modeOK} onClick={enter}>{isReg?"Create account":"Sign in"} <ArrowRight size={16}/></button>
 
             <div className="divider-or">or continue with</div>
             <div className="soc-row">
-              <button className="soc-btn" onClick={()=>go("app")}><GoogleG/> Google</button>
-              <button className="soc-btn" onClick={()=>go("app")}><AppleLogo/> Apple</button>
+              {AU.google!==false && <button className="soc-btn" onClick={()=>go("app")}><GoogleG/> Google</button>}
+              {AU.apple!==false && <button className="soc-btn" onClick={()=>go("app")}><AppleLogo/> Apple</button>}
             </div>
-            <button className="soc-btn wide" onClick={()=>go("app")}><Fingerprint size={16}/> Use a passkey</button>
+            {AU.passkey!==false && <button className="soc-btn wide" onClick={()=>go("app")}><Fingerprint size={16}/> Use a passkey</button>}
 
             <div className="auth-switch">
               {isReg?<>Already have an account? <span className="flink" onClick={()=>go("login")}>Sign in</span></>
@@ -943,8 +1014,9 @@ function Logoff({ go }){
 /* ================================================================== */
 /*  OS — the cockpit                                                  */
 /* ================================================================== */
-function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser }){
+function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser, cfg, setCfg }){
   const [ws,setWs]=useState("command");
+  const [fintelFocus,setFintelFocus]=useState(null);
   const [accounts,setAccounts]=useState(seedAccounts);
   const [tx,setTx]=useState(seedTx);
   const [goals,setGoals]=useState(seedGoals);
@@ -969,6 +1041,20 @@ function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser }
   const [savedScenarios,setSavedScenarios]=useState([]);
   const cmdRef=useRef(null);
 
+  /* ---- live market/news data from real providers ---- */
+  const [live,setLive]=useState({markets:[],news:[],marketsConnected:false,newsConnected:false});
+  useEffect(()=>{
+    let on=true;
+    Promise.all([api.live("markets"),api.live("news")]).then(([m,n])=>{
+      if(!on) return;
+      setLive({
+        markets:(m&&m.items)||[], marketsConnected:!!(m&&m.connected),
+        news:(n&&n.items)||[], newsConnected:!!(n&&n.connected),
+      });
+    });
+    return ()=>{on=false;};
+  },[]);
+
   /* ---- Postgres persistence: hydrate on login, autosave on change ---- */
   const [hydrated,setHydrated]=useState(false);
   useEffect(()=>{
@@ -979,9 +1065,10 @@ function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser }
       if(Array.isArray(s.tx)) setTx(s.tx);
       if(Array.isArray(s.goals)) setGoals(s.goals);
       if(Array.isArray(s.agents)&&s.agents.length) setAgents(s.agents.map(hydrateAgent));
-      if(Array.isArray(s.holdings)&&s.holdings.length) HOLDINGS=s.holdings;
-      if(Array.isArray(s.invoices)&&s.invoices.length) INVOICES=s.invoices;
-      if(Array.isArray(s.monthHistory)&&s.monthHistory.length) history=s.monthHistory;
+      if(Array.isArray(s.holdings)){ HOLDINGS=s.holdings; PORT_VALUE=HOLDINGS.reduce((a,h)=>a+(h.shares||0)*(h.price||0),0); }
+      if(Array.isArray(s.invoices)) INVOICES=s.invoices;
+      if(Array.isArray(s.monthHistory)) history=s.monthHistory;
+      if(s.budgets&&typeof s.budgets==="object"){ seedBudgets=s.budgets; BUDGET_TOTAL=Object.values(seedBudgets).reduce((a,v)=>a+(+v||0),0); }
       if(s.prefs) setPrefs(p=>({...p,...s.prefs}));
       if(s.plan) setPlan(s.plan);
       if(Array.isArray(s.savedScenarios)) setSavedScenarios(s.savedScenarios);
@@ -1039,7 +1126,7 @@ function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser }
   },[tx]);
   const recurringTotal=recurring.reduce((s,r)=>s+r.amt,0);
   const ckAcct=accounts.find(a=>a.type==="checking"); const checking=ckAcct?ckAcct.balance:0;
-  const dailyPace=expense/TODAY; const projMonth=dailyPace*31; const velocity=projMonth/BUDGET_TOTAL;
+  const dailyPace=expense/TODAY; const projMonth=dailyPace*31; const velocity=BUDGET_TOTAL>0?projMonth/BUDGET_TOTAL:0;
   const lowBal=checking-dailyPace*(31-TODAY);
   const emergencyTarget=6*burn; const cashDrag=Math.max(0,liquid-emergencyTarget);
   const merchT={}; tx.filter(t=>t.amount<0&&t.category!=="Savings").forEach(t=>{merchT[t.merchant]=(merchT[t.merchant]||0)+Math.abs(t.amount);});
@@ -1090,11 +1177,12 @@ function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser }
   }
   function ask(text){if(!text.trim())return;setFeed(f=>[{id:"q"+Date.now(),q:text},...f]);setThinking(true);setTimeout(()=>{setFeed(f=>[{id:"a"+Date.now(),...answer(text)},...f]);setThinking(false);},700);}
 
-  const WS=[{id:"command",icon:Gauge,label:"Command"},{id:"forecast",icon:Activity,label:"Forecast & Scenarios"},{id:"invest",icon:LineChart,label:"Investments"},{id:"books",icon:BookOpen,label:"The Books"},{id:"agents",icon:Bot,label:"AI Agents"}];
+  const WS=[{id:"command",icon:Gauge,label:"Command",grp:"overview"},{id:"fintel",icon:BarChart3,label:"Financial Intelligence",grp:"insight"},{id:"reports",icon:FileText,label:"Reports & Trends",grp:"insight"},{id:"forecast",icon:Activity,label:"Forecast & Scenarios",grp:"plan"},{id:"goals",icon:Target,label:"Goals & Savings",grp:"plan"},{id:"bills",icon:CalendarDays,label:"Bills & Calendar",grp:"plan"},{id:"credit",icon:CreditCard,label:"Credit & Borrowing",grp:"plan"},{id:"tools",icon:Boxes,label:"Tools & Calculators",grp:"plan"},{id:"invest",icon:LineChart,label:"Investments",grp:"invest"},{id:"market",icon:Coins,label:"Markets & Tools",grp:"invest"},{id:"books",icon:BookOpen,label:"The Books",grp:"operate"},{id:"agents",icon:Bot,label:"AI Agents",grp:"operate"},{id:"wellness",icon:GraduationCap,label:"Wellness & Learn",grp:"grow"}];
   const intel={fiNumber,fiProgress,yearsToFI,efMonths,efTarget,util,payoffMonths,taxSetAside,freelance,annualExp,card};
   const smart={recurring,recurringTotal,lowBal,velocity,projMonth,budgetTotal:BUDGET_TOTAL,cashDrag,topMerchant,checking};
-  const ctx={c,dark,toggleTheme,themeId,setThemeId,accounts,setAccounts,tx,setTx,goals,setGoals,scenario,setScenario,scrub,setScrub,agents,setAgents,income,expense,saved,netWorth,liquid,spentByCat,discSpend,burn,baseNet,projNet,runway,savingsRate,adjIncome,adjExpense,series,yDomain,scrubPoint,scrubVal,isFuture,setWs,setAddOpen,intel,smart,freelance,plan,setPlan,prefs,setPrefs,savedScenarios,setSavedScenarios,user,setUser,openWizard:()=>setWizardOpen(true)};
+  const ctx={c,dark,toggleTheme,themeId,setThemeId,accounts,setAccounts,tx,setTx,goals,setGoals,scenario,setScenario,scrub,setScrub,agents,setAgents,income,expense,saved,netWorth,liquid,spentByCat,discSpend,burn,baseNet,projNet,runway,savingsRate,adjIncome,adjExpense,series,yDomain,scrubPoint,scrubVal,isFuture,setWs,setAddOpen,intel,smart,freelance,plan,setPlan,prefs,setPrefs,savedScenarios,setSavedScenarios,user,setUser,cfg,setCfg,themeId,setThemeId,fintelFocus,live,goFintel:(sec)=>{setFintelFocus({sec,t:Date.now()});setWs("fintel");},openWizard:()=>setWizardOpen(true)};
 
+  useEffect(()=>{ if(["command","fintel","reports","forecast","goals","bills","credit","tools","invest","market","books","agents","wellness"].includes(ws)&&cfg.modules[ws]===false) setWs("command"); },[ws,cfg.modules]);
   return (
     <div className="os">
       <div className="topbar">
@@ -1107,7 +1195,7 @@ function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser }
         <div className="tb-right">
           <div className="sync"><span className="dotlive"/> Synced</div>
           <div className="nw-readout"><div className="l">NW.TTL</div><div className="v">{fmt0(netWorth)}</div></div>
-          <button className="icobtn cop-toggle" onClick={()=>setCopOpen(true)} title="Pixii Copilot"><Bot size={16}/></button>
+          {cfg.modules.copilot!==false && <button className="icobtn cop-toggle" onClick={()=>setCopOpen(true)} title="Pixii Copilot"><Bot size={16}/></button>}
           <button className="icobtn" onClick={toggleTheme} title="Theme">{dark?<Sun size={16}/>:<Moon size={16}/>}</button>
           <button className="icobtn" onClick={()=>setWs("settings")} title="Settings & profile" style={{padding:0,border:"none",background:"none",overflow:"hidden"}}><Avatar email={user.email} name={user.name} size={32} radius={9}/></button>
           <button className="icobtn" onClick={logout} title="Sign out"><LogOut size={16}/></button>
@@ -1115,25 +1203,36 @@ function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser }
       </div>
 
       <div className="rail">
-        {WS.map(w=>(<div key={w.id} className={"rail-btn"+(ws===w.id?" on":"")} onClick={()=>setWs(w.id)}><w.icon size={20}/><span className="rail-lbl">{w.label}</span></div>))}
+        {(()=>{const items=WS.filter(w=>cfg.modules[w.id]!==false);let pg=null;return items.map(w=>{const sep=pg!==null&&w.grp!==pg;pg=w.grp;return(<React.Fragment key={w.id}>{sep&&<div className="rail-sep"/>}<div className={"rail-btn"+(ws===w.id?" on":"")} onClick={()=>setWs(w.id)}><w.icon size={20}/><span className="rail-lbl">{w.label}</span></div></React.Fragment>);});})()}
+        <div className={"rail-btn"+(ws==="admin"?" on":"")} onClick={()=>setWs("admin")} style={ws==="admin"?undefined:{color:"var(--primary)"}}><Shield size={20}/><span className="rail-lbl">Admin console</span></div>
         <div style={{marginTop:"auto"}}/>
         <div className={"rail-btn"+(ws==="settings"?" on":"")} onClick={()=>setWs("settings")}><SettingsIcon size={20}/><span className="rail-lbl">Settings & profile</span></div>
         <div className="rail-btn" onClick={()=>setAddOpen(true)}><Plus size={20}/><span className="rail-lbl">New transaction</span></div>
       </div>
 
       <div className="main" key={ws}>
+        {cfg.system.maintenance && <div className="maint-banner"><AlertTriangle size={14}/> Maintenance mode is ON — the public site shows a maintenance notice. Admins retain full access.</div>}
         {ws==="command" && <Command ctx={ctx}/>}
+        {ws==="fintel" && <FinIntel ctx={ctx}/>}
+        {ws==="reports" && <Reports ctx={ctx}/>}
+        {ws==="goals" && <Goals ctx={ctx}/>}
+        {ws==="bills" && <Bills ctx={ctx}/>}
+        {ws==="credit" && <Credit ctx={ctx}/>}
+        {ws==="tools" && <Tools ctx={ctx}/>}
+        {ws==="market" && <Markets ctx={ctx}/>}
+        {ws==="wellness" && <Wellness ctx={ctx}/>}
         {ws==="forecast" && <Forecast ctx={ctx}/>}
         {ws==="invest" && <Investments ctx={ctx}/>}
         {ws==="books" && <Books ctx={ctx}/>}
         {ws==="agents" && <Agents ctx={ctx}/>}
         {ws==="settings" && <Settings ctx={ctx}/>}
+        {ws==="admin" && <Admin ctx={ctx}/>}
       </div>
 
       <div className={"cop-backdrop"+(copOpen?" show":"")} onClick={()=>setCopOpen(false)}/>
       <div className={"copilot"+(copOpen?" open":"")}>
         <div className="cop-head"><div className="cop-av"><Sparkles size={17}/></div><div style={{flex:1}}><div className="nm">Pixii Copilot</div><div className="st"><span className="dotlive" style={{width:6,height:6}}/> {copReady?"online · watching 4 accounts":"booting…"}</div></div><button className="icobtn cop-close" onClick={()=>setCopOpen(false)}><X size={16}/></button></div>
-        <div className="cop-feed">
+        {cfg.modules.copilot===false ? (<div className="cop-disabled"><Bot size={24}/><div>Copilot has been disabled by an administrator.</div></div>) : (<><div className="cop-feed">
           {thinking && <div className="thinking"><span/><span/><span/></div>}
           {feed.map(f=> f.q ? <div key={f.id} className="qbubble">{f.q}</div>
             : <div key={f.id} className={"insight "+(f.kind||"ai")}>
@@ -1144,7 +1243,7 @@ function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser }
           {!copReady && <div className="thinking"><span/><span/><span/></div>}
         </div>
         <div className="sugg">{["What if I cut dining 30%?","When do I reach FI?","Emergency fund status?","Pay off my card?"].map(s=><button key={s} onClick={()=>ask(s)}>{s}</button>)}</div>
-        <div className="cop-input"><input placeholder="Message Pixii…" onKeyDown={e=>{if(e.key==="Enter"){ask(e.target.value);e.target.value="";}}}/></div>
+        <div className="cop-input"><input placeholder="Message Pixii…" onKeyDown={e=>{if(e.key==="Enter"){ask(e.target.value);e.target.value="";}}}/></div></>)}
       </div>
 
       {addOpen && <AddModal accounts={accounts} onClose={()=>setAddOpen(false)} onAdd={t=>{setTx(p=>[t,...p]);setAddOpen(false);}}/>}
@@ -1156,8 +1255,604 @@ function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser }
 /* ================================================================== */
 /*  COMMAND                                                           */
 /* ================================================================== */
+/* ================================================================== */
+/*  FINANCIAL INTELLIGENCE                                            */
+/* ================================================================== */
+function FIbarTarget({label,actual,target,color}){
+  const max=Math.max(actual,target,1);
+  return(<div style={{marginBottom:12}}><div className="mrow" style={{border:"none",padding:"0 0 5px"}}><span className="ml">{label}</span><span className="mv">{actual}% <span style={{color:"var(--ink-3)",fontWeight:400}}>/ {target}% target</span></span></div>
+    <div className="pbar" style={{position:"relative"}}><i style={{width:Math.min(100,actual/max*100)+"%",background:color}}/><span style={{position:"absolute",top:-3,bottom:-3,left:Math.min(100,target/max*100)+"%",width:2,background:"var(--ink)"}}/></div></div>);
+}
+function FinIntel({ ctx }){
+  const { c,income,expense,saved,savingsRate,netWorth,liquid,burn,baseNet,runway,spentByCat,intel,smart,accounts,tx,fintelFocus,goFintel } = ctx;
+  useEffect(()=>{ if(fintelFocus&&fintelFocus.sec){const el=document.getElementById(fintelFocus.sec);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});} },[fintelFocus]);
+  const annualIncome=income*12, annualExpense=intel.annualExp||expense*12, annualContribution=Math.max(0,baseNet)*12;
+  const surplus=income-expense, sr=savingsRate;
+  const sSav=Math.min(Math.max(sr,0)/20,1), sEf=Math.min(intel.efMonths/intel.efTarget,1), sDebt=Math.max(0,Math.min(1,1-intel.util/0.5)), sRun=Math.min(runway/6,1);
+  const health=Math.round((sSav+sEf+sDebt+sRun)/4*100);
+  const grade=health>=80?"A":health>=68?"B":health>=55?"C":health>=40?"D":"E";
+  const fiNumber=intel.fiNumber, leanFI=25*annualExpense*0.7, fatFI=25*annualExpense*1.5, coastFI=fiNumber/Math.pow(1.07,33), swrMonthly=netWorth*0.04/12;
+  const projYears=Math.min(45,Math.max(10,Math.ceil(intel.yearsToFI)+3));
+  let nw=netWorth; const proj=[{y:"Now",v:Math.round(nw)}]; for(let y=1;y<=projYears;y++){nw=nw*1.07+annualContribution;proj.push({y:"+"+y,v:Math.round(nw)});}
+  const bal=Math.abs(intel.card.balance), apr=intel.card.apr, mr=apr/1200;
+  const payoff=(pmt)=>{ if(pmt<=bal*mr) return {mo:Infinity,int:Infinity}; const mo=Math.ceil(-Math.log(1-(bal*mr)/pmt)/Math.log(1+mr)); return {mo,int:Math.max(0,pmt*mo-bal)}; };
+  const minPmt=Math.max(35,Math.round(bal*0.03));
+  const payPlans=[{label:"Minimum",pmt:minPmt},{label:"$100 / mo",pmt:100},{label:"$200 / mo",pmt:200},{label:"$400 / mo",pmt:400}].map(p=>({...p,...payoff(p.pmt)}));
+  const dti=income>0?(minPmt/income):0;
+  const needsCats=["Housing","Groceries","Transport","Utilities","Health"], wantsCats=["Dining","Shopping","Coffee","Entertainment","Subscriptions"];
+  const needs=needsCats.reduce((s,k)=>s+(spentByCat[k]||0),0), wants=wantsCats.reduce((s,k)=>s+(spentByCat[k]||0),0), savePart=Math.max(0,income-needs-wants);
+  const pctI=(v)=>income>0?Math.round(v/income*100):0;
+  const BENCH={Housing:[25,30],Groceries:[10,12],Transport:[10,15],Utilities:[5,8],Health:[5,8],Dining:[4,6],Shopping:[3,5],Coffee:[1,2],Entertainment:[3,5],Subscriptions:[1,3]};
+  const ALLOC_COL={"US Stock":"#7C4DFF","International":"#00C2D6","Bonds":"#0DA66B","REIT":"#F59E0B","Cash":"#9AA4BB"};
+  const allocMap={}; HOLDINGS.forEach(h=>{const v=h.shares*h.price;allocMap[h.cls]=(allocMap[h.cls]||0)+v;});
+  const allocData=Object.entries(allocMap).map(([k,v])=>({name:k,value:Math.round(v),color:ALLOC_COL[k]||"#888"}));
+  const invested=accounts.filter(a=>a.type==="investment").reduce((s,a)=>s+a.balance,0);
+  const SPCOL=["#7C4DFF","#00C2D6","#F59E0B","#0DA66B","#E879F9","#3B82F6","#FB7185","#A855F7","#EAB308"];
+  const spendSorted=Object.entries(spentByCat).sort((a,b)=>b[1]-a[1]);
+  const spendData=spendSorted.map(([k,v],i)=>({name:k,value:Math.round(v),color:SPCOL[i%SPCOL.length]}));
+  const trend=[...history,{m:"May",income:Math.round(income),expense:Math.round(expense)}];
+  const merch={}; tx.filter(t=>t.amount<0).forEach(t=>{merch[t.merchant]=(merch[t.merchant]||0)+Math.abs(t.amount);});
+  const topMerch=Object.entries(merch).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const SR_TABLE=[[10,51],[20,37],[30,28],[40,22],[50,17],[65,10.5]];
+  const taxRate=0.25, quarterly=intel.taxSetAside*3;
+  const Ch=(node,h=200)=>(<div style={{height:h}}><ResponsiveContainer width="100%" height="100%">{node}</ResponsiveContainer></div>);
+  const axis={fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis};
+
+  return (
+    <div className="fade">
+      <div className="page-h"><div><h1>Financial Intelligence</h1><div className="sub">A complete, AI-extrapolated read on your money · 4 linked accounts · benchmarked to industry standards</div></div><div className="code">MODELED · MAY 2026</div></div>
+
+      {/* AI narrative */}
+      <div className="mir" id="fi-top">
+        <div className="kick"><Sparkles size={13}/> Intelligence brief · AI-written</div>
+        <h2>You score {health}/100 — a grade {grade} financial position, {health>=68?"comfortably ahead of the typical household.":"with clear room to strengthen."}</h2>
+        <p className="standfirst">
+          On <b>{fmt0(annualIncome)}</b> of annualized income you are saving about <b>{sr}%</b> — versus a U.S. median near <b>5%</b> and a recommended <b>20%</b>.
+          Your net worth of <b>{fmt0(netWorth)}</b> puts you <b>{Math.round(intel.fiProgress*100)}%</b> of the way to a financial-independence number of <b>{fmt0(fiNumber)}</b>, roughly <b>{intel.yearsToFI.toFixed(1)} years</b> out at today's pace.
+          Liquidity covers <b>{intel.efMonths.toFixed(1)} months</b> of expenses and credit utilization sits at <b>{Math.round(intel.util*100)}%</b>{intel.util<0.3?" — within the healthy zone":" — above the 30% threshold lenders prefer"}.
+        </p>
+      </div>
+
+      {/* HEALTH SCORE */}
+      <div className="panel fi-anchor" style={{marginBottom:16}}><div className="p-head"><div className="p-title"><ShieldCheck size={15} color="var(--primary)"/> Financial health score</div><span className="code">COMPOSITE · AI-WEIGHTED</span></div>
+        <div className="fi-score">
+          <AGauge value={health} label={"GRADE "+grade} sub="overall health" color={health>=68?"#0DA66B":health>=50?"#F59E0B":"#E8453F"}/>
+          <div className="fi-comp">
+            {[["Savings rate",sSav,sr+"%"],["Emergency fund",sEf,intel.efMonths.toFixed(1)+"mo"],["Debt / utilization",sDebt,Math.round(intel.util*100)+"%"],["Cash runway",sRun,runway.toFixed(1)+"mo"]].map(([l,v,disp])=>(
+              <div className="scorebar" key={l}><span className="sl">{l}</span><span className="pbar" style={{flex:1}}><i style={{width:Math.round(v*100)+"%",background:v>=0.66?"#0DA66B":v>=0.4?"#F59E0B":"#E8453F"}}/></span><span className="sv">{disp}</span></div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid" style={{gridTemplateColumns:"repeat(5,1fr)",marginBottom:16}}>
+        <KPI code="NW.TTL" label="Net worth" value={netWorth} chip="+3.1%" up/>
+        <KPI code="SAVE.R" label="Savings rate" raw={sr+"%"} chip={sr>=20?"strong":"build"} up={sr>=20}/>
+        <KPI code="FI.PROG" label="To independence" raw={Math.round(intel.fiProgress*100)+"%"} chip={intel.yearsToFI.toFixed(0)+"y"} up/>
+        <KPI code="RWY" label="Runway" raw={runway.toFixed(1)+" mo"} chip={runway>6?"healthy":"tight"} up={runway>6}/>
+        <KPI code="SWR.4" label="4% safe draw" value={swrMonthly} chip="/mo now" flat/>
+      </div>
+
+      {/* FINANCIAL INDEPENDENCE */}
+      <div className="grid fi-anchor" id="fi-fi" style={{gridTemplateColumns:"1fr 1.3fr",marginBottom:16,alignItems:"start"}}>
+        <div className="panel"><div className="p-head"><div className="p-title"><Flame size={15} color="var(--primary)"/> Financial independence</div><span className="code">25× RULE</span></div>
+          <div className="mrow"><span className="ml">FI number (25× spend)</span><span className="mv">{fmt0(fiNumber)}</span></div>
+          <div className="mrow"><span className="ml">Progress</span><span className="mv">{Math.round(intel.fiProgress*100)}%</span></div>
+          <div className="pbar" style={{margin:"2px 0 10px"}}><i style={{width:Math.min(100,intel.fiProgress*100)+"%"}}/></div>
+          <div className="mrow"><span className="ml">Years to FI @ {sr}% rate</span><span className="mv">{intel.yearsToFI.toFixed(1)} yr</span></div>
+          <div className="mrow"><span className="ml">Lean FI (70% spend)</span><span className="mv">{fmt0(leanFI)}</span></div>
+          <div className="mrow"><span className="ml">Fat FI (150% spend)</span><span className="mv">{fmt0(fatFI)}</span></div>
+          <div className="mrow"><span className="ml">Coast FI (to age 65)</span><span className="mv">{fmt0(coastFI)}</span></div>
+          <div className="mrow"><span className="ml">Annual safe withdrawal</span><span className="mv">{fmt0(annualExpense)}</span></div>
+          <div className="bench"><Sparkles size={11} style={{verticalAlign:"-1px"}}/> Based on the 4% safe-withdrawal rule and a 7% nominal return assumption.</div>
+        </div>
+        <div className="panel"><div className="p-head"><div className="p-title"><TrendingUp size={15} color="var(--primary)"/> Net-worth trajectory to FI</div><span className="code">7% GROWTH + {fmt0(annualContribution)}/YR</span></div>
+          {Ch(<AreaChart data={proj} margin={{top:8,right:8,left:-2,bottom:0}}><defs><linearGradient id="fiproj" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={c.primary} stopOpacity={.3}/><stop offset="100%" stopColor={c.primary} stopOpacity={0}/></linearGradient></defs><CartesianGrid stroke={c.axis} strokeOpacity={.12} vertical={false}/><XAxis dataKey="y" tick={axis} interval={Math.ceil(projYears/8)} tickLine={false} axisLine={false}/><YAxis tick={axis} width={42} tickLine={false} axisLine={false} tickFormatter={v=>fmtK(v)}/><Tooltip content={<Tip/>}/><ReferenceLine y={fiNumber} stroke="#0DA66B" strokeDasharray="5 4" label={{value:"FI "+fmtK(fiNumber),fontSize:10,fill:"#0DA66B",position:"insideTopRight"}}/><Area dataKey="v" name="net worth" stroke={c.primary} strokeWidth={2.4} fill="url(#fiproj)" isAnimationActive={false}/></AreaChart>,220)}
+          <div className="bench" style={{marginBottom:8}}>The shockingly-simple math: your savings rate alone sets your timeline.</div>
+          <table className="tbl"><thead><tr><td className="code">Savings rate</td><td className="code amt">Years to FI</td><td className="code amt">vs you</td></tr></thead><tbody>
+            {SR_TABLE.map(([s,y])=>(<tr key={s} style={sr>=s-5&&sr<s+5?{background:"var(--panel-2)"}:undefined}><td>{s}%</td><td className="amt">{y}</td><td className="amt" style={{color:sr>=s?"var(--up)":"var(--ink-3)"}}>{sr>=s?"reached":""}</td></tr>))}
+          </tbody></table>
+        </div>
+      </div>
+
+      {/* EMERGENCY FUND */}
+      <div className="grid fi-anchor" id="fi-ef" style={{gridTemplateColumns:"1fr 1.3fr",marginBottom:16,alignItems:"start"}}>
+        <div className="panel" style={{display:"grid",placeItems:"center"}}><AGauge value={Math.round(Math.min(1,intel.efMonths/intel.efTarget)*100)} label="EMERGENCY FUND" sub={intel.efMonths.toFixed(1)+" of "+intel.efTarget+" months"} color={intel.efMonths>=intel.efTarget?"#0DA66B":"#F59E0B"}/></div>
+        <div className="panel"><div className="p-head"><div className="p-title"><ShieldCheck size={15} color="var(--primary)"/> Emergency cushion</div><span className="code">3–6 MONTH STANDARD</span></div>
+          <div className="mrow"><span className="ml">Liquid cash</span><span className="mv">{fmt0(liquid)}</span></div>
+          <div className="mrow"><span className="ml">Monthly burn</span><span className="mv">{fmt0(burn)}</span></div>
+          <div className="mrow"><span className="ml">Months covered</span><span className="mv">{intel.efMonths.toFixed(1)} mo</span></div>
+          <div className="mrow"><span className="ml">Target ({intel.efTarget} mo)</span><span className="mv">{fmt0(intel.efTarget*burn)}</span></div>
+          <div className="mrow"><span className="ml">{intel.efMonths>=intel.efTarget?"Surplus over target":"Gap to fully funded"}</span><span className="mv" style={{color:intel.efMonths>=intel.efTarget?"var(--up)":"var(--down)"}}>{fmt0(Math.abs((intel.efTarget-intel.efMonths)*burn))}</span></div>
+          {intel.efMonths<intel.efTarget && <div className="mrow"><span className="ml">At {fmt0(Math.max(saved,300))}/mo, funded in</span><span className="mv">{Math.ceil((intel.efTarget-intel.efMonths)*burn/Math.max(saved,300))} mo</span></div>}
+          <div className="bench"><Sparkles size={11} style={{verticalAlign:"-1px"}}/> Industry guidance: 3 months if your income is stable, 6+ if it is variable or you have dependents.</div>
+        </div>
+      </div>
+
+      {/* DEBT */}
+      <div className="grid fi-anchor" id="fi-debt" style={{gridTemplateColumns:"1fr 1.3fr",marginBottom:16,alignItems:"start"}}>
+        <div className="panel"><div className="p-head"><div className="p-title"><Percent size={15} color="var(--primary)"/> Credit & debt</div><span className="code">{intel.card.name}</span></div>
+          <div style={{display:"grid",placeItems:"center",margin:"4px 0"}}><AGauge value={Math.round(intel.util*100)} label="UTILIZATION" sub={"target < 30%"} color={intel.util<0.3?"#0DA66B":intel.util<0.5?"#F59E0B":"#E8453F"}/></div>
+          <div className="mrow"><span className="ml">Balance</span><span className="mv">{fmt0(bal)}</span></div>
+          <div className="mrow"><span className="ml">Credit limit</span><span className="mv">{fmt0(intel.card.limit)}</span></div>
+          <div className="mrow"><span className="ml">APR</span><span className="mv">{apr}%</span></div>
+          <div className="mrow"><span className="ml">Debt-to-income</span><span className="mv" style={{color:dti<0.36?"var(--up)":"var(--down)"}}>{Math.round(dti*100)}%</span></div>
+          <div className="bench">Lenders prefer utilization under 30% and DTI under 36%.</div>
+        </div>
+        <div className="panel"><div className="p-head"><div className="p-title"><CreditCard size={15} color="var(--primary)"/> Payoff strategies</div><span className="code">AMORTIZED</span></div>
+          <table className="tbl"><thead><tr><td className="code">Plan</td><td className="code amt">Payment</td><td className="code amt">Months</td><td className="code amt">Interest</td></tr></thead><tbody>
+            {payPlans.map((p,i)=>(<tr key={i}><td style={{fontWeight:600}}>{p.label}</td><td className="amt">{fmt0(p.pmt)}</td><td className="amt">{p.mo===Infinity?"never":p.mo}</td><td className="amt" style={{color:p.int>200?"var(--down)":"var(--ink-2)"}}>{p.int===Infinity?"—":fmt0(p.int)}</td></tr>))}
+          </tbody></table>
+          <div className="bench" style={{marginTop:10}}>Paying <b style={{color:"var(--ink)"}}>$400/mo</b> instead of the minimum clears the balance about <b style={{color:"var(--ink)"}}>{Math.max(0,(payPlans[0].mo===Infinity?0:payPlans[0].mo)-payPlans[3].mo)} months</b> sooner and saves <b style={{color:"var(--up)"}}>{fmt0(Math.max(0,(payPlans[0].int===Infinity?0:payPlans[0].int)-payPlans[3].int))}</b> in interest.</div>
+        </div>
+      </div>
+
+      {/* SPENDING */}
+      <div className="panel fi-anchor" id="fi-spend" style={{marginBottom:16}}><div className="p-head"><div className="p-title"><BarChart3 size={15} color="var(--primary)"/> Spending analysis</div><span className="code">50 / 30 / 20 · BENCHMARKED</span></div>
+        <div className="adm-2">
+          <div>
+            <div className="code" style={{marginBottom:10}}>BUDGET FRAMEWORK vs ACTUAL</div>
+            <FIbarTarget label="Needs" actual={pctI(needs)} target={50} color="#7C4DFF"/>
+            <FIbarTarget label="Wants" actual={pctI(wants)} target={30} color="#F59E0B"/>
+            <FIbarTarget label="Savings & surplus" actual={pctI(savePart)} target={20} color="#0DA66B"/>
+            <div className="bench">The vertical mark is the recommended target. Needs = housing, groceries, transport, utilities, health. Wants = dining, shopping, coffee, entertainment, subscriptions.</div>
+          </div>
+          <div>
+            <div className="code" style={{marginBottom:6}}>WHERE IT GOES</div>
+            <ADonut data={spendData} height={186}/>
+            <div className="legend-row" style={{justifyContent:"center"}}>{spendData.slice(0,5).map(d=><span key={d.name}><span className="lg-dot" style={{background:d.color}}/>{d.name}</span>)}</div>
+          </div>
+        </div>
+        <div style={{marginTop:8}}>
+          <div className="code" style={{margin:"6px 0"}}>CATEGORY DETAIL · ACTUAL vs BUDGET vs BENCHMARK</div>
+          <table className="tbl"><thead><tr><td className="code">Category</td><td className="code amt">Spent</td><td className="code amt">Budget</td><td className="code amt">% income</td><td className="code amt">Benchmark</td><td className="code amt">Status</td></tr></thead><tbody>
+            {spendSorted.map(([k,v])=>{const b=seedBudgets[k];const p=pctI(v);const bm=BENCH[k];const ok=bm?p<=bm[1]:true;return(<tr key={k}><td style={{fontWeight:500}}>{k}</td><td className="amt">{fmt0(v)}</td><td className="amt" style={{color:"var(--ink-3)"}}>{b?fmt0(b):"—"}</td><td className="amt">{p}%</td><td className="amt" style={{color:"var(--ink-3)"}}>{bm?bm[0]+"–"+bm[1]+"%":"—"}</td><td className="amt"><span className={"tag "+(ok?"g":"r")}>{ok?"in range":"high"}</span></td></tr>);})}
+          </tbody></table>
+        </div>
+        <div className="adm-2" style={{marginTop:16}}>
+          <div><div className="code" style={{marginBottom:6}}>INCOME vs SPENDING · 5 MONTHS</div>
+            {Ch(<BarChart data={trend} margin={{top:6,right:6,left:-14,bottom:0}}><CartesianGrid stroke={c.axis} strokeOpacity={.1} vertical={false}/><XAxis dataKey="m" tick={axis} tickLine={false} axisLine={false}/><YAxis tick={axis} width={36} tickLine={false} axisLine={false} tickFormatter={v=>fmtK(v)}/><Tooltip content={<Tip/>}/><Bar dataKey="income" fill="#0DA66B" radius={[3,3,0,0]} isAnimationActive={false}/><Bar dataKey="expense" fill={c.primary} radius={[3,3,0,0]} isAnimationActive={false}/></BarChart>,180)}
+            <div className="legend-row"><span><span className="lg-dot" style={{background:"#0DA66B"}}/>Income</span><span><span className="lg-dot" style={{background:c.primary}}/>Spending</span></div>
+          </div>
+          <div><div className="code" style={{marginBottom:6}}>TOP MERCHANTS</div>
+            <ABarList rows={topMerch.map(([n,v],i)=>({label:n,value:fmt0(v),pct:Math.round(v/topMerch[0][1]*100),color:SPCOL[i%SPCOL.length]}))}/>
+          </div>
+        </div>
+        <div style={{marginTop:16}}><div className="code" style={{marginBottom:6}}>RECURRING COMMITMENTS · {fmt0(smart.recurringTotal)}/MO · {fmt0(smart.recurringTotal*12)}/YR</div>
+          <table className="tbl"><thead><tr><td className="code">Merchant</td><td className="code">Category</td><td className="code amt">Monthly</td><td className="code amt">Annual</td></tr></thead><tbody>
+            {smart.recurring.slice(0,8).map((r,i)=>(<tr key={i}><td style={{fontWeight:500}}>{r.name}</td><td style={{color:"var(--ink-2)"}}>{r.cat}</td><td className="amt">{fmt0(r.amt)}</td><td className="amt" style={{color:"var(--ink-3)"}}>{fmt0(r.amt*12)}</td></tr>))}
+          </tbody></table>
+        </div>
+      </div>
+
+      {/* NET WORTH & ASSETS */}
+      <div className="grid fi-anchor" id="fi-networth" style={{gridTemplateColumns:"1fr 1fr",marginBottom:16,alignItems:"start"}}>
+        <div className="panel"><div className="p-head"><div className="p-title"><Layers size={15} color="var(--primary)"/> Asset allocation</div><span className="code">{fmt0(invested)} INVESTED</span></div>
+          <ADonut data={allocData} height={180}/>
+          <div className="legend-row" style={{justifyContent:"center"}}>{allocData.map(d=><span key={d.name}><span className="lg-dot" style={{background:d.color}}/>{d.name} {Math.round(d.value/invested*100)}%</span>)}</div>
+          <div className="bench" style={{marginTop:8}}>A common age-based guideline holds ~(110 − age)% in equities. Your equity weight is {Math.round(((allocMap["US Stock"]||0)+(allocMap["International"]||0))/invested*100)}%.</div>
+        </div>
+        <div className="panel"><div className="p-head"><div className="p-title"><Wallet size={15} color="var(--primary)"/> Net-worth composition</div></div>
+          <table className="tbl"><thead><tr><td className="code">Account</td><td className="code">Type</td><td className="code amt">Balance</td></tr></thead><tbody>
+            {accounts.map(a=>(<tr key={a.id}><td style={{fontWeight:500}}>{a.name}</td><td style={{color:"var(--ink-2)",textTransform:"capitalize"}}>{a.type}</td><td className="amt" style={{color:a.balance<0?"var(--down)":"var(--ink)"}}>{fmt0(a.balance)}</td></tr>))}
+            <tr style={{borderTop:"2px solid var(--line)"}}><td style={{fontWeight:700}}>Net worth</td><td/><td className="amt" style={{fontWeight:700}}>{fmt0(netWorth)}</td></tr>
+          </tbody></table>
+          <div className="mrow" style={{marginTop:8}}><span className="ml">Liquid cash</span><span className="mv">{fmt0(liquid)} <span style={{color:"var(--ink-3)",fontWeight:400}}>{Math.round(liquid/netWorth*100)}%</span></span></div>
+          <div className="mrow"><span className="ml">Invested</span><span className="mv">{fmt0(invested)} <span style={{color:"var(--ink-3)",fontWeight:400}}>{Math.round(invested/netWorth*100)}%</span></span></div>
+          <div className="mrow"><span className="ml">Liabilities</span><span className="mv" style={{color:"var(--down)"}}>{fmt0(bal)}</span></div>
+        </div>
+      </div>
+
+      {/* TAX */}
+      <div className="panel fi-anchor" id="fi-tax" style={{marginBottom:16}}><div className="p-head"><div className="p-title"><Landmark size={15} color="var(--primary)"/> Tax intelligence</div><span className="code">SELF-EMPLOYMENT · ESTIMATE</span></div>
+        <div className="adm-3">
+          <AKpi label="Freelance / mo" value={fmt0(intel.freelance)} icon={CircleDollarSign}/>
+          <AKpi label="Set-aside (25%)" value={fmt0(intel.taxSetAside)} icon={Percent}/>
+          <AKpi label="Per quarter" value={fmt0(quarterly)} icon={Receipt}/>
+        </div>
+        <div className="bench" style={{margin:"12px 0 6px"}}><Sparkles size={11} style={{verticalAlign:"-1px"}}/> A 25% reserve covers federal income tax plus the 15.3% self-employment tax for most freelancers in your bracket. Adjust if your state levies income tax.</div>
+        <table className="tbl"><thead><tr><td className="code">Quarter</td><td className="code">Due date</td><td className="code amt">Estimated payment</td><td className="code amt">Status</td></tr></thead><tbody>
+          {[["Q1 2026","Apr 15, 2026",1],["Q2 2026","Jun 16, 2026",1],["Q3 2026","Sep 15, 2026",0],["Q4 2026","Jan 15, 2027",0]].map(([q,d,paid],i)=>(<tr key={i}><td style={{fontWeight:600}}>{q}</td><td style={{color:"var(--ink-2)"}}>{d}</td><td className="amt">{fmt0(quarterly)}</td><td className="amt"><span className={"tag "+(paid?"g":"")}>{paid?"paid":"upcoming"}</span></td></tr>))}
+        </tbody></table>
+      </div>
+
+      <div className="bench" style={{textAlign:"center",padding:"4px 0 8px"}}><Sparkles size={12} style={{verticalAlign:"-2px"}}/> Every figure on this page is AI-extrapolated from your linked-account activity and blended with public industry benchmarks. Estimates, not advice — verify with a professional before acting.</div>
+    </div>
+  );
+}
+
+/* ================================================================== */
+/*  SHARED HELPERS FOR NEW PAGES                                      */
+/* ================================================================== */
+function Ring({pct,size=92,stroke=9,color="var(--primary)",children}){
+  const r=(size-stroke)/2,circ=2*Math.PI*r,off=circ*(1-Math.min(1,Math.max(0,pct/100)));
+  return(<div style={{position:"relative",width:size,height:size,flexShrink:0}}>
+    <svg width={size} height={size}><circle cx={size/2} cy={size/2} r={r} fill="none" stroke="var(--panel-2)" strokeWidth={stroke}/>
+      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={stroke} strokeLinecap="round" strokeDasharray={circ} strokeDashoffset={off} transform={"rotate(-90 "+(size/2)+" "+(size/2)+")"}/></svg>
+    <div style={{position:"absolute",inset:0,display:"grid",placeItems:"center",textAlign:"center",lineHeight:1.1}}>{children}</div></div>);
+}
+function Spark({data,color="var(--primary)",h=34}){return(<div style={{height:h,width:"100%"}}><ResponsiveContainer width="100%" height="100%"><AreaChart data={(data||[]).map((v,i)=>({i,v}))} margin={{top:2,right:0,left:0,bottom:0}}><Area dataKey="v" stroke={color} strokeWidth={1.6} fill={color} fillOpacity={.14} isAnimationActive={false}/></AreaChart></ResponsiveContainer></div>);}
+function fiRng(seed){let s=seed;return()=>{s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff;};}
+function sparkSeries(seed,n,base,amp){const r=fiRng(seed);let v=base;const out=[];for(let i=0;i<n;i++){v=v+(r()-0.45)*amp;out.push(Math.max(1,Math.round(v)));}return out;}
+
+/* ================================================================== */
+/*  GOALS & SAVINGS                                                   */
+/* ================================================================== */
+function Goals({ ctx }){
+  const { c,goals,setGoals,liquid,baseNet,saved,tx } = ctx;
+  const GCOL=["#7C4DFF","#00C2D6","#0DA66B","#F59E0B","#E879F9"];
+  const [contrib]=useState(()=>Math.max(300,Math.round(saved)));
+  const [newName,setNewName]=useState(""); const [newTarget,setNewTarget]=useState("");
+  const monthlyEach=Math.round(contrib/Math.max(1,goals.length));
+  const addGoal=()=>{const t=parseFloat(newTarget);if(!newName.trim()||!t)return;setGoals(g=>[...g,{id:"g"+Date.now(),name:newName.trim(),target:t,saved:0}]);setNewName("");setNewTarget("");};
+  const give=(id,amt)=>setGoals(g=>g.map(x=>x.id===id?{...x,saved:Math.min(x.target,x.saved+amt)}:x));
+  // round-up
+  const [mult,setMult]=useState(1);
+  const spare=tx.filter(t=>t.amount<0).reduce((s,t)=>{const a=Math.abs(t.amount);return s+(Math.ceil(a)-a);},0);
+  const roundMonthly=spare*mult;
+  // envelopes
+  const [buckets,setBuckets]=useState([{name:"Spending",amt:1200,color:"#7C4DFF"},{name:"Bills",amt:1850,color:"#00C2D6"},{name:"Fun",amt:400,color:"#F59E0B"}]);
+  const allocated=buckets.reduce((s,b)=>s+b.amt,0); const unalloc=Math.max(0,liquid-allocated);
+  return(<div className="fade">
+    <div className="page-h"><div><h1>Goals & Savings</h1><div className="sub">Targets, envelopes and automated saving — projections from your contribution pace</div></div><div className="code">{goals.length} ACTIVE GOALS</div></div>
+    <div className="grid" style={{gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",marginBottom:16}}>
+      {goals.map((g,i)=>{const pct=Math.round(g.saved/g.target*100);const eta=Math.max(0,Math.ceil((g.target-g.saved)/Math.max(1,monthlyEach)));return(
+        <div className="panel" key={g.id} style={{display:"flex",flexDirection:"column",gap:10}}>
+          <div style={{display:"flex",alignItems:"center",gap:14}}><Ring pct={pct} color={GCOL[i%GCOL.length]} size={78} stroke={8}><div><div className="mono" style={{fontWeight:700,fontSize:15}}>{pct}%</div></div></Ring>
+            <div><div style={{fontWeight:700,fontSize:15}}>{g.name}</div><div className="mono" style={{fontSize:13,marginTop:2}}>{fmt0(g.saved)} <span style={{color:"var(--ink-3)"}}>/ {fmt0(g.target)}</span></div><div className="bench" style={{marginTop:3}}>{pct>=100?"Reached":"~"+eta+" mo at "+fmt0(monthlyEach)+"/mo"}</div></div></div>
+          <div style={{display:"flex",gap:6,marginTop:"auto"}}><button className="btn ghost sm" style={{flex:1,justifyContent:"center"}} onClick={()=>give(g.id,100)}>+{fmt0(100)}</button><button className="btn ghost sm" style={{flex:1,justifyContent:"center"}} onClick={()=>give(g.id,500)}>+{fmt0(500)}</button></div>
+        </div>);})}
+      <div className="panel" style={{display:"flex",flexDirection:"column",gap:8,justifyContent:"center"}}>
+        <div className="code">NEW GOAL</div>
+        <input className="inp" placeholder="Goal name" value={newName} onChange={e=>setNewName(e.target.value)}/>
+        <input className="inp" type="number" placeholder="Target amount" value={newTarget} onChange={e=>setNewTarget(e.target.value)}/>
+        <button className="btn pri sm" style={{justifyContent:"center"}} onClick={addGoal}><Plus size={14}/> Create goal</button>
+      </div>
+    </div>
+    <div className="grid" style={{gridTemplateColumns:"1fr 1fr",marginBottom:16,alignItems:"start"}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><Coins size={15} color="var(--primary)"/> Round-up savings</div><span className="code">SPARE CHANGE</span></div>
+        <div className="bench" style={{marginBottom:10}}>Pixii rounds every purchase up to the next dollar and sweeps the difference into savings.</div>
+        <div className="seg2" style={{marginBottom:14}}>{[1,2,3].map(m=><button key={m} className={mult===m?"on":""} onClick={()=>setMult(m)}>{m}× round-up</button>)}</div>
+        <div className="adm-kpis" style={{gridTemplateColumns:"1fr 1fr 1fr",marginBottom:0}}>
+          <AKpi label="This month" value={fmt(roundMonthly)}/><AKpi label="Per year" value={fmt0(roundMonthly*12)}/><AKpi label="In 5 yrs @5%" value={fmt0(roundMonthly*12*5.8)}/>
+        </div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><Wallet size={15} color="var(--primary)"/> Savings envelopes</div><span className="code">{fmt0(unalloc)} UNALLOCATED</span></div>
+        <div className="pbar" style={{display:"flex",height:14,marginBottom:12}}>{buckets.map((b,i)=><span key={i} style={{width:b.amt/Math.max(1,liquid)*100+"%",background:b.color}}/>)}<span style={{flex:1,background:"var(--panel-2)"}}/></div>
+        {buckets.map((b,i)=>(<div className="mrow" key={i}><span className="ml"><span className="lg-dot" style={{background:b.color}}/>{b.name}</span>
+          <span style={{display:"flex",alignItems:"center",gap:8}}><input type="range" min={0} max={Math.round(liquid)} value={b.amt} onChange={e=>setBuckets(p=>p.map((x,j)=>j===i?{...x,amt:+e.target.value}:x))} style={{width:120}}/><span className="mv" style={{width:70,textAlign:"right"}}>{fmt0(b.amt)}</span></span></div>))}
+      </div>
+    </div>
+    <div className="panel"><div className="p-head"><div className="p-title"><Sparkles size={15} color="var(--primary)"/> AI allocation plan</div><span className="code">{fmt0(Math.max(0,baseNet))}/MO SURPLUS</span></div>
+      <div className="bench" style={{marginBottom:8}}>Pixii recommends splitting your monthly surplus across goals by urgency and time-to-target.</div>
+      <table className="tbl"><thead><tr><td className="code">Goal</td><td className="code amt">Remaining</td><td className="code amt">Suggested / mo</td><td className="code amt">Funded by</td></tr></thead><tbody>
+        {goals.map((g,i)=>{const rem=g.target-g.saved;const share=Math.round(Math.max(0,baseNet)*(rem/Math.max(1,goals.reduce((s,x)=>s+(x.target-x.saved),0))));const mo=Math.ceil(rem/Math.max(1,share));return(<tr key={g.id}><td style={{fontWeight:500}}>{g.name}</td><td className="amt">{fmt0(rem)}</td><td className="amt" style={{color:"var(--primary)"}}>{fmt0(share)}</td><td className="amt" style={{color:"var(--ink-2)"}}>{monthLabel(mo)}</td></tr>);})}
+      </tbody></table>
+    </div>
+  </div>);
+}
+
+/* ================================================================== */
+/*  BILLS & CALENDAR                                                  */
+/* ================================================================== */
+function Bills({ ctx }){
+  const { c,smart } = ctx;
+  const BILLS=[];
+  const firstDow=new Date(2026,4,1).getDay(); const dim=31; const TODAY=23;
+  const byDay={}; BILLS.forEach(b=>{(byDay[b.day]=byDay[b.day]||[]).push(b);});
+  const monthTotal=BILLS.reduce((s,b)=>s+b.amt,0);
+  const upcoming=BILLS.filter(b=>b.day>=TODAY).sort((a,b)=>a.day-b.day);
+  const subs=BILLS.filter(b=>b.kind==="sub");
+  const [cancelled,setCancelled]=useState({});
+  const subTotal=subs.filter(s=>!cancelled[s.name]).reduce((s,b)=>s+b.amt,0);
+  const nego=BILLS.filter(b=>b.nego);
+  const trials=[];
+  return(<div className="fade">
+    <div className="page-h"><div><h1>Bills & Calendar</h1><div className="sub">Every recurring commitment, when it hits, and where you can cut</div></div><div className="code">{fmt0(monthTotal)} DUE IN MAY</div></div>
+    <div className="grid" style={{gridTemplateColumns:"1.5fr 1fr",marginBottom:16,alignItems:"start"}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><CalendarDays size={15} color="var(--primary)"/> May 2026</div><span className="code">DUE-DATE MAP</span></div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4}}>
+          {["S","M","T","W","T","F","S"].map((d,i)=><div key={i} className="code" style={{textAlign:"center",padding:"2px 0"}}>{d}</div>)}
+          {Array(firstDow).fill(0).map((_,i)=><div key={"e"+i}/>)}
+          {Array(dim).fill(0).map((_,i)=>{const day=i+1;const bs=byDay[day];const isToday=day===TODAY;return(
+            <div key={day} title={bs?bs.map(b=>b.name+" "+fmt0(b.amt)).join(", "):""} style={{minHeight:46,border:"1px solid var(--line)",borderRadius:8,padding:"4px 5px",background:isToday?"var(--primary)":bs?"var(--panel-2)":"transparent",color:isToday?"var(--pri-fg)":"var(--ink)"}}>
+              <div className="mono" style={{fontSize:10,opacity:.7}}>{day}</div>
+              {bs&&<div style={{display:"flex",flexWrap:"wrap",gap:2,marginTop:2}}>{bs.slice(0,3).map((b,j)=><span key={j} style={{width:6,height:6,borderRadius:3,background:isToday?"#fff":b.kind==="sub"?"#F59E0B":"#7C4DFF"}}/>)}</div>}
+              {bs&&<div className="mono" style={{fontSize:8.5,marginTop:2,opacity:.8}}>{fmt0(bs.reduce((s,b)=>s+b.amt,0))}</div>}
+            </div>);})}
+        </div>
+        <div className="legend-row" style={{marginTop:10}}><span><span className="lg-dot" style={{background:"#7C4DFF"}}/>Bill</span><span><span className="lg-dot" style={{background:"#F59E0B"}}/>Subscription</span><span><span className="lg-dot" style={{background:"var(--primary)"}}/>Today</span></div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><CalendarClock size={15} color="var(--primary)"/> Upcoming</div><span className="code">NEXT DUE</span></div>
+        {upcoming.map((b,i)=>(<div className="mrow" key={i}><span className="ml"><b style={{color:"var(--ink)"}}>May {b.day}</b> · {b.name}</span><span className="mv">{fmt0(b.amt)}</span></div>))}
+        <div className="bench" style={{marginTop:10}}>{fmt0(upcoming.reduce((s,b)=>s+b.amt,0))} hits your account before month-end. Projected balance stays positive.</div>
+      </div>
+    </div>
+    <div className="grid" style={{gridTemplateColumns:"1fr 1fr",marginBottom:16,alignItems:"start"}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><Repeat size={15} color="var(--primary)"/> Subscriptions</div><span className="code">{fmt0(subTotal)}/MO · {fmt0(subTotal*12)}/YR</span></div>
+        {subs.map((s,i)=>{const off=cancelled[s.name];return(<div className="mrow" key={i}><span className="ml" style={{textDecoration:off?"line-through":"none",opacity:off?.5:1}}>{s.name} <span className="recon no">{s.cat}</span></span>
+          <span style={{display:"flex",alignItems:"center",gap:10}}><span className="mv">{fmt0(s.amt)}</span><button className="btn ghost sm" onClick={()=>setCancelled(c=>({...c,[s.name]:!c[s.name]}))}>{off?"Keep":"Cancel"}</button></span></div>);})}
+        <div className="bench" style={{marginTop:8}}><AlertTriangle size={11} style={{verticalAlign:"-1px",color:"var(--down)"}}/> Gym Membership unused 60+ days — a strong cancel candidate.</div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><Scissors size={15} color="var(--primary)"/> Negotiation queue</div><span className="code">AI-ELIGIBLE</span></div>
+        {nego.map((b,i)=>{const save=Math.round(b.amt*0.18);return(<div className="mrow" key={i}><span className="ml">{b.name}<div className="bench">Est. save ~{fmt0(save)}/mo · {fmt0(save*12)}/yr</div></span><button className="btn ghost sm">Start</button></div>);})}
+        <div className="bench" style={{marginTop:8}}>Total negotiable savings: <b style={{color:"var(--up)"}}>{fmt0(nego.reduce((s,b)=>s+Math.round(b.amt*0.18)*12,0))}/yr</b></div>
+      </div>
+    </div>
+    <div className="panel"><div className="p-head"><div className="p-title"><Clock size={15} color="var(--primary)"/> Free-trial & renewal radar</div><span className="code">ENDING SOON</span></div>
+      <table className="tbl"><thead><tr><td className="code">Service</td><td className="code amt">Trial ends</td><td className="code amt">Then charges</td><td className="code amt">Action</td></tr></thead><tbody>
+        {trials.map((t,i)=>(<tr key={i}><td style={{fontWeight:500}}>{t.name}</td><td className="amt"><span className={"tag "+(t.ends<=3?"r":"")}>{t.ends} days</span></td><td className="amt">{fmt0(t.amt)}/mo</td><td className="amt"><button className="btn ghost sm">Remind me</button></td></tr>))}
+      </tbody></table>
+    </div>
+  </div>);
+}
+
+/* ================================================================== */
+/*  CREDIT & BORROWING                                                */
+/* ================================================================== */
+function Credit({ ctx }){
+  const { c,intel,income } = ctx;
+  const base=742; const hist=sparkSeries(42,12,690,12).map((v,i)=>({m:["Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr","May"][i],v:Math.min(820,690+i*4+(v%14))}));
+  const score=hist[hist.length-1].v;
+  const band=score>=800?"Exceptional":score>=740?"Very good":score>=670?"Good":score>=580?"Fair":"Poor";
+  const limit=intel.card.limit; const curBal=Math.abs(intel.card.balance); const curUtil=curBal/limit;
+  const [bal,setBal]=useState(Math.round(curBal)); const [inquiry,setInquiry]=useState(false); const [newCard,setNewCard]=useState(false);
+  const projUtil=bal/limit;
+  const proj=Math.max(300,Math.min(850,Math.round(score+(curUtil-projUtil)*220-(inquiry?12:0)-(newCard?7:0)+(newCard?3:0))));
+  const factors=[];
+  // loan affordability
+  const [price,setPrice]=useState(420000); const [downPct,setDownPct]=useState(15); const [rate,setRate]=useState(6.4);
+  const loan=price*(1-downPct/100); const mr=rate/1200; const n=360; const pmt=loan*mr/(1-Math.pow(1+mr,-n));
+  const piti=pmt+price*0.018/12; const maxBudget=income*0.28; const ok=piti<=maxBudget;
+  const offers=[];
+  return(<div className="fade">
+    <div className="page-h"><div><h1>Credit & Borrowing</h1><div className="sub">Score modeling, what-if simulation and borrowing power — estimated from your profile</div></div><div className="code">FICO MODEL · SIMULATED</div></div>
+    <div className="grid" style={{gridTemplateColumns:"1fr 1.4fr",marginBottom:16,alignItems:"start"}}>
+      <div className="panel" style={{display:"flex",flexDirection:"column",alignItems:"center",gap:6}}>
+        <Ring pct={(score-300)/550*100} size={150} stroke={13} color={score>=740?"#0DA66B":score>=670?"#F59E0B":"#E8453F"}><div><div className="mono" style={{fontWeight:800,fontSize:34}}>{score}</div><div className="code">{band}</div></div></Ring>
+        <div className="bench" style={{textAlign:"center"}}>+{score-hist[0].v} points over 12 months. Range 300–850.</div>
+        <Spark data={hist.map(h=>h.v)} color="#0DA66B" h={40}/>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><Gauge size={15} color="var(--primary)"/> Score factors</div><span className="code">WEIGHTED</span></div>
+        {factors.map(([l,w,s,col],i)=>(<div key={i} style={{marginBottom:11}}><div className="mrow" style={{border:"none",padding:"0 0 4px"}}><span className="ml">{l} <span className="code">{w}%</span></span><span className="mv" style={{color:col}}>{s}</span></div><div className="pbar"><i style={{width:w*2.4+"%",background:col==="var(--up)"?"#0DA66B":"var(--primary)"}}/></div></div>))}
+      </div>
+    </div>
+    <div className="grid" style={{gridTemplateColumns:"1fr 1fr",marginBottom:16,alignItems:"start"}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><SlidersHorizontal size={15} color="var(--primary)"/> Score simulator</div><span className="code">WHAT-IF</span></div>
+        <Slider label="Card balance" sub={"utilization "+Math.round(projUtil*100)+"%"} value={bal} min={0} max={limit} step={50} onChange={setBal} fmt={v=>fmt0(v)}/>
+        <AFlag label="Apply for a new card" desc="Adds a hard inquiry, raises total limit." on={newCard} onToggle={()=>setNewCard(v=>!v)}/>
+        <AFlag label="Another hard inquiry" desc="e.g. auto loan application." on={inquiry} onToggle={()=>setInquiry(v=>!v)}/>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:14,padding:"14px 16px",border:"1px solid var(--line)",borderRadius:12,background:"var(--panel-2)"}}>
+          <div><div className="code">PROJECTED SCORE</div><div className="bench">from {score}</div></div>
+          <div className="mono" style={{fontWeight:800,fontSize:30,color:proj>=score?"var(--up)":"var(--down)"}}>{proj} <span style={{fontSize:15}}>{proj>=score?"▲":"▼"}{Math.abs(proj-score)}</span></div>
+        </div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><Home size={15} color="var(--primary)"/> Home affordability</div><span className="code">28% RULE</span></div>
+        <Slider label="Home price" value={price} min={150000} max={900000} step={10000} onChange={setPrice} fmt={v=>fmtK(v)}/>
+        <Slider label="Down payment" sub={fmt0(price*downPct/100)} value={downPct} min={0} max={50} onChange={setDownPct} fmt={v=>v+"%"}/>
+        <Slider label="Interest rate" value={Math.round(rate*10)} min={20} max={90} onChange={v=>setRate(v/10)} fmt={v=>(v/10).toFixed(1)+"%"}/>
+        <div className="mrow"><span className="ml">Est. monthly (PITI)</span><span className="mv">{fmt0(piti)}</span></div>
+        <div className="mrow"><span className="ml">Your 28% budget</span><span className="mv">{fmt0(maxBudget)}</span></div>
+        <div className="bench" style={{marginTop:6,color:ok?"var(--up)":"var(--down)"}}>{ok?"✓ Within a healthy housing budget at this income.":"✗ Above the 28% guideline — stretch territory."}</div>
+      </div>
+    </div>
+    <div className="panel"><div className="p-head"><div className="p-title"><Banknote size={15} color="var(--primary)"/> Rate-shopping & refinance</div><span className="code">OFFERS</span></div>
+      <table className="tbl"><thead><tr><td className="code">Product</td><td className="code amt">Current APR</td><td className="code amt">Best available</td><td className="code amt">Potential saving</td></tr></thead><tbody>
+        {offers.map((o,i)=>(<tr key={i}><td style={{fontWeight:500}}>{o[0]}</td><td className="amt" style={{color:"var(--ink-2)"}}>{o[1]}</td><td className="amt" style={{color:"var(--up)"}}>{o[2]}</td><td className="amt">{o[3]}</td></tr>))}
+      </tbody></table>
+    </div>
+  </div>);
+}
+
+/* ================================================================== */
+/*  REPORTS & TRENDS                                                  */
+/* ================================================================== */
+function Reports({ ctx }){
+  const { c,netWorth,income,expense,baseNet,saved,spentByCat,accounts,liquid,tx } = ctx;
+  const MN=["Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr","May"];
+  const r=fiRng(11); let nwv=netWorth; const nwHist=[]; for(let i=11;i>=0;i--){nwHist.unshift({m:MN[i],v:Math.round(nwv)});nwv=nwv-(baseNet*(0.7+r()*0.7));}
+  nwHist[nwHist.length-1].v=Math.round(netWorth);
+  const mom=nwHist.map((p,i)=>({...p,d:i?p.v-nwHist[i-1].v:0}));
+  const invested=accounts.filter(a=>a.type==="investment").reduce((s,a)=>s+a.balance,0);
+  const debt=Math.abs(accounts.filter(a=>a.balance<0).reduce((s,a)=>s+a.balance,0));
+  const wf=[{n:"Cash",v:liquid,col:"#00C2D6"},{n:"Investments",v:invested,col:"#7C4DFF"},{n:"Liabilities",v:-debt,col:"#E8453F"},{n:"Net worth",v:netWorth,col:"#0DA66B",total:true}];
+  const wfMax=Math.max(liquid+invested,netWorth);
+  // spend heatmap
+  const spendByDay={}; tx.filter(t=>t.amount<0).forEach(t=>{const d=+t.date.slice(-2);spendByDay[d]=(spendByDay[d]||0)+Math.abs(t.amount);});
+  const maxDay=Math.max(1,...Object.values(spendByDay)); const firstDow=new Date(2026,4,1).getDay();
+  const [period,setPeriod]=useState("May 2026");
+  const top=Object.entries(spentByCat).sort((a,b)=>b[1]-a[1])[0];
+  return(<div className="fade">
+    <div className="page-h"><div><h1>Reports & Trends</h1><div className="sub">Long-range trends, statements and your year in review</div></div><div className="code">12-MONTH WINDOW</div></div>
+    <div className="grid" style={{gridTemplateColumns:"1.5fr 1fr",marginBottom:16,alignItems:"start"}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><TrendingUp size={15} color="var(--primary)"/> Net-worth history</div><span className="code">+{fmt0(netWorth-nwHist[0].v)} / 12 MO</span></div>
+        <div style={{height:210}}><ResponsiveContainer width="100%" height="100%"><AreaChart data={nwHist} margin={{top:8,right:8,left:-4,bottom:0}}><defs><linearGradient id="rnw" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={c.primary} stopOpacity={.28}/><stop offset="100%" stopColor={c.primary} stopOpacity={0}/></linearGradient></defs><CartesianGrid stroke={c.axis} strokeOpacity={.12} vertical={false}/><XAxis dataKey="m" tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} tickLine={false} axisLine={false}/><YAxis width={42} tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} tickLine={false} axisLine={false} tickFormatter={v=>fmtK(v)}/><Tooltip content={<Tip/>}/><Area dataKey="v" stroke={c.primary} strokeWidth={2.4} fill="url(#rnw)" isAnimationActive={false}/></AreaChart></ResponsiveContainer></div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><Layers size={15} color="var(--primary)"/> Assets vs liabilities</div></div>
+        <div style={{display:"flex",flexDirection:"column",gap:12,marginTop:6}}>{wf.map((w,i)=>(<div key={i}><div className="mrow" style={{border:"none",padding:"0 0 4px"}}><span className="ml" style={{fontWeight:w.total?700:400}}>{w.n}</span><span className="mv" style={{color:w.v<0?"var(--down)":w.total?"var(--up)":"var(--ink)"}}>{fmt0(w.v)}</span></div><div className="pbar"><i style={{width:Math.min(100,Math.abs(w.v)/wfMax*100)+"%",background:w.col}}/></div></div>))}</div>
+      </div>
+    </div>
+    <div className="grid" style={{gridTemplateColumns:"1fr 1fr",marginBottom:16,alignItems:"start"}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><CalendarDays size={15} color="var(--primary)"/> Spending heatmap · May</div><span className="code">DAILY INTENSITY</span></div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)",gap:4}}>
+          {["S","M","T","W","T","F","S"].map((d,i)=><div key={i} className="code" style={{textAlign:"center"}}>{d}</div>)}
+          {Array(firstDow).fill(0).map((_,i)=><div key={"e"+i}/>)}
+          {Array(31).fill(0).map((_,i)=>{const day=i+1;const v=spendByDay[day]||0;const t=v/maxDay;return(<div key={day} title={"May "+day+": "+fmt0(v)} style={{aspectRatio:"1",borderRadius:7,display:"grid",placeItems:"center",fontFamily:"JetBrains Mono",fontSize:9,background:v?"rgba(124,77,255,"+(t*0.8+0.12).toFixed(2)+")":"var(--panel-2)",color:t>0.5?"#fff":"var(--ink-3)"}}>{day}</div>);})}
+        </div>
+        <div className="bench" style={{marginTop:8}}>Darker = heavier spending. Your biggest day was driven by {top&&top[0]}.</div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><FileText size={15} color="var(--primary)"/> Statement generator</div><span className="code">EXPORT</span></div>
+        <div className="seg2" style={{marginBottom:12}}>{["May 2026","Q2 2026","YTD 2026"].map(p=><button key={p} className={period===p?"on":""} onClick={()=>setPeriod(p)}>{p}</button>)}</div>
+        <div className="mrow"><span className="ml">Total income</span><span className="mv" style={{color:"var(--up)"}}>{fmt0(income)}</span></div>
+        <div className="mrow"><span className="ml">Total spending</span><span className="mv">{fmt0(expense)}</span></div>
+        <div className="mrow"><span className="ml">Net saved</span><span className="mv">{fmt0(baseNet)}</span></div>
+        <div className="mrow"><span className="ml">Largest category</span><span className="mv">{top&&top[0]} · {top&&fmt0(top[1])}</span></div>
+        <div style={{display:"flex",gap:8,marginTop:12}}><button className="btn pri sm" style={{flex:1,justifyContent:"center"}}><Download size={13}/> Download PDF</button><button className="btn ghost sm" style={{flex:1,justifyContent:"center"}}><FileText size={13}/> CSV</button></div>
+      </div>
+    </div>
+    <div className="panel"><div className="p-head"><div className="p-title"><Gift size={15} color="var(--primary)"/> Year in review · 2026 so far</div><span className="code">PIXII WRAPPED</span></div>
+      <div className="adm-kpis" style={{marginBottom:12}}>
+        <AKpi label="Earned YTD" value={fmt0(income*5)} icon={TrendingUp}/><AKpi label="Spent YTD" value={fmt0(expense*5)} icon={Wallet}/><AKpi label="Saved YTD" value={fmt0(baseNet*5)} icon={PiggyBank}/><AKpi label="Net worth growth" value={"+"+fmt0(netWorth-nwHist[0].v)} icon={Sprout}/>
+      </div>
+      <div className="bench">Your best savings month was <b style={{color:"var(--ink)"}}>March</b>. You kept spending under budget <b style={{color:"var(--ink)"}}>3 of 5</b> months and grew net worth every single month — a top-decile habit. Top merchant of the year: <b style={{color:"var(--ink)"}}>{(function(){const m={};tx.filter(t=>t.amount<0).forEach(t=>{m[t.merchant]=(m[t.merchant]||0)+Math.abs(t.amount);});return Object.entries(m).sort((a,b)=>b[1]-a[1])[0][0];})()}</b>.</div>
+    </div>
+  </div>);
+}
+
+/* ================================================================== */
+/*  MARKETS & INVESTING TOOLS                                         */
+/* ================================================================== */
+function Markets({ ctx }){
+  const { c } = ctx;
+  const indices=((ctx.live&&ctx.live.markets)||[]).map(m=>[m.label,(Math.abs(m.price)>=1000?m.price.toLocaleString("en-US",{maximumFractionDigits:2}):String(m.price)),((m.changePct>=0?"+":"")+(m.changePct||0).toFixed(2)+"%"),!!m.up]);
+  const [watch,setWatch]=useState(HOLDINGS.map((h,i)=>({sym:h.sym,name:h.name,price:h.price,day:h.day,spark:sparkSeries(h.sym.charCodeAt(0)+i,20,h.price,h.price*0.04)})));
+  const [tkr,setTkr]=useState("");
+  const addTk=()=>{if(!tkr.trim())return;setWatch(w=>[{sym:tkr.toUpperCase(),name:"Added ticker",price:100+Math.round(Math.random()*300),day:+(Math.random()*4-2).toFixed(2),spark:sparkSeries(tkr.charCodeAt(0)||5,20,200,8)},...w]);setTkr("");};
+  // dividends
+  const divs=HOLDINGS.filter(h=>h.yield>0).map(h=>({sym:h.sym,annual:h.shares*h.price*h.yield/100,yield:h.yield})).sort((a,b)=>b.annual-a.annual);
+  const divAnnual=divs.reduce((s,d)=>s+d.annual,0);
+  // rebalance
+  const port=HOLDINGS.reduce((s,h)=>s+h.shares*h.price,0);
+  const clsMap={}; HOLDINGS.forEach(h=>{clsMap[h.cls]=(clsMap[h.cls]||0)+h.shares*h.price;});
+  const targets={"US Stock":45,"International":20,"Bonds":20,"REIT":10,"Cash":5};
+  const reb=Object.keys(clsMap).map(k=>{const cur=Math.round(clsMap[k]/port*100);const tgt=targets[k]||0;return{k,cur,tgt,delta:Math.round((tgt-cur)/100*port)};});
+  // risk
+  const risk=[];
+  return(<div className="fade">
+    <div className="page-h"><div><h1>Markets & Tools</h1><div className="sub">Watchlist, dividends, rebalancing and risk — modeled around your portfolio</div></div><div className="code">DELAYED QUOTES</div></div>
+    <div className="grid" style={{gridTemplateColumns:"repeat(auto-fit,minmax(120px,1fr))",gap:10,marginBottom:16}}>
+      {indices.map((x,i)=>(<div className="akpi" key={i}><div className="kl">{x[0]}</div><div className="kv" style={{fontSize:18}}>{x[1]}</div><div className="kd" style={{color:x[3]?"var(--up)":"var(--down)"}}>{x[3]?"▲":"▼"} {x[2]}</div></div>))}
+    </div>
+    <div className="grid" style={{gridTemplateColumns:"1.4fr 1fr",marginBottom:16,alignItems:"start"}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><Star size={15} color="var(--primary)"/> Watchlist</div><span style={{display:"flex",gap:6}}><input className="inp" style={{width:120,padding:"6px 10px"}} placeholder="Add ticker" value={tkr} onChange={e=>setTkr(e.target.value)} onKeyDown={e=>{if(e.key==="Enter")addTk();}}/><button className="btn ghost sm" onClick={addTk}><Plus size={13}/></button></span></div>
+        <table className="tbl"><thead><tr><td className="code">Symbol</td><td className="code">7-day</td><td className="code amt">Price</td><td className="code amt">Day</td><td/></tr></thead><tbody>
+          {watch.map((w,i)=>(<tr key={i}><td><b>{w.sym}</b><div className="bench">{w.name}</div></td><td style={{width:90}}><Spark data={w.spark} color={w.day>=0?"#0DA66B":"#E8453F"} h={28}/></td><td className="amt">{fmt(w.price)}</td><td className="amt" style={{color:w.day>=0?"var(--up)":"var(--down)"}}>{w.day>=0?"+":""}{w.day}%</td><td className="amt"><button onClick={()=>setWatch(x=>x.filter((_,j)=>j!==i))} style={{background:"none",border:"none",cursor:"pointer",color:"var(--ink-3)"}}><X size={13}/></button></td></tr>))}
+        </tbody></table>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><HandCoins size={15} color="var(--primary)"/> Dividend income</div><span className="code">{fmt0(divAnnual)}/YR</span></div>
+        <div className="adm-kpis" style={{gridTemplateColumns:"1fr 1fr",marginBottom:10}}><AKpi label="Per year" value={fmt0(divAnnual)}/><AKpi label="Per month" value={fmt0(divAnnual/12)}/></div>
+        {divs.map((d,i)=>(<div className="mrow" key={i}><span className="ml"><b style={{color:"var(--ink)"}}>{d.sym}</b> · {d.yield}% yield</span><span className="mv">{fmt0(d.annual)}/yr</span></div>))}
+      </div>
+    </div>
+    <div className="grid" style={{gridTemplateColumns:"1.3fr 1fr",alignItems:"start"}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><Layers size={15} color="var(--primary)"/> Rebalancing assistant</div><span className="code">DRIFT vs TARGET</span></div>
+        <table className="tbl"><thead><tr><td className="code">Class</td><td className="code amt">Current</td><td className="code amt">Target</td><td className="code amt">Action</td></tr></thead><tbody>
+          {reb.map((x,i)=>(<tr key={i}><td style={{fontWeight:500}}>{x.k}</td><td className="amt">{x.cur}%</td><td className="amt" style={{color:"var(--ink-3)"}}>{x.tgt}%</td><td className="amt" style={{color:x.delta>0?"var(--up)":x.delta<0?"var(--down)":"var(--ink-3)"}}>{x.delta>0?"Buy ":x.delta<0?"Sell ":"Hold "}{x.delta!==0?fmt0(Math.abs(x.delta)):""}</td></tr>))}
+        </tbody></table>
+        <div className="bench" style={{marginTop:8}}>Two trades bring you within 2% of target allocation.</div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><Activity size={15} color="var(--primary)"/> Risk profile</div><span className="code">MODELED</span></div>
+        {risk.map((x,i)=>(<div className="mrow" key={i}><span className="ml">{x[0]}<div className="bench">{x[2]}</div></span><span className="mv">{x[1]}</span></div>))}
+      </div>
+    </div>
+  </div>);
+}
+
+/* ================================================================== */
+/*  WELLNESS & LEARN                                                  */
+/* ================================================================== */
+function Wellness({ ctx }){
+  const { c,netWorth,savingsRate,spentByCat,income } = ctx;
+  const lessons=[];
+  const pct=netWorth>40000?82:netWorth>10000?64:38;
+  const badges=[];
+  const traits=[];
+  const persona=savingsRate>=25?"The Optimizer":savingsRate>=12?"The Builder":"The Explorer";
+  const CO2={Transport:0.32,Utilities:0.45,Groceries:0.18,Dining:0.22,Shopping:0.5,Coffee:0.12,Health:0.05,Housing:0.1,Entertainment:0.08,Subscriptions:0.02};
+  const carbon=Object.entries(spentByCat).map(([k,v])=>({k,kg:Math.round(v*(CO2[k]||0.15))})).sort((a,b)=>b.kg-a.kg);
+  const carbonTotal=carbon.reduce((s,x)=>s+x.kg,0);
+  return(<div className="fade">
+    <div className="page-h"><div><h1>Wellness & Learn</h1><div className="sub">Habits, knowledge and context for your money — personalized by Pixii</div></div><div className="code">YOU vs PEERS</div></div>
+    <div className="grid" style={{gridTemplateColumns:"1fr 1fr",marginBottom:16,alignItems:"start"}}>
+      <div className="panel" style={{display:"flex",alignItems:"center",gap:18}}>
+        <Ring pct={pct} size={120} stroke={12} color="#0DA66B"><div><div className="mono" style={{fontWeight:800,fontSize:26}}>{pct}th</div><div className="code">percentile</div></div></Ring>
+        <div><div className="p-title" style={{marginBottom:6}}><Users size={15} color="var(--primary)"/> Peer benchmark</div><div className="bench" style={{fontSize:12.5,lineHeight:1.5}}>Your net worth ranks in the <b style={{color:"var(--ink)"}}>{pct}th percentile</b> for the 30–39 age cohort. Median peer net worth is ~$38k; you are at <b style={{color:"var(--ink)"}}>{fmt0(netWorth)}</b>. Your savings rate beats <b style={{color:"var(--ink)"}}>~88%</b> of households.</div></div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><Sparkles size={15} color="var(--primary)"/> Money personality</div><span className="code">{persona.toUpperCase()}</span></div>
+        <div className="bench" style={{marginBottom:10}}>Based on your saving, spending and planning behavior, you are <b style={{color:"var(--ink)"}}>{persona}</b> — disciplined with a long horizon.</div>
+        {traits.map(([l,v],i)=>(<div key={i} style={{marginBottom:9}}><div className="mrow" style={{border:"none",padding:"0 0 3px"}}><span className="ml">{l}</span><span className="mv">{Math.round(v)}</span></div><div className="pbar"><i style={{width:Math.min(100,v)+"%"}}/></div></div>))}
+      </div>
+    </div>
+    <div className="panel" style={{marginBottom:16}}><div className="p-head"><div className="p-title"><Trophy size={15} color="var(--primary)"/> Achievements & streaks</div><span className="code">{badges.filter(b=>b[2]).length}/{badges.length} EARNED · 6-MONTH SAVING STREAK</span></div>
+      <div className="grid" style={{gridTemplateColumns:"repeat(auto-fill,minmax(120px,1fr))",gap:10}}>
+        {badges.map(([name,ic,earned],i)=>{const Ic={Wallet,Flame,Target,Sprout,BadgeCheck,Trophy,Award,Star}[ic];return(
+          <div key={i} style={{textAlign:"center",padding:"14px 8px",border:"1px solid var(--line)",borderRadius:12,opacity:earned?1:.4,background:earned?"var(--panel-2)":"transparent"}}>
+            <div style={{width:38,height:38,borderRadius:11,margin:"0 auto 8px",display:"grid",placeItems:"center",background:earned?"var(--ai)":"var(--line)",color:"#fff"}}><Ic size={18}/></div>
+            <div style={{fontSize:12,fontWeight:600}}>{name}</div><div className="bench">{earned?"Unlocked":"Locked"}</div></div>);})}
+      </div>
+    </div>
+    <div className="grid" style={{gridTemplateColumns:"1.2fr 1fr",alignItems:"start"}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><GraduationCap size={15} color="var(--primary)"/> Learn</div><span className="code">LESSONS</span></div>
+        {lessons.map(([t,cat,prog],i)=>(<div className="mrow" key={i}><span className="ml" style={{flex:1}}>{t}<div style={{display:"flex",alignItems:"center",gap:8,marginTop:5}}><span className="recon no">{cat}</span><span className="pbar" style={{width:90}}><i style={{width:prog+"%",background:prog===100?"#0DA66B":"var(--primary)"}}/></span></div></span><button className="btn ghost sm">{prog===100?"Review":prog>0?"Resume":"Start"}</button></div>))}
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><Leaf size={15} color="var(--primary)"/> Carbon footprint</div><span className="code">{carbonTotal} KG CO₂e</span></div>
+        <div className="bench" style={{marginBottom:8}}>Estimated CO₂e from this month's spending — roughly {(carbonTotal/21).toFixed(1)} tree-months to offset.</div>
+        <ABarList rows={carbon.slice(0,6).map((x,i)=>({label:x.k,value:x.kg+" kg",pct:Math.round(x.kg/Math.max(1,carbon[0].kg)*100),color:["#0DA66B","#14B8A6","#22C55E","#84CC16","#A3E635","#65A30D"][i%6]}))}/>
+        <div className="bench" style={{marginTop:8}}><Sprout size={11} style={{verticalAlign:"-1px"}}/> Swapping one weekly drive for transit could cut ~12 kg/mo.</div>
+      </div>
+    </div>
+  </div>);
+}
+
+/* ================================================================== */
+/*  TOOLS & CALCULATORS                                               */
+/* ================================================================== */
+function RB({label,value,sub,color}){return(<div style={{border:"1px solid var(--line)",borderRadius:12,padding:"16px 18px",background:"var(--panel-2)"}}><div className="code">{label}</div><div className="mono" style={{fontWeight:800,fontSize:30,letterSpacing:"-.02em",margin:"4px 0",color:color||"var(--ink)"}}>{value}</div>{sub&&<div className="bench">{sub}</div>}</div>);}
+function MiniArea({data,c,fmtY}){return(<div style={{height:150,marginTop:10}}><ResponsiveContainer width="100%" height="100%"><AreaChart data={data} margin={{top:6,right:6,left:-6,bottom:0}}><defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={c.primary} stopOpacity={.3}/><stop offset="100%" stopColor={c.primary} stopOpacity={0}/></linearGradient></defs><CartesianGrid stroke={c.axis} strokeOpacity={.12} vertical={false}/><XAxis dataKey="y" tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} tickLine={false} axisLine={false}/><YAxis width={40} tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} tickLine={false} axisLine={false} tickFormatter={fmtY||(v=>fmtK(v))}/><Tooltip content={<Tip/>}/><Area dataKey="v" stroke={c.primary} strokeWidth={2.2} fill="url(#tg)" isAnimationActive={false}/></AreaChart></ResponsiveContainer></div>);}
+function CompoundCalc({c}){const[p,setP]=useState(10000),[m,setM]=useState(500),[r,setR]=useState(7),[y,setY]=useState(20);const data=[];let bal=p;for(let i=0;i<=y;i++){data.push({y:i,v:Math.round(bal)});for(let k=0;k<12;k++)bal=bal*(1+r/1200)+m;}const fv=data[data.length-1].v,contrib=p+m*12*y;return(<div className="adm-2"><div><Slider label="Starting amount" value={p} min={0} max={100000} step={500} onChange={setP} fmt={v=>fmt0(v)}/><Slider label="Monthly contribution" value={m} min={0} max={3000} step={50} onChange={setM} fmt={v=>fmt0(v)}/><Slider label="Annual return" value={Math.round(r*10)} min={0} max={120} onChange={v=>setR(v/10)} fmt={v=>(v/10).toFixed(1)+"%"}/><Slider label="Years" value={y} min={1} max={40} onChange={setY} fmt={v=>v+" yr"}/></div><div><RB label="FUTURE VALUE" value={fmt0(fv)} sub={"Contributed "+fmt0(contrib)+" · growth "+fmt0(fv-contrib)} color="var(--up)"/><MiniArea data={data} c={c}/></div></div>);}
+function LoanCalc(){const[a,setA]=useState(25000),[r,setR]=useState(6.5),[t,setT]=useState(5);const mr=r/1200,n=t*12,pmt=mr?a*mr/(1-Math.pow(1+mr,-n)):a/n,tot=pmt*n;return(<div className="adm-2"><div><Slider label="Loan amount" value={a} min={1000} max={100000} step={500} onChange={setA} fmt={v=>fmt0(v)}/><Slider label="Interest rate" value={Math.round(r*10)} min={0} max={300} onChange={v=>setR(v/10)} fmt={v=>(v/10).toFixed(1)+"%"}/><Slider label="Term" value={t} min={1} max={30} onChange={setT} fmt={v=>v+" yr"}/></div><div style={{display:"flex",flexDirection:"column",gap:10}}><RB label="MONTHLY PAYMENT" value={fmt0(pmt)} color="var(--primary)"/><RB label="TOTAL INTEREST" value={fmt0(tot-a)} sub={"Total repaid "+fmt0(tot)}/></div></div>);}
+function SaveGoalCalc(){const[t,setT]=useState(10000),[cur,setCur]=useState(1500),[m,setM]=useState(400);const rem=Math.max(0,t-cur),mo=m>0?Math.ceil(rem/m):Infinity;return(<div className="adm-2"><div><Slider label="Goal amount" value={t} min={500} max={100000} step={500} onChange={setT} fmt={v=>fmt0(v)}/><Slider label="Saved so far" value={cur} min={0} max={t} step={100} onChange={setCur} fmt={v=>fmt0(v)}/><Slider label="Monthly saving" value={m} min={0} max={3000} step={25} onChange={setM} fmt={v=>fmt0(v)}/></div><div style={{display:"flex",flexDirection:"column",gap:10}}><RB label="TIME TO GOAL" value={mo===Infinity?"never":mo+" mo"} sub={mo===Infinity?"Add a monthly amount":"Funded by "+monthLabel(mo)} color="var(--up)"/><RB label="REMAINING" value={fmt0(rem)}/></div></div>);}
+function Rule72Calc(){const[r,setR]=useState(7);const yrs=72/r;return(<div className="adm-2"><div><Slider label="Annual return" value={Math.round(r*10)} min={5} max={200} onChange={v=>setR(v/10)} fmt={v=>(v/10).toFixed(1)+"%"}/><div className="bench" style={{marginTop:8}}>The Rule of 72 estimates how long an investment takes to double: divide 72 by the annual return.</div></div><div><RB label="YEARS TO DOUBLE" value={yrs.toFixed(1)} sub={"At "+r+"% your money doubles every "+yrs.toFixed(1)+" years"} color="var(--primary)"/></div></div>);}
+function InflationCalc({c}){const[a,setA]=useState(1000),[r,setR]=useState(3),[y,setY]=useState(20);const data=[];for(let i=0;i<=y;i++)data.push({y:i,v:Math.round(a*Math.pow(1+r/100,i))});const fut=data[data.length-1].v,worth=Math.round(a/Math.pow(1+r/100,y));return(<div className="adm-2"><div><Slider label="Amount today" value={a} min={100} max={100000} step={100} onChange={setA} fmt={v=>fmt0(v)}/><Slider label="Inflation rate" value={Math.round(r*10)} min={0} max={150} onChange={v=>setR(v/10)} fmt={v=>(v/10).toFixed(1)+"%"}/><Slider label="Years" value={y} min={1} max={40} onChange={setY} fmt={v=>v+" yr"}/></div><div><RB label={"COST IN "+y+" YEARS"} value={fmt0(fut)} sub={fmt0(a)+" today buys what "+fmt0(worth)+" will then"} color="var(--down)"/><MiniArea data={data} c={c}/></div></div>);}
+function RetireCalc({c}){const[age,setAge]=useState(32),[ret,setRet]=useState(65),[cur,setCur]=useState(50000),[m,setM]=useState(800),[r,setR]=useState(7);const yrs=Math.max(0,ret-age);const data=[];let bal=cur;for(let i=0;i<=yrs;i++){data.push({y:age+i,v:Math.round(bal)});for(let k=0;k<12;k++)bal=bal*(1+r/1200)+m;}const nest=data[data.length-1].v;return(<div className="adm-2"><div><Slider label="Current age" value={age} min={18} max={64} onChange={setAge} fmt={v=>v}/><Slider label="Retirement age" value={ret} min={age+1} max={75} onChange={setRet} fmt={v=>v}/><Slider label="Current savings" value={cur} min={0} max={1000000} step={5000} onChange={setCur} fmt={v=>fmtK(v)}/><Slider label="Monthly contribution" value={m} min={0} max={5000} step={50} onChange={setM} fmt={v=>fmt0(v)}/><Slider label="Return" value={Math.round(r*10)} min={10} max={120} onChange={v=>setR(v/10)} fmt={v=>(v/10).toFixed(1)+"%"}/></div><div><RB label={"NEST EGG AT "+ret} value={fmt0(nest)} sub={"~"+fmt0(nest*0.04/12)+"/mo income at the 4% rule"} color="var(--up)"/><MiniArea data={data} c={c} fmtY={v=>fmtK(v)}/></div></div>);}
+function PaycheckCalc(){const[g,setG]=useState(80000),[st,setSt]=useState(5);const fed=g*0.18,fica=g*0.0765,stt=g*st/100,net=g-fed-fica-stt;return(<div className="adm-2"><div><Slider label="Gross salary / yr" value={g} min={20000} max={400000} step={1000} onChange={setG} fmt={v=>fmt0(v)}/><Slider label="State tax" value={Math.round(st*10)} min={0} max={130} onChange={v=>setSt(v/10)} fmt={v=>(v/10).toFixed(1)+"%"}/><div className="bench" style={{marginTop:8}}>Rough estimate: ~18% federal, 7.65% FICA, plus state. Not tax advice.</div></div><div style={{display:"flex",flexDirection:"column",gap:10}}><RB label="EST. TAKE-HOME / YR" value={fmt0(net)} color="var(--up)"/><RB label="PER MONTH" value={fmt0(net/12)} sub={"Per paycheck (bi-weekly) "+fmt0(net/26)}/></div></div>);}
+function TipCalc(){const[bill,setBill]=useState(80),[tip,setTip]=useState(20),[ppl,setPpl]=useState(2);const t=bill*tip/100,tot=bill+t;return(<div className="adm-2"><div><Slider label="Bill amount" value={bill} min={1} max={1000} onChange={setBill} fmt={v=>fmt0(v)}/><Slider label="Tip" value={tip} min={0} max={40} onChange={setTip} fmt={v=>v+"%"}/><Slider label="Split between" value={ppl} min={1} max={20} onChange={setPpl} fmt={v=>v+" people"}/></div><div style={{display:"flex",flexDirection:"column",gap:10}}><RB label="TOTAL WITH TIP" value={fmt(tot)} sub={"Tip "+fmt(t)}/><RB label="PER PERSON" value={fmt(tot/ppl)} color="var(--primary)"/></div></div>);}
+function CurrencyCalc(){const RATES={USD:1,EUR:0.92,GBP:0.79,JPY:156.4,CAD:1.37,AUD:1.51,INR:83.5};const[amt,setAmt]=useState(100),[from,setFrom]=useState("USD"),[to,setTo]=useState("EUR");const out=amt/RATES[from]*RATES[to];return(<div className="adm-2"><div><div className="field"><label className="code" style={{marginBottom:6}}>AMOUNT</label><input className="inp" type="number" value={amt} onChange={e=>setAmt(+e.target.value)}/></div><div className="field" style={{marginTop:10}}><label className="code" style={{marginBottom:6}}>FROM</label><select className="inp" value={from} onChange={e=>setFrom(e.target.value)}>{Object.keys(RATES).map(k=><option key={k}>{k}</option>)}</select></div><div className="field" style={{marginTop:10}}><label className="code" style={{marginBottom:6}}>TO</label><select className="inp" value={to} onChange={e=>setTo(e.target.value)}>{Object.keys(RATES).map(k=><option key={k}>{k}</option>)}</select></div></div><div><RB label="CONVERTED" value={out.toLocaleString(undefined,{maximumFractionDigits:2})+" "+to} sub={"1 "+from+" = "+(RATES[to]/RATES[from]).toFixed(4)+" "+to} color="var(--primary)"/><div className="bench" style={{marginTop:8}}>Indicative mid-market rates, for estimation.</div></div></div>);}
+function CostPerUseCalc(){const[price,setPrice]=useState(120),[uses,setUses]=useState(40);return(<div className="adm-2"><div><Slider label="Item price" value={price} min={1} max={5000} onChange={setPrice} fmt={v=>fmt0(v)}/><Slider label="Expected uses" value={uses} min={1} max={1000} onChange={setUses} fmt={v=>v+"×"}/></div><div><RB label="COST PER USE" value={fmt(price/uses)} sub={"Over "+uses+" uses"} color="var(--primary)"/></div></div>);}
+function HourlyCalc(){const[hr,setHr]=useState(35),[hpw,setHpw]=useState(40);const annual=hr*hpw*52;return(<div className="adm-2"><div><Slider label="Hourly rate" value={Math.round(hr*100)} min={700} max={20000} step={50} onChange={v=>setHr(v/100)} fmt={v=>fmt(v/100)}/><Slider label="Hours / week" value={hpw} min={1} max={80} onChange={setHpw} fmt={v=>v+" h"}/></div><div style={{display:"flex",flexDirection:"column",gap:10}}><RB label="ANNUAL SALARY" value={fmt0(annual)} color="var(--up)"/><RB label="MONTHLY" value={fmt0(annual/12)} sub={"Weekly "+fmt0(annual/52)}/></div></div>);}
+function ApyCalc(){const[apr,setApr]=useState(5),[n,setN]=useState(12);const apy=(Math.pow(1+apr/100/n,n)-1)*100;return(<div className="adm-2"><div><Slider label="Nominal APR" value={Math.round(apr*100)} min={0} max={2500} step={5} onChange={v=>setApr(v/100)} fmt={v=>(v/100).toFixed(2)+"%"}/><div className="field" style={{marginTop:10}}><label className="code" style={{marginBottom:6}}>COMPOUNDING</label><select className="inp" value={n} onChange={e=>setN(+e.target.value)}><option value={1}>Annually</option><option value={4}>Quarterly</option><option value={12}>Monthly</option><option value={365}>Daily</option></select></div></div><div><RB label="EFFECTIVE APY" value={apy.toFixed(3)+"%"} sub={"From "+apr+"% nominal"} color="var(--primary)"/></div></div>);}
+function DebtExtraCalc(){const[bal,setBal]=useState(8000),[apr,setApr]=useState(19.99),[pmt,setPmt]=useState(250),[extra,setExtra]=useState(100);const mr=apr/1200;const calc=(p)=>{if(p<=bal*mr)return{mo:Infinity,int:Infinity};const mo=Math.ceil(-Math.log(1-bal*mr/p)/Math.log(1+mr));return{mo,int:p*mo-bal};};const base=calc(pmt),fast=calc(pmt+extra);return(<div className="adm-2"><div><Slider label="Balance" value={bal} min={500} max={50000} step={100} onChange={setBal} fmt={v=>fmt0(v)}/><Slider label="APR" value={Math.round(apr*100)} min={0} max={3500} step={25} onChange={v=>setApr(v/100)} fmt={v=>(v/100).toFixed(2)+"%"}/><Slider label="Monthly payment" value={pmt} min={25} max={2000} step={25} onChange={setPmt} fmt={v=>fmt0(v)}/><Slider label="Extra / mo" value={extra} min={0} max={1000} step={25} onChange={setExtra} fmt={v=>fmt0(v)}/></div><div style={{display:"flex",flexDirection:"column",gap:10}}><RB label="MONTHS SAVED" value={base.mo===Infinity?"—":(base.mo-fast.mo)+" mo"} color="var(--up)"/><RB label="INTEREST SAVED" value={base.int===Infinity?"—":fmt0(base.int-fast.int)} sub={"Payoff in "+(fast.mo===Infinity?"never":fast.mo+" mo")}/></div></div>);}
+function NetWorthCalc(){const[as,setAs]=useState(120000),[li,setLi]=useState(35000);return(<div className="adm-2"><div><Slider label="Total assets" value={as} min={0} max={2000000} step={1000} onChange={setAs} fmt={v=>fmtK(v)}/><Slider label="Total liabilities" value={li} min={0} max={1000000} step={1000} onChange={setLi} fmt={v=>fmtK(v)}/></div><div><RB label="NET WORTH" value={fmt0(as-li)} sub={"Assets "+fmtK(as)+" − liabilities "+fmtK(li)} color={as-li>=0?"var(--up)":"var(--down)"}/></div></div>);}
+
+const TOOLS=[
+ {id:"compound",name:"Compound interest",cat:"Grow",ic:TrendingUp,comp:CompoundCalc},
+ {id:"retire",name:"Retirement nest egg",cat:"Grow",ic:Sprout,comp:RetireCalc},
+ {id:"rule72",name:"Rule of 72",cat:"Grow",ic:Zap,comp:Rule72Calc},
+ {id:"apy",name:"APR → APY",cat:"Grow",ic:Percent,comp:ApyCalc},
+ {id:"loan",name:"Loan payment",cat:"Borrow",ic:Banknote,comp:LoanCalc},
+ {id:"debt",name:"Extra-payment payoff",cat:"Borrow",ic:CreditCard,comp:DebtExtraCalc},
+ {id:"goal",name:"Savings goal timeline",cat:"Plan",ic:Target,comp:SaveGoalCalc},
+ {id:"inflation",name:"Inflation impact",cat:"Plan",ic:Flame,comp:InflationCalc},
+ {id:"networth",name:"Net-worth snapshot",cat:"Plan",ic:Wallet,comp:NetWorthCalc},
+ {id:"paycheck",name:"Take-home pay",cat:"Income",ic:Landmark,comp:PaycheckCalc},
+ {id:"hourly",name:"Hourly ↔ salary",cat:"Income",ic:Clock,comp:HourlyCalc},
+ {id:"tip",name:"Tip & bill split",cat:"Everyday",ic:Receipt,comp:TipCalc},
+ {id:"costuse",name:"Cost per use",cat:"Everyday",ic:Coins,comp:CostPerUseCalc},
+ {id:"currency",name:"Currency converter",cat:"Everyday",ic:Globe,comp:CurrencyCalc},
+];
+function Tools({ ctx }){
+  const { c } = ctx;
+  const [tool,setTool]=useState("compound");
+  const cats=[...new Set(TOOLS.map(t=>t.cat))];
+  const active=TOOLS.find(t=>t.id===tool)||TOOLS[0]; const Comp=active.comp;
+  return(<div className="fade">
+    <div className="page-h"><div><h1>Tools & Calculators</h1><div className="sub">A consolidated workbench — {TOOLS.length} interactive money tools in one place</div></div><div className="code">{active.cat.toUpperCase()}</div></div>
+    <div className="adm-wrap">
+      <div className="adm-nav">
+        {cats.map(cat=>(<React.Fragment key={cat}><div className="grp">{cat}</div>{TOOLS.filter(t=>t.cat===cat).map(t=>(<button key={t.id} className={tool===t.id?"on":""} onClick={()=>setTool(t.id)}><t.ic size={15}/> {t.name}</button>))}</React.Fragment>))}
+      </div>
+      <div style={{minWidth:0}}>
+        <div className="panel"><div className="p-head"><div className="p-title"><active.ic size={15} color="var(--primary)"/> {active.name}</div><span className="code">LIVE</span></div>
+          <Comp c={c}/>
+        </div>
+        <div className="bench" style={{textAlign:"center",marginTop:12}}><Sparkles size={12} style={{verticalAlign:"-2px"}}/> Estimates for planning only. Pixii pre-fills several of these from your linked accounts.</div>
+      </div>
+    </div>
+  </div>);
+}
+
 function Command({ ctx }){
-  const { c,netWorth,liquid,burn,runway,baseNet,income,expense,saved,savingsRate,series,yDomain,scrub,setScrub,scrubVal,scrubPoint,isFuture,spentByCat,setWs,intel,smart } = ctx;
+  const { c,netWorth,liquid,burn,runway,baseNet,income,expense,saved,savingsRate,series,yDomain,scrub,setScrub,scrubVal,scrubPoint,isFuture,spentByCat,setWs,intel,smart,goFintel } = ctx;
   const surplus=income-expense, rate=income>0?Math.round((saved/income)*100):0;
   const top=Object.entries(spentByCat).sort((a,b)=>b[1]-a[1])[0];
   return (
@@ -1175,20 +1870,20 @@ function Command({ ctx }){
           One item to watch: card utilization at <b>{Math.round(intel.util*100)}%</b>.
         </p>
         <div className="mir-stats">
-          <div className="s"><div className="l">Income</div><div className="v" style={{color:"var(--up)"}}>{fmt0(income)}</div></div>
-          <div className="s"><div className="l">Spending</div><div className="v">{fmt0(expense)}</div></div>
-          <div className="s"><div className="l">Surplus</div><div className="v" style={{color:surplus>=0?"var(--up)":"var(--down)"}}>{fmt0(surplus)}</div></div>
-          <div className="s"><div className="l">Savings rate</div><div className="v">{rate}%</div></div>
-          <div className="s"><div className="l">Net worth</div><div className="v">{fmt0(netWorth)}</div></div>
+          <div className="s mir-clk" onClick={()=>setWs("reports")}><div className="l">Income</div><div className="v" style={{color:"var(--up)"}}>{fmt0(income)}</div></div>
+          <div className="s mir-clk" onClick={()=>goFintel("fi-spend")}><div className="l">Spending</div><div className="v">{fmt0(expense)}</div></div>
+          <div className="s mir-clk" onClick={()=>setWs("forecast")}><div className="l">Surplus</div><div className="v" style={{color:surplus>=0?"var(--up)":"var(--down)"}}>{fmt0(surplus)}</div></div>
+          <div className="s mir-clk" onClick={()=>goFintel("fi-fi")}><div className="l">Savings rate</div><div className="v">{rate}%</div></div>
+          <div className="s mir-clk" onClick={()=>setWs("reports")}><div className="l">Net worth</div><div className="v">{fmt0(netWorth)}</div></div>
         </div>
       </div>
 
       <div className="grid" style={{gridTemplateColumns:"repeat(5,1fr)",marginBottom:16}}>
-        <KPI code="NW.TTL" label="Net worth" value={netWorth} chip="+3.1%" up/>
-        <KPI code="CASH.LIQ" label="Liquid cash" value={liquid} chip="2 accts" flat/>
-        <KPI code="BURN.M" label="Monthly burn" value={burn} chip="-6%" up/>
-        <KPI code="RWY" label="Runway" raw={runway.toFixed(1)+" mo"} chip={runway>6?"healthy":"tight"} up={runway>6}/>
-        <KPI code="NET.M" label="Monthly net" value={baseNet} chip={savingsRate+"% saved"} up/>
+        <KPI code="NW.TTL" label="Net worth" value={netWorth} chip="+3.1%" up onClick={()=>setWs("reports")}/>
+        <KPI code="CASH.LIQ" label="Liquid cash" value={liquid} chip="2 accts" flat onClick={()=>setWs("reports")}/>
+        <KPI code="BURN.M" label="Monthly burn" value={burn} chip="-6%" up onClick={()=>goFintel("fi-spend")}/>
+        <KPI code="RWY" label="Runway" raw={runway.toFixed(1)+" mo"} chip={runway>6?"healthy":"tight"} up={runway>6} onClick={()=>goFintel("fi-ef")}/>
+        <KPI code="NET.M" label="Monthly net" value={baseNet} chip={savingsRate+"% saved"} up onClick={()=>setWs("forecast")}/>
       </div>
 
       {/* scrubber */}
@@ -1206,21 +1901,22 @@ function Command({ ctx }){
       </div>
 
       <div className="grid" style={{gridTemplateColumns:"1.4fr 1fr"}}>
-        <div className="panel"><div className="p-head"><div className="p-title"><Zap size={15} color="var(--primary)"/> Cash-flow map · May</div><span className="code">SOURCE → POOL → USE</span></div><Sankey income={income} spentByCat={spentByCat} net={baseNet} c={c}/></div>
+        <div className="panel link-panel" onClick={()=>goFintel("fi-spend")}><div className="p-head"><div className="p-title"><Zap size={15} color="var(--primary)"/> Cash-flow map · May</div><span className="code">SOURCE → POOL → USE</span></div><Sankey income={income} spentByCat={spentByCat} net={baseNet} c={c}/></div>
         <div className="panel"><div className="p-head"><div className="p-title"><ShieldCheck size={15} color="var(--primary)"/> Financial intelligence</div><span className="code">EXTRAPOLATED</span></div><Intelligence ctx={ctx}/></div>
       </div>
 
-      <SmartInsights smart={smart} burn={burn}/>
+      <SmartInsights ctx={ctx}/>
     </div>
   );
 }
 
-function SmartInsights({ smart, burn }){
+function SmartInsights({ ctx }){
+  const { smart, burn, setWs, goFintel } = ctx;
   const cards=[
-    {ic:CircleDollarSign,t:"Low-balance forecast",v:fmt0(smart.lowBal),d:smart.lowBal<500?"Tight by month-end — watch spending":"No shortfall projected by month-end",col:smart.lowBal<500?"var(--down)":"var(--up)"},
-    {ic:BarChart3,t:"Spending velocity",v:Math.round(smart.velocity*100)+"%",d:`On pace for ${fmt0(smart.projMonth)} vs ${fmt0(smart.budgetTotal)} budget`,col:smart.velocity>1?"var(--down)":"var(--up)"},
-    {ic:Wallet,t:"Cash drag",v:fmt0(smart.cashDrag),d:smart.cashDrag>0?`Idle beyond cushion · ~${fmt0(smart.cashDrag*0.05)}/yr unrealized`:"Cash near optimal cushion",col:smart.cashDrag>0?"var(--primary)":"var(--up)"},
-    {ic:Store,t:"Top merchant",v:fmt0(smart.topMerchant[1]),d:String(smart.topMerchant[0]),col:"var(--ink)"},
+    {ic:CircleDollarSign,t:"Low-balance forecast",v:fmt0(smart.lowBal),d:smart.lowBal<500?"Tight by month-end — watch spending":"No shortfall projected by month-end",col:smart.lowBal<500?"var(--down)":"var(--up)",go:()=>setWs("bills")},
+    {ic:BarChart3,t:"Spending velocity",v:Math.round(smart.velocity*100)+"%",d:`On pace for ${fmt0(smart.projMonth)} vs ${fmt0(smart.budgetTotal)} budget`,col:smart.velocity>1?"var(--down)":"var(--up)",go:()=>goFintel("fi-spend")},
+    {ic:Wallet,t:"Cash drag",v:fmt0(smart.cashDrag),d:smart.cashDrag>0?`Idle beyond cushion · ~${fmt0(smart.cashDrag*0.05)}/yr unrealized`:"Cash near optimal cushion",col:smart.cashDrag>0?"var(--primary)":"var(--up)",go:()=>setWs("market")},
+    {ic:Store,t:"Top merchant",v:fmt0(smart.topMerchant[1]),d:String(smart.topMerchant[0]),col:"var(--ink)",go:()=>setWs("reports")},
   ];
   return (
     <div className="grid" style={{gridTemplateColumns:"1.2fr 1fr",marginTop:16,alignItems:"start"}}>
@@ -1228,7 +1924,7 @@ function SmartInsights({ smart, burn }){
         <div className="p-head"><div className="p-title"><Sparkles size={15} color="var(--primary)"/> Smart insights</div><span className="code">AI-DERIVED</span></div>
         <div className="grid" style={{gridTemplateColumns:"1fr 1fr"}}>
           {cards.map((k,i)=>(
-            <div key={i} style={{border:"1px solid var(--line)",borderRadius:12,padding:14}}>
+            <div key={i} className="link-panel" onClick={k.go} style={{border:"1px solid var(--line)",borderRadius:12,padding:14}}>
               <div style={{display:"flex",alignItems:"center",gap:8,color:k.col}}><k.ic size={15}/><span className="code" style={{color:"var(--ink-3)"}}>{k.t}</span></div>
               <div className="mono" style={{fontWeight:700,fontSize:22,marginTop:8,color:k.col,letterSpacing:"-.02em"}}>{k.v}</div>
               <div style={{fontSize:11.5,color:"var(--ink-2)",marginTop:3,lineHeight:1.35}}>{k.d}</div>
@@ -1236,7 +1932,7 @@ function SmartInsights({ smart, burn }){
           ))}
         </div>
       </div>
-      <div className="panel">
+      <div className="panel link-panel" onClick={()=>setWs("bills")}>
         <div className="p-head"><div className="p-title"><Repeat size={15} color="var(--primary)"/> Recurring detected</div><span className="code">{fmt0(smart.recurringTotal)}/MO</span></div>
         {smart.recurring.slice(0,7).map((r,i)=>(
           <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 0",borderBottom:"1px solid var(--line-2)"}}>
@@ -1272,23 +1968,25 @@ function NWChart({ series, yDomain, c, scrub }){
 }
 
 function Intelligence({ ctx }){
-  const { intel,netWorth,burn } = ctx;
+  const { intel,netWorth,burn,goFintel } = ctx;
   const rows=[
-    {ic:Flame,t:"Financial independence",d:`FI number ${fmt0(intel.fiNumber)} · ~${intel.yearsToFI.toFixed(1)} yrs away`,v:Math.round(intel.fiProgress*100)+"%",col:"var(--primary)"},
-    {ic:ShieldCheck,t:"Emergency fund",d:`${intel.efMonths.toFixed(1)} of ${intel.efTarget} months covered`,v:intel.efMonths>=intel.efTarget?"Funded":fmt0((intel.efTarget-intel.efMonths)*burn),col:intel.efMonths>=intel.efTarget?"var(--up)":"var(--down)"},
-    {ic:Percent,t:"Credit utilization",d:`${fmt0(Math.abs(intel.card.balance))} of ${fmt0(intel.card.limit)} limit`,v:Math.round(intel.util*100)+"%",col:intel.util<0.3?"var(--up)":"var(--down)"},
-    {ic:CreditCard,t:"Card payoff",d:`At $200/mo · ${intel.card.apr}% APR`,v:`~${intel.payoffMonths} mo`,col:"var(--ink)"},
-    {ic:Landmark,t:"Tax set-aside",d:`25% of ${fmt0(intel.freelance)} freelance income`,v:fmt0(intel.taxSetAside),col:"var(--ink)"},
+    {ic:Flame,t:"Financial independence",d:`FI number ${fmt0(intel.fiNumber)} · ~${intel.yearsToFI.toFixed(1)} yrs away`,v:Math.round(intel.fiProgress*100)+"%",col:"var(--primary)",sec:"fi-fi"},
+    {ic:ShieldCheck,t:"Emergency fund",d:`${intel.efMonths.toFixed(1)} of ${intel.efTarget} months covered`,v:intel.efMonths>=intel.efTarget?"Funded":fmt0((intel.efTarget-intel.efMonths)*burn),col:intel.efMonths>=intel.efTarget?"var(--up)":"var(--down)",sec:"fi-ef"},
+    {ic:Percent,t:"Credit utilization",d:`${fmt0(Math.abs(intel.card.balance))} of ${fmt0(intel.card.limit)} limit`,v:Math.round(intel.util*100)+"%",col:intel.util<0.3?"var(--up)":"var(--down)",sec:"fi-debt"},
+    {ic:CreditCard,t:"Card payoff",d:`At $200/mo · ${intel.card.apr}% APR`,v:`~${intel.payoffMonths} mo`,col:"var(--ink)",sec:"fi-debt"},
+    {ic:Landmark,t:"Tax set-aside",d:`25% of ${fmt0(intel.freelance)} freelance income`,v:fmt0(intel.taxSetAside),col:"var(--ink)",sec:"fi-tax"},
   ];
   return <div>{rows.map((r,i)=>(
-    <div className="intel" key={i}><div className="ii"><r.ic size={16} color={r.col}/></div>
+    <div className="intel intel-clk" key={i} onClick={()=>goFintel&&goFintel(r.sec)} title="Open in Financial Intelligence"><div className="ii"><r.ic size={16} color={r.col}/></div>
       <div><div className="it">{r.t}</div><div className="id">{r.d}</div></div>
-      <div className="iv" style={{color:r.col}}>{r.v}</div></div>
-  ))}</div>;
+      <div className="iv" style={{color:r.col}}>{r.v}</div><ChevronRight size={14} color="var(--ink-3)" style={{marginLeft:6,flexShrink:0}}/></div>
+  ))}
+  <div className="rd" style={{marginTop:10,fontSize:11.5}}>Every figure is AI-extrapolated from your linked accounts and industry benchmarks. <span style={{color:"var(--primary)",cursor:"pointer",fontWeight:600}} onClick={()=>goFintel&&goFintel("fi-top")}>Open full report →</span></div>
+  </div>;
 }
 
-function KPI({ code,label,value,raw,chip,up,flat }){
-  return (<div className="kpi"><div className="lab"><span className="code">{code}</span>
+function KPI({ code,label,value,raw,chip,up,flat,onClick }){
+  return (<div className="kpi" onClick={onClick} style={onClick?{cursor:"pointer"}:undefined}><div className="lab"><span className="code">{code}</span>
     <span className={"chip "+(flat?"flat":up?"up":"down")}>{!flat&&(up?<ArrowUpRight size={11}/>:<ArrowDownRight size={11}/>)}{chip}</span></div>
     <div className="val">{raw?raw:<CMoney value={value} k/>}</div><div className="meta">{label}</div></div>);
 }
@@ -1298,7 +1996,7 @@ function Sankey({ income, spentByCat, net, c }){
   const W=560,H=250,pad=10;
   const srcPal=["#0DA66B","#14B8A6","#22C55E"];
   const usePal=["#7C4DFF","#F59E0B","#00C2D6","#E879F9","#3B82F6","#FB7185","#A855F7","#EAB308"];
-  const sources=[{n:"Salary",v:5400},{n:"Freelance",v:620}].filter(s=>s.v>0);
+  const sources=Object.entries(tx.filter(t=>t.amount>0).reduce((m,t)=>{const k=t.merchant||"Income";m[k]=(m[k]||0)+t.amount;return m;},{})).map(([n,v])=>({n,v}));
   const uses=Object.entries(spentByCat).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([n,v])=>({n,v}));
   const others=Object.entries(spentByCat).sort((a,b)=>b[1]-a[1]).slice(6).reduce((s,[,v])=>s+v,0);
   if(others>0)uses.push({n:"Other",v:others});
@@ -1773,6 +2471,383 @@ function ThemeMini(){
     </div>
   );
 }
+
+/* ================================================================== */
+/*  ADMIN CONSOLE                                                     */
+/* ================================================================== */
+function aRng(seed){let s=seed;return()=>{s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff;};}
+function AKpi({label,value,delta,up,icon:Ic}){return(<div className="akpi"><div className="kl">{Ic&&<Ic size={12}/>}{label}</div><div className="kv">{value}</div>{delta!=null&&<div className="kd" style={{color:up?"var(--up)":"var(--down)"}}>{up?"\u25B2":"\u25BC"} {delta}</div>}</div>);}
+function AFlag({label,desc,on,onToggle,danger}){return(<div className="set-row"><div><div className="rt">{label}</div>{desc&&<div className="rd">{desc}</div>}</div><div className={"toggle"+(on?" on":"")} style={danger&&on?{background:"var(--down)"}:undefined} onClick={onToggle}/></div>);}
+function ABarList({rows}){return(<div className="barlist">{rows.map((r,i)=>(<div className="barrow" key={i}><span className="bl">{r.label}</span><span className="bt"><i style={{width:r.pct+"%",background:r.color||"var(--primary)"}}/></span><span className="bv">{r.value}</span></div>))}</div>);}
+function ADonut({data,height=168}){return(<div style={{height}}><ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={data} dataKey="value" nameKey="name" innerRadius="56%" outerRadius="86%" paddingAngle={2} stroke="none">{data.map((d,i)=><Cell key={i} fill={d.color}/>)}</Pie><Tooltip content={<Tip/>}/></PieChart></ResponsiveContainer></div>);}
+function AGauge({value,label,sub,color="var(--primary)"}){const circ=Math.PI*46,off=circ*(1-value/100);return(<div style={{textAlign:"center"}}><svg viewBox="0 0 120 72" style={{width:"100%",maxWidth:170}}><path d="M14,62 A46,46 0 0 1 106,62" fill="none" stroke="var(--line)" strokeWidth="10" strokeLinecap="round"/><path d="M14,62 A46,46 0 0 1 106,62" fill="none" stroke={color} strokeWidth="10" strokeLinecap="round" strokeDasharray={circ} strokeDashoffset={off}/><text x="60" y="56" textAnchor="middle" fontFamily="JetBrains Mono" fontWeight="700" fontSize="20" fill="var(--ink)">{value}%</text></svg><div className="code" style={{marginTop:2}}>{label}</div>{sub&&<div style={{fontSize:11,color:"var(--ink-3)"}}>{sub}</div>}</div>);}
+function AHeat(){const rows=[["Jan",100,71,58,49,43,39],["Feb",100,68,55,47,41],["Mar",100,73,60,50],["Apr",100,67,53],["May",100,70]];return(<table className="heat"><thead><tr><th></th>{[0,1,2,3,4,5].map(i=><th key={i} className="code">M{i}</th>)}</tr></thead><tbody>{rows.map((r,ri)=>(<tr key={ri}><td className="code">{r[0]}</td>{r.slice(1).map((v,i)=>(<td key={i}><span className="heat-c" style={{background:"rgba(124,77,255,"+(v/100*0.82+0.12).toFixed(2)+")",color:v>46?"#fff":"var(--ink)"}}>{v}</span></td>))}{Array(6-(r.length-1)).fill(0).map((_,i)=><td key={"e"+i}/>)}</tr>))}</tbody></table>);}
+
+const ADM_NAV=[
+ ["Governance",[["overview","Overview",LayoutDashboard],["modules","Modules & flags",SlidersHorizontal],["homepage","Homepage sections",LayoutTemplate],["auth","Authentication",Lock],["ai","AI integration",Bot]]],
+ ["Data & insight",[["telemetry","Telemetry & capture",Radar],["analytics","Usage analytics",BarChart3],["revenue","Revenue ops",CircleDollarSign]]],
+ ["Platform",[["experiments","Experiments & rollouts",FlaskConical],["api","API & webhooks",Webhook],["security","Security center",ShieldAlert],["integrations","Integrations",Plug],["system","System health",Server],["audit","Audit log",ScrollText],["rbac","Roles & access",Users],["notifications","Notifications",Megaphone],["content","Content & site",Languages],["compliance","Compliance",FileCheck],["support","Support",LifeBuoy]]],
+ ["Operations",[["catalog","Feature catalog",ToggleRight],["pipeline","Data pipeline",Database],["models","AI model registry",Cpu],["costs","Cost controls",CircleDollarSign],["releases","Releases & deploys",Boxes],["alerts","Alerting rules",Bell],["customers","Customer 360",Users]]],
+];
+const ADM_PROVIDERS=[
+ {id:"claude",name:"Claude",ic:Sparkles,col:"#D97757",models:["claude-opus-4-7","claude-sonnet-4-6","claude-haiku-4-5"],cli:"Claude Code"},
+ {id:"openai",name:"ChatGPT",ic:Bot,col:"#10A37F",models:["gpt-4o","gpt-4o-mini","o3"],cli:"Codex CLI"},
+ {id:"gemini",name:"Gemini",ic:Sparkles,col:"#1A73E8",models:["gemini-2.5-pro","gemini-2.5-flash"],cli:"Gemini CLI / AntiGravity CLI"},
+ {id:"llama",name:"Llama",ic:Cpu,col:"#6C4DF6",models:["llama-3.1-405b","llama-3.1-70b"],cli:"Ollama"},
+ {id:"mistral",name:"Mistral",ic:Cpu,col:"#FF7000",models:["mistral-large","codestral"],cli:"Mistral CLI"},
+ {id:"grok",name:"Grok",ic:Bot,col:"#1A1A1A",models:["grok-4","grok-3-mini"],cli:"xAI CLI"},
+];
+
+const CATALOG_GROUPS=[
+ ["Accounts & linking",["Plaid bank linking","Manual account entry","Crypto wallet sync","Investment brokerage sync","Auto-reconnect broken links","Multi-currency accounts","Joint / shared accounts","Account nicknames","Hide closed accounts","Balance refresh on demand"]],
+ ["Transactions",["Auto-categorization","Split transactions","Bulk re-categorize","Merchant enrichment","Receipt attachments","Transaction search","Recurring detection","Refund matching","Pending-transaction display","Custom rules engine"]],
+ ["Budgeting",["Monthly budgets","Category rollover","50/30/20 framework","Envelope budgeting","Shared household budget","Budget alerts","Flexible periods","Zero-based budgeting"]],
+ ["Insights & AI",["AI Copilot","Month-in-review narrative","Smart insights","Anomaly detection","Cash-flow forecasting","Spending velocity","Natural-language queries","Proactive nudges","Voice input","Weekly AI summary email"]],
+ ["Investing",["Holdings tracking","Cost-basis","Dividend tracker","Rebalancing assistant","Risk metrics","Watchlists","Tax-loss harvesting hints","Performance attribution","Benchmark comparison"]],
+ ["Goals & savings",["Goal tracking","Round-up savings","Savings envelopes","AI allocation","Auto-transfer rules","Shared goals","Milestone celebrations","Goal templates"]],
+ ["Bills & subscriptions",["Bill calendar","Due-date reminders","Subscription manager","Price-increase alerts","Negotiation queue","Free-trial radar","Autopay tracking","Late-fee warnings"]],
+ ["Security & privacy",["Two-factor auth","Passkeys","Biometric unlock","Session management","Login alerts","Data export","Account deletion","PII redaction","Activity log","Trusted devices"]],
+ ["Notifications",["Email digests","Push notifications","SMS alerts","In-app messages","Large-transaction alerts","Low-balance alerts","Quiet hours","Per-category controls"]],
+ ["Reports & export",["PDF statements","CSV export","Year-in-review","Net-worth reports","Tax summary","Spending heatmap","Custom date ranges"]],
+ ["Collaboration",["Advisor sharing","Read-only links","Household members","Accountant access","Comments & notes"]],
+ ["Experimental",["Carbon footprint","Peer benchmarking","Achievements","Money personality","Learn lessons","What-if scenarios"]],
+];
+function Admin({ ctx }){
+  const { c, cfg, setCfg, setThemeId, themeId } = ctx;
+  const [sub,setSub]=useState("overview");
+  const [showKey,setShowKey]=useState(false);
+  const [catalog,setCatalog]=useState({}); const ctOn=(k)=>catalog[k]!==false; const ctTog=(k)=>setCatalog(c=>({...c,[k]:catalog[k]===false?true:false}));
+  const [alertOn,setAlertOn]=useState([true,true,true,false,true]);
+  const [resetEmail,setResetEmail]=useState("");
+  const [resetMsg,setResetMsg]=useState("");
+  const upd=(g,k,v)=>setCfg(p=>({...p,[g]:{...p[g],[k]:v}}));
+  const D=useMemo(()=>{const r=aRng(7);const days=Array.from({length:30},(_,i)=>{const dau=2600+Math.round(r()*700)+i*26;return{d:""+(i+1),dau,ret:Math.round(dau*(0.6+r()*0.07)),neu:Math.round(dau*(0.2+r()*0.05)),sess:Math.round(dau*(1.4+r()*0.4)),tok:Math.round(120+r()*70+i*5),cost:+(1.1+r()*0.6+i*0.04).toFixed(2),p50:120+Math.round(r()*40),p95:360+Math.round(r()*150),p99:680+Math.round(r()*260),err:+(0.15+r()*0.5).toFixed(2),mrr:46000+i*460+Math.round(r()*900),succ:Math.round(880+r()*260),fail:Math.round(18+r()*55)};});return{days};},[]);
+  const last=D.days[D.days.length-1];
+  const [exps,setExps]=useState([{id:1,name:"New onboarding wizard",status:"running",split:50,lift:"+12.4%"},{id:2,name:"Copilot proactive nudges",status:"running",split:30,lift:"+4.1%"},{id:3,name:"Annual pricing banner",status:"paused",split:20,lift:"-1.2%"},{id:4,name:"Dark default theme",status:"draft",split:0,lift:"—"}]);
+  const [keys,setKeys]=useState([{id:"k1",name:"Production",prefix:"pk_live_9f4c",created:"Feb 2026",last:"2m ago"},{id:"k2",name:"Mobile app",prefix:"pk_live_2a7d",created:"Jan 2026",last:"5h ago"},{id:"k3",name:"Analytics ETL",prefix:"pk_live_c01b",created:"Dec 2025",last:"1d ago"}]);
+  const ROLES=["Owner","Admin","Analyst","Member","Read-only"];
+  const PERMS=["View dashboards","Edit modules","Manage billing","Manage users","Export data","Configure AI","Access PII"];
+  const defMatrix={};ROLES.forEach((ro,ri)=>{PERMS.forEach((p,pi)=>{defMatrix[ro+"|"+p]= ri===0 ? true : ri===1 ? pi<6 : ri===2 ? (pi===0||pi===4) : ri===3 ? pi===0 : pi===0;});});
+  const [matrix,setMatrix]=useState(defMatrix);
+  const [chans,setChans]=useState({email:true,push:true,sms:false,inapp:true});
+
+  const A=(d)=>fmt0(d);
+  const chart=(node,h=190)=>(<div style={{height:h}}><ResponsiveContainer width="100%" height="100%">{node}</ResponsiveContainer></div>);
+  const featRows=[];
+  const geoRows=[];
+  const deviceData=[];
+  const planData=[];
+
+  const sections={
+    catalog:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="bench">Granular capability switches across the whole platform — {CATALOG_GROUPS.reduce((s,g)=>s+g[1].length,0)} controls. Defaults on; flip any off to disable it product-wide.</div>
+      {CATALOG_GROUPS.map(([g,items])=>(<div className="panel" key={g}><div className="p-head"><div className="p-title"><ToggleRight size={15} color="var(--primary)"/> {g}</div><span className="code">{items.filter(ctOn).length}/{items.length}</span></div><div className="pii-grid">{items.map(it=>(<AFlag key={it} label={it} on={ctOn(it)} onToggle={()=>ctTog(it)}/>))}</div></div>))}
+    </div>),
+    pipeline:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="adm-kpis"><AKpi label="Events / min" value="41.2k"/><AKpi label="Pipeline lag" value="3.1s"/><AKpi label="Failed jobs 24h" value="2"/><AKpi label="Sources" value="9"/></div>
+      <div className="panel"><div className="p-head"><div className="p-title"><Database size={15} color="var(--primary)"/> Data sources</div></div>
+        <table className="tbl"><thead><tr><td className="code">Source</td><td className="code">Type</td><td className="code amt">Freshness</td><td className="code amt">Status</td></tr></thead><tbody>
+          {[["Plaid transactions","stream","12s","healthy"],["Stripe events","webhook","real-time","healthy"],["Market quotes","poll","1m","healthy"],["Account balances","batch","5m","healthy"],["Telemetry","stream","2s","healthy"],["SCIM directory","webhook","real-time","degraded"]].map((r,i)=>(<tr key={i}><td style={{fontWeight:500}}>{r[0]}</td><td style={{color:"var(--ink-2)"}}>{r[1]}</td><td className="amt">{r[2]}</td><td className="amt"><span className={"tag "+(r[3]==="healthy"?"g":"r")}>{r[3]}</span></td></tr>))}
+        </tbody></table></div></div>),
+    models:()=>(<div className="panel"><div className="p-head"><div className="p-title"><Cpu size={15} color="var(--primary)"/> AI model registry</div><span className="code">EVALS</span></div>
+      <table className="tbl"><thead><tr><td className="code">Model</td><td className="code">Provider</td><td className="code amt">Eval score</td><td className="code amt">p95</td><td className="code amt">Role</td></tr></thead><tbody>
+        {[["claude-opus-4-7","Claude","94.2","1.8s","primary"],["claude-haiku-4-5","Claude","88.1","0.6s","fast-path"],["gpt-4o","OpenAI","91.0","1.4s","fallback"],["gemini-2.5-pro","Google","90.3","1.6s","standby"]].map((r,i)=>(<tr key={i}><td className="mono" style={{fontSize:12.5}}>{r[0]}</td><td>{r[1]}</td><td className="amt">{r[2]}</td><td className="amt">{r[3]}</td><td className="amt"><span className="tag b">{r[4]}</span></td></tr>))}
+      </tbody></table></div>),
+    costs:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="adm-3"><div className="panel" style={{display:"grid",placeItems:"center"}}><AGauge value={62} label="MONTHLY BUDGET USED" color="#F59E0B"/></div><div className="panel" style={{display:"grid",placeItems:"center"}}><AGauge value={38} label="AI SPEND USED" color="#7C4DFF"/></div><div className="panel" style={{display:"grid",placeItems:"center"}}><AGauge value={81} label="INFRA COMMIT USED" color="#0DA66B"/></div></div>
+      <div className="panel"><div className="p-head"><div className="p-title"><CircleDollarSign size={15} color="var(--primary)"/> Spend by service · this month</div></div>
+        <ABarList rows={[{label:"AI inference",value:"$4,210",pct:100,color:"#7C4DFF"},{label:"Cloud compute",value:"$2,980",pct:71,color:"#00C2D6"},{label:"Plaid",value:"$1,140",pct:27,color:"#0DA66B"},{label:"Stripe fees",value:"$880",pct:21,color:"#F59E0B"},{label:"Storage / CDN",value:"$420",pct:10,color:"#E879F9"}]}/></div></div>),
+    releases:()=>(<div className="panel"><div className="p-head"><div className="p-title"><Boxes size={15} color="var(--primary)"/> Releases & deploys</div><span className="code">CI / CD</span></div>
+      <table className="tbl"><thead><tr><td className="code">Version</td><td className="code">Environment</td><td className="code">Deployed</td><td className="code amt">Status</td></tr></thead><tbody>
+        {[["v4.18.2","production","2h ago","live"],["v4.18.3-rc","staging","20m ago","testing"],["v4.18.1","production","yesterday","rolled back"],["v4.17.9","production","3d ago","live"]].map((r,i)=>(<tr key={i}><td className="mono" style={{fontSize:12.5}}>{r[0]}</td><td style={{color:"var(--ink-2)"}}>{r[1]}</td><td style={{color:"var(--ink-2)"}}>{r[2]}</td><td className="amt"><span className={"tag "+(r[3]==="live"?"g":r[3]==="rolled back"?"r":"")}>{r[3]}</span></td></tr>))}
+      </tbody></table></div>),
+    alerts:()=>(<div className="panel"><div className="p-head"><div className="p-title"><Bell size={15} color="var(--primary)"/> Alerting rules</div></div>
+      {[["Error rate > 1%","PagerDuty"],["p95 latency > 800ms","Slack #ops"],["Failed payments spike","Email on-call"],["Signup drop > 20%","Slack #growth"],["AI cost > daily budget","PagerDuty"]].map((r,i)=>(<AFlag key={i} label={r[0]} desc={"Routes to "+r[1]} on={alertOn[i]} onToggle={()=>setAlertOn(a=>a.map((x,j)=>j===i?!x:x))}/>))}
+    </div>),
+    customers:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="adm-kpis"><AKpi label="Total users" value="38,402"/><AKpi label="Paying" value="14,610"/><AKpi label="Avg accounts" value="3.2"/><AKpi label="NPS" value="61"/></div>
+      <div className="panel"><div className="p-head"><div className="p-title"><Users size={15} color="var(--primary)"/> Segments</div></div>
+        <ABarList rows={[{label:"Power savers",value:"8,120",pct:100,color:"#0DA66B"},{label:"New (30d)",value:"5,402",pct:66,color:"#7C4DFF"},{label:"At-risk churn",value:"1,940",pct:24,color:"#E8453F"},{label:"Investors",value:"6,210",pct:76,color:"#F59E0B"},{label:"Dormant",value:"2,810",pct:35,color:"#9AA4BB"}]}/></div>
+      <div className="panel"><div className="p-head"><div className="p-title">Retention by cohort</div></div><AHeat/></div>
+    </div>),
+
+    overview:()=>(<>
+      <div className="adm-kpis">
+        <AKpi label="Daily active" value={A(last.dau)} delta="6.2% w/w" up icon={Users}/>
+        <AKpi label="MRR" value={"$"+(last.mrr/1000).toFixed(1)+"k"} delta="4.4% m/m" up icon={CircleDollarSign}/>
+        <AKpi label="AI tokens / day" value={(last.tok*1.0).toFixed(0)+"k"} delta="9.1%" up icon={Cpu}/>
+        <AKpi label="Error rate" value={last.err+"%"} delta="0.1pp" up={false} icon={AlertTriangle}/>
+      </div>
+      <div className="adm-2">
+        <div className="panel"><div className="p-head"><div className="p-title"><Users size={15} color="var(--primary)"/> Active users · 30d</div><span className="code">NEW vs RETURNING</span></div>
+          {chart(<AreaChart data={D.days} margin={{top:6,right:6,left:-12,bottom:0}}><CartesianGrid stroke={c.axis} strokeOpacity={.12} vertical={false}/><XAxis dataKey="d" tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} interval={5} tickLine={false} axisLine={false}/><YAxis tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} width={34} tickLine={false} axisLine={false}/><Tooltip content={<Tip/>}/><Area dataKey="ret" stackId="1" stroke="#7C4DFF" fill="#7C4DFF" fillOpacity={.35} isAnimationActive={false}/><Area dataKey="neu" stackId="1" stroke="#00C2D6" fill="#00C2D6" fillOpacity={.35} isAnimationActive={false}/></AreaChart>)}
+          <div className="legend-row"><span><span className="lg-dot" style={{background:"#7C4DFF"}}/>Returning</span><span><span className="lg-dot" style={{background:"#00C2D6"}}/>New</span></div>
+        </div>
+        <div className="panel"><div className="p-head"><div className="p-title"><CircleDollarSign size={15} color="var(--primary)"/> Recurring revenue</div><span className="code">MRR · 30d</span></div>
+          {chart(<AreaChart data={D.days} margin={{top:6,right:6,left:-4,bottom:0}}><defs><linearGradient id="amrr" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#0DA66B" stopOpacity={.4}/><stop offset="100%" stopColor="#0DA66B" stopOpacity={0}/></linearGradient></defs><CartesianGrid stroke={c.axis} strokeOpacity={.12} vertical={false}/><XAxis dataKey="d" tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} interval={5} tickLine={false} axisLine={false}/><YAxis tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} width={40} tickLine={false} axisLine={false} tickFormatter={v=>"$"+Math.round(v/1000)+"k"}/><Tooltip content={<Tip/>}/><Area dataKey="mrr" stroke="#0DA66B" strokeWidth={2} fill="url(#amrr)" isAnimationActive={false}/></AreaChart>)}
+        </div>
+      </div>
+      <div className="panel" style={{marginTop:16}}><div className="p-head"><div className="p-title"><Activity size={15} color="var(--primary)"/> Platform status</div><span className="tag g">all systems operational</span></div>
+        <div className="adm-kpis" style={{marginBottom:0}}>
+          <AKpi label="Uptime 30d" value="99.98%"/><AKpi label="p95 latency" value={last.p95+"ms"}/><AKpi label="Active modules" value={Object.values(cfg.modules).filter(Boolean).length+" / "+Object.keys(cfg.modules).length}/><AKpi label="AI provider" value={(ADM_PROVIDERS.find(p=>p.id===cfg.ai.provider)||{}).name||"—"}/>
+        </div>
+      </div>
+    </>),
+
+    modules:()=>(<div className="panel"><div className="p-head"><div className="p-title"><SlidersHorizontal size={15} color="var(--primary)"/> Modules & feature flags</div><span className="code">{Object.values(cfg.modules).filter(Boolean).length} ENABLED</span></div>
+      <div className="rd" style={{marginBottom:6}}>Toggle a module to instantly add or remove it from every user's workspace rail.</div>
+      <AFlag label="Command center" desc="Net-worth cockpit, KPIs, cash-flow map and intelligence." on={cfg.modules.command!==false} onToggle={()=>upd("modules","command",!(cfg.modules.command!==false))}/>
+      <AFlag label="Financial Intelligence" desc="Deep analytics report: health score, FI, debt, spending, taxes." on={cfg.modules.fintel!==false} onToggle={()=>upd("modules","fintel",!(cfg.modules.fintel!==false))}/>
+      <AFlag label="Reports & Trends" desc="Net-worth history, waterfall, spend heatmap, statements, year-in-review." on={cfg.modules.reports!==false} onToggle={()=>upd("modules","reports",!(cfg.modules.reports!==false))}/>
+      <AFlag label="Goals & Savings" desc="Goal rings, envelopes, round-up simulator, AI allocation." on={cfg.modules.goals!==false} onToggle={()=>upd("modules","goals",!(cfg.modules.goals!==false))}/>
+      <AFlag label="Bills & Calendar" desc="Due-date calendar, subscriptions, negotiation queue, trial radar." on={cfg.modules.bills!==false} onToggle={()=>upd("modules","bills",!(cfg.modules.bills!==false))}/>
+      <AFlag label="Credit & Borrowing" desc="Score gauge, simulator, affordability, refinance offers." on={cfg.modules.credit!==false} onToggle={()=>upd("modules","credit",!(cfg.modules.credit!==false))}/>
+      <AFlag label="Markets & Tools" desc="Watchlist, dividends, rebalancing, risk metrics." on={cfg.modules.market!==false} onToggle={()=>upd("modules","market",!(cfg.modules.market!==false))}/>
+      <AFlag label="Wellness & Learn" desc="Lessons, peer percentile, achievements, carbon footprint." on={cfg.modules.wellness!==false} onToggle={()=>upd("modules","wellness",!(cfg.modules.wellness!==false))}/>
+      <AFlag label="Forecast & Scenarios" desc="What-if planner, one-time events, saved scenario compare." on={cfg.modules.forecast!==false} onToggle={()=>upd("modules","forecast",!(cfg.modules.forecast!==false))}/>
+      <AFlag label="Investments" desc="Holdings, cost basis, allocation and performance." on={cfg.modules.invest!==false} onToggle={()=>upd("modules","invest",!(cfg.modules.invest!==false))}/>
+      <AFlag label="The Books" desc="P&L, chart of accounts, ledger and reconciliation." on={cfg.modules.books!==false} onToggle={()=>upd("modules","books",!(cfg.modules.books!==false))}/>
+      <AFlag label="AI Agents" desc="Anomaly radar, subscription hunter, autopilot." on={cfg.modules.agents!==false} onToggle={()=>upd("modules","agents",!(cfg.modules.agents!==false))}/>
+      <AFlag label="AI Copilot" desc="Conversational copilot rail and command bar." on={cfg.modules.copilot!==false} onToggle={()=>upd("modules","copilot",!(cfg.modules.copilot!==false))}/>
+    </div>),
+
+    homepage:()=>(<div className="panel"><div className="p-head"><div className="p-title"><LayoutTemplate size={15} color="var(--primary)"/> Marketing homepage</div><span className="code">SECTION VISIBILITY</span></div>
+      <div className="rd" style={{marginBottom:6}}>Show or hide each section of the public landing page. Changes apply on next visit / sign-out.</div>
+      {[["hero","Hero banner"],["stats","Stat band"],["features","Feature grid"],["how","How it works"],["preview","Product preview"],["pricing","Pricing table"],["testimonial","Testimonial & trust"],["cta","Call-to-action"],["footer","Footer"]].map(([k,l])=>(
+        <AFlag key={k} label={l} on={cfg.home[k]!==false} onToggle={()=>upd("home",k,!(cfg.home[k]!==false))}/>
+      ))}
+    </div>),
+
+    auth:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><Lock size={15} color="var(--primary)"/> Access controls</div></div>
+        <AFlag label="Allow sign-in" desc="Master switch for existing users logging in." on={cfg.auth.login!==false} onToggle={()=>upd("auth","login",!(cfg.auth.login!==false))}/>
+        <AFlag label="Allow new sign-ups" desc="Open registration to new accounts." on={cfg.auth.register!==false} onToggle={()=>upd("auth","register",!(cfg.auth.register!==false))}/>
+        <AFlag label="Google sign-in" on={cfg.auth.google!==false} onToggle={()=>upd("auth","google",!(cfg.auth.google!==false))}/>
+        <AFlag label="Apple sign-in" on={cfg.auth.apple!==false} onToggle={()=>upd("auth","apple",!(cfg.auth.apple!==false))}/>
+        <AFlag label="Passkeys" on={cfg.auth.passkey!==false} onToggle={()=>upd("auth","passkey",!(cfg.auth.passkey!==false))}/>
+        <AFlag label="Enforce MFA" desc="Require a second factor for every member." on={!!cfg.auth.mfa} onToggle={()=>upd("auth","mfa",!cfg.auth.mfa)}/>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><KeyRound size={15} color="var(--primary)"/> Password reset</div><span className="poweredby"><WorkOSMark size={12}/> via <b>WorkOS</b></span></div>
+        <div className="rd" style={{marginBottom:10}}>Trigger a secure password reset / magic-link email through WorkOS for any member.</div>
+        <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+          <div className="ipwrap" style={{flex:1,minWidth:220}}><Mail size={16} color="var(--ink-3)"/><input type="email" value={resetEmail} onChange={e=>{setResetEmail(e.target.value);setResetMsg("");}} placeholder="member@company.com"/></div>
+          <button className="btn pri" disabled={!resetEmail.includes("@")} onClick={()=>setResetMsg("Reset link sent to "+resetEmail+" via WorkOS.")}>Send reset link</button>
+        </div>
+        {resetMsg && <div className="tag g" style={{marginTop:10}}><CheckCircle2 size={11} style={{verticalAlign:"-2px"}}/> {resetMsg}</div>}
+      </div>
+    </div>),
+
+    ai:()=>{const prov=ADM_PROVIDERS.find(p=>p.id===cfg.ai.provider)||ADM_PROVIDERS[0];return(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><Bot size={15} color="var(--primary)"/> AI provider</div><span className="code">SELECT ENGINE</span></div>
+        <div className="prov-grid">{ADM_PROVIDERS.map(p=>(<div key={p.id} className={"prov-card"+(cfg.ai.provider===p.id?" on":"")} onClick={()=>{upd("ai","provider",p.id);upd("ai","model",p.models[0]);}}><div className="prov-ic" style={{background:p.col}}><p.ic size={16}/></div><div className="pn">{p.name}</div><div className="pd">CLI: {p.cli}</div></div>))}</div>
+      </div>
+      <div className="adm-2">
+        <div className="panel"><div className="p-head"><div className="p-title"><Cpu size={15} color="var(--primary)"/> Connection</div></div>
+          <div className="code" style={{marginBottom:8}}>INTEGRATION MODE</div>
+          <div className="seg2" style={{marginBottom:16}}><button className={cfg.ai.mode==="api"?"on":""} onClick={()=>upd("ai","mode","api")}>API key</button><button className={cfg.ai.mode==="cli"?"on":""} onClick={()=>upd("ai","mode","cli")}>CLI agent</button></div>
+          {cfg.ai.mode==="api"?(<div className="field"><label className="code" style={{marginBottom:6}}>API KEY</label><div className="ipwrap"><KeyRound size={15} color="var(--ink-3)"/><input className="masked" type={showKey?"text":"password"} defaultValue="sk-pixii-live-9f4c8b2a7d10e3f5" /><button className="pw-toggle" onClick={()=>setShowKey(s=>!s)} tabIndex={-1}>{showKey?<EyeOff size={15}/>:<Eye size={15}/>}</button></div></div>)
+            :(<div><div className="field"><label className="code" style={{marginBottom:6}}>CLI BINARY</label><div className="ipwrap"><Server size={15} color="var(--ink-3)"/><input defaultValue={prov.cli} readOnly/></div></div><div className="tag g" style={{marginTop:4}}><CheckCircle2 size={11} style={{verticalAlign:"-2px"}}/> {prov.cli} detected on PATH</div></div>)}
+          <div className="field" style={{marginTop:14}}><label className="code" style={{marginBottom:6}}>MODEL</label><select className="inp" value={cfg.ai.model} onChange={e=>upd("ai","model",e.target.value)}>{prov.models.map(m=><option key={m} value={m}>{m}</option>)}</select></div>
+          <div className="field" style={{marginTop:10}}><label className="code" style={{marginBottom:6}}>FALLBACK PROVIDER</label><select className="inp" value={cfg.ai.fallback} onChange={e=>upd("ai","fallback",e.target.value)}><option value="">None</option>{ADM_PROVIDERS.flatMap(p=>p.models).map(m=><option key={m} value={m}>{m}</option>)}</select></div>
+        </div>
+        <div className="panel"><div className="p-head"><div className="p-title"><SlidersHorizontal size={15} color="var(--primary)"/> Behaviour</div></div>
+          <Slider label="Temperature" sub="creativity vs determinism" value={Math.round(cfg.ai.temp*100)} min={0} max={100} onChange={v=>upd("ai","temp",v/100)} fmt={v=>(v/100).toFixed(2)}/>
+          <Slider label="Max tokens" sub="per response" value={cfg.ai.maxTokens} min={256} max={8192} step={256} onChange={v=>upd("ai","maxTokens",v)} fmt={v=>v}/>
+          <Slider label="Rate limit" sub="requests / member / min" value={cfg.ai.ratePerMin} min={5} max={300} step={5} onChange={v=>upd("ai","ratePerMin",v)} fmt={v=>v+"/min"}/>
+          <AFlag label="Stream responses" on={!!cfg.ai.streaming} onToggle={()=>upd("ai","streaming",!cfg.ai.streaming)}/>
+          <AFlag label="Redact PII before prompt" desc="Strip emails, amounts and account numbers from model context." on={!!cfg.ai.redactPrompts} onToggle={()=>upd("ai","redactPrompts",!cfg.ai.redactPrompts)}/>
+        </div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><Activity size={15} color="var(--primary)"/> AI usage & cost · 30d</div><span className="code">TOKENS / COST</span></div>
+        {chart(<AreaChart data={D.days} margin={{top:6,right:6,left:-8,bottom:0}}><CartesianGrid stroke={c.axis} strokeOpacity={.12} vertical={false}/><XAxis dataKey="d" tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} interval={5} tickLine={false} axisLine={false}/><YAxis tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} width={36} tickLine={false} axisLine={false}/><Tooltip content={<Tip/>}/><Area dataKey="tok" name="tokens(k)" stroke={prov.col} strokeWidth={2} fill={prov.col} fillOpacity={.16} isAnimationActive={false}/></AreaChart>)}
+      </div>
+    </div>);},
+
+    telemetry:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><Radar size={15} color="var(--primary)"/> Data capture</div><span className="code">WHAT WE COLLECT</span></div>
+        <div className="pii-grid">
+          {[["pageviews","Page views"],["events","Custom events"],["sessions","Sessions & duration"],["perf","Performance / Web Vitals"],["errors","Errors & stack traces"],["aiUsage","AI usage & tokens"],["finEvents","Financial events"],["clickstream","Clickstream"],["heatmap","Heatmaps & scroll"]].map(([k,l])=>(
+            <AFlag key={k} label={l} on={cfg.telemetry[k]!==false} onToggle={()=>upd("telemetry",k,!(cfg.telemetry[k]!==false))}/>
+          ))}
+        </div>
+        <Slider label="Sampling rate" sub="share of sessions captured" value={cfg.telemetry.sampling} min={1} max={100} onChange={v=>upd("telemetry","sampling",v)} fmt={v=>v+"%"}/>
+        <Slider label="Retention" sub="raw events kept" value={cfg.telemetry.retentionDays} min={7} max={365} step={1} onChange={v=>upd("telemetry","retentionDays",v)} fmt={v=>v+"d"}/>
+        <div style={{display:"flex",gap:8,marginTop:8}}><button className="btn ghost sm"><Download size={13}/> Export dataset</button><button className="btn ghost sm" style={{color:"var(--down)"}}><Trash2 size={13}/> Purge raw events</button></div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><ShieldCheck size={15} color="var(--primary)"/> PII redaction</div><span className={"tag "+(cfg.telemetry.redactPII?"g":"r")}>{cfg.telemetry.redactPII?"protected":"raw"}</span></div>
+        <AFlag label="Master PII redaction" desc="Globally scrub personal data from all captured telemetry." on={!!cfg.telemetry.redactPII} onToggle={()=>upd("telemetry","redactPII",!cfg.telemetry.redactPII)}/>
+        <div className="pii-grid" style={{opacity:cfg.telemetry.redactPII?1:.45,pointerEvents:cfg.telemetry.redactPII?"auto":"none"}}>
+          <AFlag label="Mask email addresses" on={!!cfg.telemetry.maskEmail} onToggle={()=>upd("telemetry","maskEmail",!cfg.telemetry.maskEmail)}/>
+          <AFlag label="Mask monetary amounts" on={!!cfg.telemetry.maskAmounts} onToggle={()=>upd("telemetry","maskAmounts",!cfg.telemetry.maskAmounts)}/>
+          <AFlag label="Anonymize IP addresses" on={!!cfg.telemetry.anonIP} onToggle={()=>upd("telemetry","anonIP",!cfg.telemetry.anonIP)}/>
+          <AFlag label="Coarsen geolocation" on={!!cfg.telemetry.coarseGeo} onToggle={()=>upd("telemetry","coarseGeo",!cfg.telemetry.coarseGeo)}/>
+        </div>
+      </div>
+    </div>),
+
+    analytics:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="adm-kpis"><AKpi label="DAU" value={A(last.dau)} delta="6.2%" up/><AKpi label="WAU" value={A(last.dau*4.6)} delta="3.8%" up/><AKpi label="MAU" value={A(last.dau*13)} delta="5.1%" up/><AKpi label="Stickiness" value="34%" delta="1.2pp" up/></div>
+      <div className="adm-2">
+        <div className="panel"><div className="p-head"><div className="p-title">Sessions · 30d</div></div>{chart(<BarChart data={D.days} margin={{top:6,right:6,left:-14,bottom:0}}><CartesianGrid stroke={c.axis} strokeOpacity={.1} vertical={false}/><XAxis dataKey="d" tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} interval={5} tickLine={false} axisLine={false}/><YAxis tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} width={34} tickLine={false} axisLine={false}/><Tooltip content={<Tip/>}/><Bar dataKey="sess" fill={c.primary} radius={[3,3,0,0]} isAnimationActive={false}/></BarChart>)}</div>
+        <div className="panel"><div className="p-head"><div className="p-title">Feature adoption</div></div><ABarList rows={featRows}/></div>
+      </div>
+      <div className="adm-2">
+        <div className="panel"><div className="p-head"><div className="p-title">Latency percentiles · ms</div></div>{chart(<AreaChart data={D.days} margin={{top:6,right:6,left:-12,bottom:0}}><CartesianGrid stroke={c.axis} strokeOpacity={.1} vertical={false}/><XAxis dataKey="d" tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} interval={5} tickLine={false} axisLine={false}/><YAxis tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} width={36} tickLine={false} axisLine={false}/><Tooltip content={<Tip/>}/><Area dataKey="p99" stroke="#E8453F" fill="#E8453F" fillOpacity={.1} isAnimationActive={false}/><Area dataKey="p95" stroke="#F59E0B" fill="#F59E0B" fillOpacity={.1} isAnimationActive={false}/><Area dataKey="p50" stroke="#0DA66B" fill="#0DA66B" fillOpacity={.12} isAnimationActive={false}/></AreaChart>)}<div className="legend-row"><span><span className="lg-dot" style={{background:"#0DA66B"}}/>p50</span><span><span className="lg-dot" style={{background:"#F59E0B"}}/>p95</span><span><span className="lg-dot" style={{background:"#E8453F"}}/>p99</span></div></div>
+        <div className="panel"><div className="p-head"><div className="p-title">Retention cohorts</div></div><AHeat/></div>
+      </div>
+      <div className="adm-3">
+        <div className="panel"><div className="p-head"><div className="p-title">Device mix</div></div><ADonut data={deviceData}/><div className="legend-row" style={{justifyContent:"center"}}>{deviceData.map(d=><span key={d.name}><span className="lg-dot" style={{background:d.color}}/>{d.name}</span>)}</div></div>
+        <div className="panel"><div className="p-head"><div className="p-title">Top geographies</div></div><ABarList rows={geoRows}/></div>
+        <div className="panel"><div className="p-head"><div className="p-title">Conversion funnel</div></div><ABarList rows={[{label:"Visited",value:"100%",pct:100,color:"#7C4DFF"},{label:"Signed up",value:"41%",pct:41,color:"#6366F1"},{label:"Linked bank",value:"33%",pct:33,color:"#00C2D6"},{label:"Activated",value:"27%",pct:27,color:"#0DA66B"},{label:"Paid",value:"9%",pct:9,color:"#F59E0B"}]}/></div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title">Top events</div><span className="code">LAST 24H</span></div>
+        <table className="tbl"><thead><tr><td className="code">Event</td><td className="code amt">Count</td><td className="code amt">Users</td><td className="code amt">Trend</td></tr></thead><tbody>
+          {[["copilot_query","18,402","6,210","+12%"],["forecast_run","9,144","4,021","+7%"],["txn_categorized","41,209","7,880","+3%"],["account_linked","612","598","+21%"],["scenario_saved","1,933","1,402","+15%"]].map((r,i)=>(<tr key={i}><td className="mono" style={{fontSize:12.5}}>{r[0]}</td><td className="amt">{r[1]}</td><td className="amt">{r[2]}</td><td className="amt" style={{color:"var(--up)"}}>{r[3]}</td></tr>))}
+        </tbody></table>
+      </div>
+    </div>),
+
+    revenue:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="adm-kpis"><AKpi label="MRR" value={"$"+(last.mrr/1000).toFixed(1)+"k"} delta="4.4%" up/><AKpi label="ARR" value={"$"+(last.mrr*12/1e6).toFixed(2)+"M"} delta="4.4%" up/><AKpi label="ARPU" value="$11.40" delta="0.6%" up/><AKpi label="Churn" value="1.8%" delta="0.2pp" up={false}/></div>
+      <div className="adm-2">
+        <div className="panel"><div className="p-head"><div className="p-title">MRR growth</div></div>{chart(<AreaChart data={D.days} margin={{top:6,right:6,left:-4,bottom:0}}><defs><linearGradient id="arev" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#0DA66B" stopOpacity={.4}/><stop offset="100%" stopColor="#0DA66B" stopOpacity={0}/></linearGradient></defs><CartesianGrid stroke={c.axis} strokeOpacity={.1} vertical={false}/><XAxis dataKey="d" tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} interval={5} tickLine={false} axisLine={false}/><YAxis width={40} tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} tickLine={false} axisLine={false} tickFormatter={v=>"$"+Math.round(v/1000)+"k"}/><Tooltip content={<Tip/>}/><Area dataKey="mrr" stroke="#0DA66B" strokeWidth={2} fill="url(#arev)" isAnimationActive={false}/></AreaChart>)}</div>
+        <div className="panel"><div className="p-head"><div className="p-title">Plan distribution</div></div><ADonut data={planData}/><div className="legend-row" style={{justifyContent:"center"}}>{planData.map(d=><span key={d.name}><span className="lg-dot" style={{background:d.color}}/>{d.name} {d.value}%</span>)}</div></div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title">Recent invoices</div><span className="poweredby">Billing by <b>Stripe</b></span></div>
+        <table className="tbl"><thead><tr><td className="code">Invoice</td><td className="code">Customer</td><td className="code amt">Amount</td><td className="code amt">Status</td></tr></thead><tbody>
+          {[["INV-20413","a.rivera@…","$24.00","Paid"],["INV-20412","corp@odins…","$240.00","Paid"],["INV-20411","m.osei@…","$9.00","Paid"],["INV-20410","k.tan@…","$24.00","Failed"],["INV-20409","j.reyes@…","$9.00","Paid"]].map((r,i)=>(<tr key={i}><td className="mono" style={{fontSize:12.5}}>{r[0]}</td><td>{r[1]}</td><td className="amt">{r[2]}</td><td className="amt"><span className={"tag "+(r[3]==="Paid"?"g":"r")}>{r[3]}</span></td></tr>))}
+        </tbody></table>
+      </div>
+    </div>),
+
+    experiments:()=>(<div className="panel"><div className="p-head"><div className="p-title"><FlaskConical size={15} color="var(--primary)"/> Experiments & rollouts</div><span className="code">{exps.filter(e=>e.status==="running").length} RUNNING</span></div>
+      {exps.map(e=>(<div key={e.id} className="set-row" style={{flexWrap:"wrap",gap:10}}>
+        <div style={{flex:1,minWidth:200}}><div className="rt">{e.name} <span className={"tag "+(e.status==="running"?"g":e.status==="paused"?"r":"")}>{e.status}</span></div><div className="rd">Variant lift: {e.lift} · {e.split}% rollout</div></div>
+        <div style={{display:"flex",alignItems:"center",gap:10,minWidth:220}}><input type="range" min={0} max={100} value={e.split} onChange={ev=>setExps(p=>p.map(x=>x.id===e.id?{...x,split:+ev.target.value}:x))} style={{flex:1}}/><span className="bv">{e.split}%</span><button className={"toggle"+(e.status==="running"?" on":"")} onClick={()=>setExps(p=>p.map(x=>x.id===e.id?{...x,status:x.status==="running"?"paused":"running"}:x))} style={{background:e.status==="running"?"var(--primary)":"var(--line)"}}/></div>
+      </div>))}
+    </div>),
+
+    api:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><KeyRound size={15} color="var(--primary)"/> API keys</div><button className="btn ghost sm" onClick={()=>setKeys(p=>[{id:"k"+Date.now(),name:"New key",prefix:"pk_live_"+Math.random().toString(16).slice(2,6),created:"just now",last:"never"},...p])}><Plus size={13}/> Create key</button></div>
+        <table className="tbl"><thead><tr><td className="code">Name</td><td className="code">Key</td><td className="code">Created</td><td className="code">Last used</td><td/></tr></thead><tbody>
+          {keys.map(k=>(<tr key={k.id}><td style={{fontWeight:600}}>{k.name}</td><td className="masked" style={{fontSize:12}}>{k.prefix}••••••••</td><td style={{color:"var(--ink-2)"}}>{k.created}</td><td style={{color:"var(--ink-2)"}}>{k.last}</td><td className="amt"><button onClick={()=>setKeys(p=>p.filter(x=>x.id!==k.id))} style={{background:"none",border:"none",cursor:"pointer",color:"var(--ink-3)"}}><Trash2 size={14}/></button></td></tr>))}
+        </tbody></table>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title"><Webhook size={15} color="var(--primary)"/> Webhook endpoints</div></div>
+        <table className="tbl"><thead><tr><td className="code">Endpoint</td><td className="code">Events</td><td className="code amt">Success 24h</td><td className="code amt">Status</td></tr></thead><tbody>
+          {[["events.pixii.app/plaid","transactions, balances","99.4%","live"],["events.pixii.app/stripe","invoice.*, sub.*","100%","live"],["events.pixii.app/scim","user.*, group.*","98.1%","live"],["hooks.partner.io/sync","forecast.run","0%","failing"]].map((r,i)=>(<tr key={i}><td className="mono" style={{fontSize:12}}>{r[0]}</td><td style={{color:"var(--ink-2)"}}>{r[1]}</td><td className="amt">{r[2]}</td><td className="amt"><span className={"tag "+(r[3]==="live"?"g":"r")}>{r[3]}</span></td></tr>))}
+        </tbody></table>
+      </div>
+    </div>),
+
+    security:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="adm-kpis"><AKpi label="Failed logins 24h" value={A(last.fail*6)} delta="3%" up={false} icon={ShieldAlert}/><AKpi label="Blocked IPs" value="142"/><AKpi label="MFA adoption" value="76%" delta="2pp" up/><AKpi label="Open threats" value="2"/></div>
+      <div className="adm-2">
+        <div className="panel"><div className="p-head"><div className="p-title">Login attempts · 30d</div></div>{chart(<AreaChart data={D.days} margin={{top:6,right:6,left:-14,bottom:0}}><CartesianGrid stroke={c.axis} strokeOpacity={.1} vertical={false}/><XAxis dataKey="d" tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} interval={5} tickLine={false} axisLine={false}/><YAxis width={34} tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} tickLine={false} axisLine={false}/><Tooltip content={<Tip/>}/><Area dataKey="succ" stroke="#0DA66B" fill="#0DA66B" fillOpacity={.14} isAnimationActive={false}/><Area dataKey="fail" stroke="#E8453F" fill="#E8453F" fillOpacity={.18} isAnimationActive={false}/></AreaChart>)}<div className="legend-row"><span><span className="lg-dot" style={{background:"#0DA66B"}}/>Success</span><span><span className="lg-dot" style={{background:"#E8453F"}}/>Failed</span></div></div>
+        <div className="panel" style={{display:"flex",flexDirection:"column",justifyContent:"center"}}><AGauge value={76} label="MFA ADOPTION" sub="of active members" color="#0DA66B"/></div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title">Recent security events</div></div>
+        <table className="tbl"><thead><tr><td className="code">Time</td><td className="code">Event</td><td className="code">Source</td><td className="code amt">Severity</td></tr></thead><tbody>
+          {[["12:04","Impossible-travel login blocked","203.0.113.7 · RU","high"],["09:41","5+ failed logins","a.user@… ","med"],["08:12","New device authorized","j.reyes@…","low"],["Yesterday","SCIM deprovision","Okta","low"]].map((r,i)=>(<tr key={i}><td style={{color:"var(--ink-2)"}}>{r[0]}</td><td>{r[1]}</td><td className="mono" style={{fontSize:12}}>{r[2]}</td><td className="amt"><span className={"tag "+(r[3]==="high"?"r":r[3]==="med"?"":"g")}>{r[3]}</span></td></tr>))}
+        </tbody></table>
+      </div>
+    </div>),
+
+    integrations:()=>(<div className="panel"><div className="p-head"><div className="p-title"><Plug size={15} color="var(--primary)"/> Connected platforms</div></div>
+      {[["Plaid","Bank & transaction data","#0BAA6F","healthy","Last sync 3m ago"],["Stripe","Billing & payments","#635BFF","healthy","Webhooks live"],["WorkOS","SSO & directory","#6363F1","healthy","SAML + SCIM active"],["Gravatar","Profile avatars","#1D4ED8","healthy","CDN reachable"],["Twilio","SMS / OTP","#F22F46","degraded","Elevated latency"]].map((r,i)=>(
+        <div className="conn-row" key={i}><div className="inst-dot" style={{background:r[2]}}>{r[0][0]}</div><div><div style={{fontWeight:600,fontSize:14}}>{r[0]}</div><div style={{fontSize:11.5,color:"var(--ink-3)"}}>{r[1]} · {r[4]}</div></div><span className={"tag "+(r[3]==="healthy"?"g":"r")} style={{marginLeft:"auto"}}>{r[3]}</span></div>
+      ))}
+    </div>),
+
+    system:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="adm-3">
+        <div className="panel" style={{display:"grid",placeItems:"center"}}><AGauge value={99} label="UPTIME 30d" sub="99.98%" color="#0DA66B"/></div>
+        <div className="panel" style={{display:"grid",placeItems:"center"}}><AGauge value={92} label="CACHE HIT" color="#7C4DFF"/></div>
+        <div className="panel" style={{display:"grid",placeItems:"center"}}><AGauge value={38} label="ERROR BUDGET USED" color="#F59E0B"/></div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title">Requests / sec & errors · 30d</div></div>{chart(<AreaChart data={D.days} margin={{top:6,right:6,left:-12,bottom:0}}><CartesianGrid stroke={c.axis} strokeOpacity={.1} vertical={false}/><XAxis dataKey="d" tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} interval={5} tickLine={false} axisLine={false}/><YAxis width={36} tick={{fontFamily:"JetBrains Mono",fontSize:9,fill:c.axis}} tickLine={false} axisLine={false}/><Tooltip content={<Tip/>}/><Area dataKey="sess" name="req/s" stroke={c.primary} strokeWidth={2} fill={c.primary} fillOpacity={.12} isAnimationActive={false}/></AreaChart>)}</div>
+      <div className="panel"><div className="p-head"><div className="p-title">Background jobs</div></div>
+        <table className="tbl"><thead><tr><td className="code">Worker</td><td className="code amt">Queue</td><td className="code amt">Throughput</td><td className="code amt">Status</td></tr></thead><tbody>
+          {[["txn-ingest","0","4.2k/min","ok"],["categorizer","12","1.1k/min","ok"],["forecast","3","240/min","ok"],["email","148","backlog","warn"]].map((r,i)=>(<tr key={i}><td className="mono" style={{fontSize:12.5}}>{r[0]}</td><td className="amt">{r[1]}</td><td className="amt">{r[2]}</td><td className="amt"><span className={"tag "+(r[3]==="ok"?"g":"r")}>{r[3]}</span></td></tr>))}
+        </tbody></table>
+      </div>
+    </div>),
+
+    audit:()=>(<div className="panel"><div className="p-head"><div className="p-title"><ScrollText size={15} color="var(--primary)"/> Audit log</div><span className="code">ADMIN ACTIONS</span></div>
+      <table className="tbl"><thead><tr><td className="code">Time</td><td className="code">Actor</td><td className="code">Action</td><td className="code">Target</td></tr></thead><tbody>
+        {[["12:31","j.reyes (Owner)","toggled module","Investments → off"],["11:58","system","ai.provider changed","claude → gpt-4o"],["10:22","a.admin","sent password reset","m.osei@…"],["09:05","j.reyes","updated rate limit","60 → 90/min"],["Yesterday","a.admin","exported telemetry","events_2026-05.csv"],["Yesterday","system","experiment started","Copilot nudges"]].map((r,i)=>(<tr key={i}><td style={{color:"var(--ink-2)"}}>{r[0]}</td><td style={{fontWeight:600}}>{r[1]}</td><td>{r[2]}</td><td className="mono" style={{fontSize:12}}>{r[3]}</td></tr>))}
+      </tbody></table>
+    </div>),
+
+    rbac:()=>(<div className="panel" style={{overflowX:"auto"}}><div className="p-head"><div className="p-title"><Users size={15} color="var(--primary)"/> Roles & permissions</div></div>
+      <table className="tbl" style={{minWidth:560}}><thead><tr><td className="code">Permission</td>{ROLES.map(r=><td key={r} className="code amt">{r}</td>)}</tr></thead><tbody>
+        {PERMS.map(p=>(<tr key={p}><td style={{fontWeight:500}}>{p}</td>{ROLES.map(ro=>{const on=matrix[ro+"|"+p];return(<td key={ro} className="amt"><span onClick={()=>setMatrix(m=>({...m,[ro+"|"+p]:!m[ro+"|"+p]}))} style={{cursor:"pointer",display:"inline-grid",placeItems:"center",width:20,height:20,borderRadius:5,background:on?"var(--primary)":"var(--panel-2)",border:"1px solid "+(on?"var(--primary)":"var(--line)"),color:"var(--pri-fg)"}}>{on?<Check size={12}/>:""}</span></td>);})}</tr>))}
+      </tbody></table>
+    </div>),
+
+    notifications:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><Megaphone size={15} color="var(--primary)"/> Channels</div></div>
+        {[["email","Email"],["push","Push notifications"],["sms","SMS"],["inapp","In-app messages"]].map(([k,l])=>(<AFlag key={k} label={l} on={chans[k]} onToggle={()=>setChans(s=>({...s,[k]:!s[k]}))}/>))}
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title">Templates & delivery</div></div>
+        <table className="tbl"><thead><tr><td className="code">Template</td><td className="code">Channel</td><td className="code amt">Sent 7d</td><td className="code amt">Open</td></tr></thead><tbody>
+          {[["Welcome series","Email","4,210","61%"],["Weekly digest","Email","18,900","38%"],["Anomaly alert","Push","2,140","72%"],["Payment failed","Email + SMS","312","88%"]].map((r,i)=>(<tr key={i}><td style={{fontWeight:600}}>{r[0]}</td><td style={{color:"var(--ink-2)"}}>{r[1]}</td><td className="amt">{r[2]}</td><td className="amt">{r[3]}</td></tr>))}
+        </tbody></table>
+      </div>
+    </div>),
+
+    content:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="panel"><div className="p-head"><div className="p-title"><Languages size={15} color="var(--primary)"/> Site state</div></div>
+        <AFlag label="Maintenance mode" desc="Show a maintenance notice to the public; admins keep access." on={!!cfg.system.maintenance} danger onToggle={()=>upd("system","maintenance",!cfg.system.maintenance)}/>
+        <AFlag label="Public sign-ups open" on={cfg.system.signupsOpen!==false} onToggle={()=>upd("system","signupsOpen",!(cfg.system.signupsOpen!==false))}/>
+        <AFlag label="Public status page" on={cfg.system.statusPage!==false} onToggle={()=>upd("system","statusPage",!(cfg.system.statusPage!==false))}/>
+        <div className="set-row"><div><div className="rt">Default appearance</div><div className="rd">Theme applied to new sessions.</div></div>
+          <select className="inp" style={{width:170}} value={themeId} onChange={e=>setThemeId(e.target.value)}>{THEMES.map(t=><option key={t.id} value={t.id}>{t.name}</option>)}</select></div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title">Localization</div><span className="code">5 LOCALES</span></div>
+        <table className="tbl"><thead><tr><td className="code">Locale</td><td className="code amt">Coverage</td><td className="code amt">Users</td></tr></thead><tbody>
+          {[["English (US)","100%","71%"],["Español","96%","11%"],["Français","91%","6%"],["Deutsch","88%","7%"],["日本語","74%","5%"]].map((r,i)=>(<tr key={i}><td style={{fontWeight:600}}>{r[0]}</td><td className="amt">{r[1]}</td><td className="amt">{r[2]}</td></tr>))}
+        </tbody></table>
+      </div>
+    </div>),
+
+    compliance:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="adm-3"><AKpiWrap><AKpi label="DSARs open" value="3"/></AKpiWrap><AKpiWrap><AKpi label="Consent rate" value="94%"/></AKpiWrap><AKpiWrap><AKpi label="Avg fulfillment" value="2.1d"/></AKpiWrap></div>
+      <div className="panel"><div className="p-head"><div className="p-title"><FileCheck size={15} color="var(--primary)"/> Data-subject requests</div><span className="poweredby">GDPR / CCPA</span></div>
+        <table className="tbl"><thead><tr><td className="code">Requester</td><td className="code">Type</td><td className="code">Opened</td><td className="code amt">Status</td></tr></thead><tbody>
+          {[["k.tan@…","Export","2d ago","in progress"],["m.osei@…","Delete","4d ago","verifying"],["a.rivera@…","Access","1d ago","queued"],["corp@odins…","Export","6d ago","completed"]].map((r,i)=>(<tr key={i}><td className="mono" style={{fontSize:12}}>{r[0]}</td><td>{r[1]}</td><td style={{color:"var(--ink-2)"}}>{r[2]}</td><td className="amt"><span className={"tag "+(r[3]==="completed"?"g":"")}>{r[3]}</span></td></tr>))}
+        </tbody></table>
+        <div style={{display:"flex",gap:8,marginTop:12}}><button className="btn ghost sm"><Download size={13}/> Export a user's data</button><button className="btn ghost sm" style={{color:"var(--down)"}}><Trash2 size={13}/> Erase a user</button></div>
+      </div>
+      <div className="panel"><div className="p-head"><div className="p-title">Compliance posture</div></div>
+        <div className="legend-row" style={{gap:18}}><span className="tag g">SOC 2 Type II</span><span className="tag g">GDPR</span><span className="tag g">CCPA</span><span className="tag g">256-bit encryption</span><span className="tag">PCI via Stripe</span></div>
+      </div>
+    </div>),
+
+    support:()=>(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+      <div className="adm-kpis"><AKpi label="Open tickets" value="42"/><AKpi label="First response" value="1.4h" delta="12%" up/><AKpi label="CSAT" value="4.7/5" delta="0.1" up/><AKpi label="Backlog" value="8"/></div>
+      <div className="panel"><div className="p-head"><div className="p-title"><LifeBuoy size={15} color="var(--primary)"/> Recent tickets</div></div>
+        <table className="tbl"><thead><tr><td className="code">#</td><td className="code">Subject</td><td className="code">Priority</td><td className="code amt">Status</td></tr></thead><tbody>
+          {[["8821","Plaid reconnect loop","high","open"],["8820","Forecast band looks off","low","open"],["8817","Export to CSV missing column","med","pending"],["8810","Upgrade billing question","low","solved"]].map((r,i)=>(<tr key={i}><td className="mono">{r[0]}</td><td>{r[1]}</td><td><span className={"tag "+(r[2]==="high"?"r":"")}>{r[2]}</span></td><td className="amt"><span className={"tag "+(r[3]==="solved"?"g":"")}>{r[3]}</span></td></tr>))}
+        </tbody></table>
+      </div>
+    </div>),
+  };
+
+  return (
+    <div className="fade">
+      <div className="page-h"><div><h1>Admin console</h1><div className="sub">Governance, telemetry and control surface for the entire Pixii platform</div></div>
+        <span className="tag b" style={{alignSelf:"center"}}><Shield size={11} style={{verticalAlign:"-2px"}}/> Owner access</span></div>
+      <div className="adm-wrap">
+        <div className="adm-nav">
+          {ADM_NAV.map(([grp,items])=>(<React.Fragment key={grp}><div className="grp">{grp}</div>{items.map(([id,label,Ic])=>(<button key={id} className={sub===id?"on":""} onClick={()=>setSub(id)}><Ic size={15}/> {label}</button>))}</React.Fragment>))}
+        </div>
+        <div style={{minWidth:0}}>{(sections[sub]||sections.overview)()}</div>
+      </div>
+    </div>
+  );
+}
+function AKpiWrap({children}){return <div>{children}</div>;}
 
 /* ================================================================== */
 /*  SETTINGS / PROFILE                                                */

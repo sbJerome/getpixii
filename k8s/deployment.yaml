@@ -23,6 +23,12 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          envFrom:
+            # Live-data API keys (Finnhub, NewsAPI, Anthropic, Plaid, ...).
+            # Populated by importing /mnt/bigData/mcp/Pixii/.credentials.
+            - secretRef:
+                name: getpixii-secrets
+                optional: true
           env:
             - name: DATABASE_URL
               valueFrom:
