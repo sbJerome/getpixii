@@ -2,6 +2,13 @@
 
 All notable changes to getpixii.ai are documented here.
 
+## [1.0.1] - 2026-05-24
+
+### Fixed
+- Startup migration now runs as a multi-statement batch (`sqlx::raw_sql`),
+  fixing a crash-loop on first boot ("cannot insert multiple commands into a
+  prepared statement").
+
 ## [1.0.0] - 2026-05-24
 
 ### Added

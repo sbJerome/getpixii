@@ -36,7 +36,7 @@ async fn main() {
         .await
         .expect("failed to connect to Postgres");
 
-    sqlx::query(include_str!("../migrations/0001_init.sql"))
+    sqlx::raw_sql(include_str!("../migrations/0001_init.sql"))
         .execute(&db)
         .await
         .expect("migration failed");
