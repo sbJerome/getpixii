@@ -1178,7 +1178,7 @@ function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser, 
   function ask(text){if(!text.trim())return;setFeed(f=>[{id:"q"+Date.now(),q:text},...f]);setThinking(true);setTimeout(()=>{setFeed(f=>[{id:"a"+Date.now(),...answer(text)},...f]);setThinking(false);},700);}
 
   const WS=[{id:"command",icon:Gauge,label:"Command",grp:"overview"},{id:"fintel",icon:BarChart3,label:"Financial Intelligence",grp:"insight"},{id:"reports",icon:FileText,label:"Reports & Trends",grp:"insight"},{id:"forecast",icon:Activity,label:"Forecast & Scenarios",grp:"plan"},{id:"goals",icon:Target,label:"Goals & Savings",grp:"plan"},{id:"bills",icon:CalendarDays,label:"Bills & Calendar",grp:"plan"},{id:"credit",icon:CreditCard,label:"Credit & Borrowing",grp:"plan"},{id:"tools",icon:Boxes,label:"Tools & Calculators",grp:"plan"},{id:"invest",icon:LineChart,label:"Investments",grp:"invest"},{id:"market",icon:Coins,label:"Markets & Tools",grp:"invest"},{id:"books",icon:BookOpen,label:"The Books",grp:"operate"},{id:"agents",icon:Bot,label:"AI Agents",grp:"operate"},{id:"wellness",icon:GraduationCap,label:"Wellness & Learn",grp:"grow"}];
-  const intel={fiNumber,fiProgress,yearsToFI,efMonths,efTarget,util,payoffMonths,taxSetAside,freelance,annualExp,card};
+  const intel={fiNumber,fiProgress,yearsToFI,efMonths,efTarget,util,payoffMonths,taxSetAside,freelance,annualExp,card:card||{name:"—",balance:0,limit:0,apr:0,type:"credit"}};
   const smart={recurring,recurringTotal,lowBal,velocity,projMonth,budgetTotal:BUDGET_TOTAL,cashDrag,topMerchant,checking};
   const ctx={c,dark,toggleTheme,themeId,setThemeId,accounts,setAccounts,tx,setTx,goals,setGoals,scenario,setScenario,scrub,setScrub,agents,setAgents,income,expense,saved,netWorth,liquid,spentByCat,discSpend,burn,baseNet,projNet,runway,savingsRate,adjIncome,adjExpense,series,yDomain,scrubPoint,scrubVal,isFuture,setWs,setAddOpen,intel,smart,freelance,plan,setPlan,prefs,setPrefs,savedScenarios,setSavedScenarios,user,setUser,cfg,setCfg,themeId,setThemeId,fintelFocus,live,goFintel:(sec)=>{setFintelFocus({sec,t:Date.now()});setWs("fintel");},openWizard:()=>setWizardOpen(true)};
 
@@ -1275,7 +1275,7 @@ function FinIntel({ ctx }){
   const projYears=Math.min(45,Math.max(10,Math.ceil(intel.yearsToFI)+3));
   let nw=netWorth; const proj=[{y:"Now",v:Math.round(nw)}]; for(let y=1;y<=projYears;y++){nw=nw*1.07+annualContribution;proj.push({y:"+"+y,v:Math.round(nw)});}
   const bal=Math.abs(intel.card.balance), apr=intel.card.apr, mr=apr/1200;
-  const payoff=(pmt)=>{ if(pmt<=bal*mr) return {mo:Infinity,int:Infinity}; const mo=Math.ceil(-Math.log(1-(bal*mr)/pmt)/Math.log(1+mr)); return {mo,int:Math.max(0,pmt*mo-bal)}; };
+  const payoff=(pmt)=>{ if(bal<=0||mr<=0) return {mo:0,int:0}; if(pmt<=bal*mr) return {mo:Infinity,int:Infinity}; const mo=Math.ceil(-Math.log(1-(bal*mr)/pmt)/Math.log(1+mr)); return {mo,int:Math.max(0,pmt*mo-bal)}; };
   const minPmt=Math.max(35,Math.round(bal*0.03));
   const payPlans=[{label:"Minimum",pmt:minPmt},{label:"$100 / mo",pmt:100},{label:"$200 / mo",pmt:200},{label:"$400 / mo",pmt:400}].map(p=>({...p,...payoff(p.pmt)}));
   const dti=income>0?(minPmt/income):0;
@@ -1595,9 +1595,9 @@ function Credit({ ctx }){
   const base=742; const hist=sparkSeries(42,12,690,12).map((v,i)=>({m:["Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr","May"][i],v:Math.min(820,690+i*4+(v%14))}));
   const score=hist[hist.length-1].v;
   const band=score>=800?"Exceptional":score>=740?"Very good":score>=670?"Good":score>=580?"Fair":"Poor";
-  const limit=intel.card.limit; const curBal=Math.abs(intel.card.balance); const curUtil=curBal/limit;
+  const limit=intel.card.limit; const curBal=Math.abs(intel.card.balance); const curUtil=limit>0?curBal/limit:0;
   const [bal,setBal]=useState(Math.round(curBal)); const [inquiry,setInquiry]=useState(false); const [newCard,setNewCard]=useState(false);
-  const projUtil=bal/limit;
+  const projUtil=limit>0?bal/limit:0;
   const proj=Math.max(300,Math.min(850,Math.round(score+(curUtil-projUtil)*220-(inquiry?12:0)-(newCard?7:0)+(newCard?3:0))));
   const factors=[];
   // loan affordability
@@ -1996,7 +1996,7 @@ function Sankey({ income, spentByCat, net, c }){
   const W=560,H=250,pad=10;
   const srcPal=["#0DA66B","#14B8A6","#22C55E"];
   const usePal=["#7C4DFF","#F59E0B","#00C2D6","#E879F9","#3B82F6","#FB7185","#A855F7","#EAB308"];
-  const sources=Object.entries(tx.filter(t=>t.amount>0).reduce((m,t)=>{const k=t.merchant||"Income";m[k]=(m[k]||0)+t.amount;return m;},{})).map(([n,v])=>({n,v}));
+  const sources=income>0?[{n:"Income",v:income}]:[];
   const uses=Object.entries(spentByCat).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([n,v])=>({n,v}));
   const others=Object.entries(spentByCat).sort((a,b)=>b[1]-a[1]).slice(6).reduce((s,[,v])=>s+v,0);
   if(others>0)uses.push({n:"Other",v:others});
@@ -2185,7 +2185,7 @@ function Investments({ ctx }){
         <KPI code="PORT.VAL" label="Portfolio value" value={total} chip={pct(dayPct)} up={dayUsd>=0}/>
         <KPI code="GAIN.TTL" label="Total gain/loss" value={gain} chip={pct(gainPct)} up={gain>=0}/>
         <KPI code="PNL.DAY" label="Day P&L" value={dayUsd} chip={pct(dayPct)} up={dayUsd>=0}/>
-        <KPI code="DIV.YR" label="Est. annual dividends" value={annualDiv} chip={(annualDiv/total*100).toFixed(1)+"% yld"} flat/>
+        <KPI code="DIV.YR" label="Est. annual dividends" value={annualDiv} chip={total>0?(annualDiv/total*100).toFixed(1)+"% yld":"—"} flat/>
       </div>
 
       <div className="grid" style={{gridTemplateColumns:"1.05fr 1fr",marginBottom:16}}>
@@ -2276,8 +2276,8 @@ function Books({ ctx }){
               <tr className="total"><td style={{fontSize:16}}>Net income</td><td className="amt" style={{fontSize:16,color:income-expense>=0?"var(--up)":"var(--down)"}}>{fmt(income-expense)}</td></tr>
             </tbody></table></div>
           <div className="grid" style={{gridTemplateColumns:"1fr 1fr",alignContent:"start"}}>
-            <MiniStat code="MARGIN" v={Math.round((income-expense)/income*100)+"%"} label="Net margin"/>
-            <MiniStat code="EXP/INC" v={Math.round(expense/income*100)+"%"} label="Expense ratio"/>
+            <MiniStat code="MARGIN" v={income>0?Math.round((income-expense)/income*100)+"%":"—"} label="Net margin"/>
+            <MiniStat code="EXP/INC" v={income>0?Math.round(expense/income*100)+"%":"—"} label="Expense ratio"/>
             <MiniStat code="NW" v={fmtK(netWorth)} label="Net worth"/>
             <MiniStat code="TOP" v={Object.entries(spentByCat).sort((a,b)=>b[1]-a[1])[0][0]} label="Top category" small/>
             <div className="panel" style={{gridColumn:"1/-1"}}><div className="p-head"><div className="p-title"><Cpu size={15} color="var(--primary)"/> AI categorization</div></div>
@@ -2976,7 +2976,7 @@ function Settings({ ctx }){
 /* ================================================================== */
 function AddModal({ onClose,onAdd,accounts }){
   const [merchant,setM]=useState("");const[amount,setA]=useState("");const[category,setC]=useState("Groceries");
-  const[type,setType]=useState("expense");const[account,setAcc]=useState(accounts[0].name);const[day,setDay]=useState(String(TODAY));
+  const[type,setType]=useState("expense");const[account,setAcc]=useState((accounts[0]&&accounts[0].name)||"");const[day,setDay]=useState(String(TODAY));
   const valid=merchant.trim()&&parseFloat(amount)>0;
   const submit=()=>{if(!valid)return;onAdd({id:"t"+Date.now(),date:`2026-05-${String(Math.min(31,Math.max(1,parseInt(day)||TODAY))).padStart(2,"0")}`,merchant:merchant.trim(),category:type==="income"?"Income":category,amount:parseFloat(amount)*(type==="income"?1:-1),account,conf:1});};
   return (
