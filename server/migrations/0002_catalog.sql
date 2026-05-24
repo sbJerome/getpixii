@@ -1,0 +1,9 @@
+ALTER TABLE users ADD COLUMN IF NOT EXISTS holdings       JSONB NOT NULL DEFAULT '[]'::jsonb;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS invoices       JSONB NOT NULL DEFAULT '[]'::jsonb;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS month_history  JSONB NOT NULL DEFAULT '[]'::jsonb;
+
+CREATE TABLE IF NOT EXISTS catalog (
+    key   TEXT PRIMARY KEY,
+    value JSONB NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);

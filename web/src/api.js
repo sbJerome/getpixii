@@ -44,4 +44,28 @@ export const api = {
       return false;
     }
   },
+
+  // Global reference/catalog data (plans, themes, institutions, landing stats).
+  async getCatalog() {
+    try {
+      const r = await fetch("/api/catalog");
+      if (!r.ok) return null;
+      return await r.json();
+    } catch {
+      return null;
+    }
+  },
+
+  async putCatalog(data) {
+    try {
+      await fetch("/api/catalog", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      return true;
+    } catch {
+      return false;
+    }
+  },
 };

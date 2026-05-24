@@ -39,7 +39,11 @@ async fn main() {
     sqlx::raw_sql(include_str!("../migrations/0001_init.sql"))
         .execute(&db)
         .await
-        .expect("migration failed");
+        .expect("migration 0001 failed");
+    sqlx::raw_sql(include_str!("../migrations/0002_catalog.sql"))
+        .execute(&db)
+        .await
+        .expect("migration 0002 failed");
     tracing::info!("migrations applied");
 
     let app_state = App { db };
@@ -51,6 +55,7 @@ async fn main() {
         .route("/health", get(health))
         .route("/auth", post(auth))
         .route("/state", get(get_state).put(put_state))
+        .route("/catalog", get(get_catalog).put(put_catalog))
         .with_state(app_state);
 
     let app = Router::new().nest("/api", api).fallback_service(spa);
@@ -163,7 +168,7 @@ async fn auth(State(app): State<App>, Json(body): Json<Value>) -> impl IntoRespo
 async fn get_state(State(app): State<App>, headers: HeaderMap) -> impl IntoResponse {
     let email = user_header(&headers);
 
-    let urow = sqlx::query("SELECT name, plan, theme_id, prefs, saved_scenarios, budgets FROM users WHERE email=$1")
+    let urow = sqlx::query("SELECT name, plan, theme_id, prefs, saved_scenarios, budgets, holdings, invoices, month_history FROM users WHERE email=$1")
         .bind(&email)
         .fetch_optional(&app.db)
         .await
@@ -179,6 +184,9 @@ async fn get_state(State(app): State<App>, headers: HeaderMap) -> impl IntoRespo
     let prefs: Value = urow.get("prefs");
     let saved_scenarios: Value = urow.get("saved_scenarios");
     let budgets: Value = urow.get("budgets");
+    let holdings: Value = urow.get("holdings");
+    let invoices: Value = urow.get("invoices");
+    let month_history: Value = urow.get("month_history");
 
     let accounts = sqlx::query(
         "SELECT id,name,inst,type,balance,limit_amt,apr,reconciled,last_seen FROM accounts WHERE user_email=$1 ORDER BY pos",
@@ -265,6 +273,9 @@ async fn get_state(State(app): State<App>, headers: HeaderMap) -> impl IntoRespo
         "prefs": prefs,
         "savedScenarios": saved_scenarios,
         "budgets": budgets,
+        "holdings": holdings,
+        "invoices": invoices,
+        "monthHistory": month_history,
         "accounts": accounts,
         "tx": tx,
         "goals": goals,
@@ -286,6 +297,35 @@ fn opt_str<'a>(v: &'a Value, k: &str) -> Option<&'a str> {
     v.get(k).and_then(|x| x.as_str())
 }
 
+// GET /api/catalog — global reference data (plans, themes, institutions, landing stats)
+async fn get_catalog(State(app): State<App>) -> impl IntoResponse {
+    let row: Option<(Value,)> = sqlx::query_as("SELECT value FROM catalog WHERE key='site'")
+        .fetch_optional(&app.db)
+        .await
+        .unwrap_or(None);
+    match row {
+        Some((v,)) => Json(v).into_response(),
+        None => Json(json!({})).into_response(),
+    }
+}
+
+// PUT /api/catalog — seed/replace the global reference data (idempotent first-write)
+async fn put_catalog(State(app): State<App>, Json(body): Json<Value>) -> impl IntoResponse {
+    let res = sqlx::query(
+        "INSERT INTO catalog(key,value,updated_at) VALUES('site',$1,now()) ON CONFLICT(key) DO UPDATE SET value=$1, updated_at=now()",
+    )
+    .bind(&body)
+    .execute(&app.db)
+    .await;
+    match res {
+        Ok(_) => Json(json!({"ok":true})).into_response(),
+        Err(e) => {
+            tracing::error!("put_catalog: {e}");
+            StatusCode::INTERNAL_SERVER_ERROR.into_response()
+        }
+    }
+}
+
 // PUT /api/state  — replaces the user's entire dataset
 async fn put_state(
     State(app): State<App>,
@@ -304,6 +344,9 @@ async fn put_state(
     let prefs = body.get("prefs").cloned().unwrap_or_else(|| json!({}));
     let saved = body.get("savedScenarios").cloned().unwrap_or_else(|| json!([]));
     let budgets = body.get("budgets").cloned().unwrap_or_else(|| json!({}));
+    let holdings = body.get("holdings").cloned().unwrap_or_else(|| json!([]));
+    let invoices = body.get("invoices").cloned().unwrap_or_else(|| json!([]));
+    let month_history = body.get("monthHistory").cloned().unwrap_or_else(|| json!([]));
 
     let mut txn = match app.db.begin().await {
         Ok(t) => t,
@@ -315,7 +358,7 @@ async fn put_state(
 
     let res: Result<(), sqlx::Error> = async {
         sqlx::query(
-            "UPDATE users SET name=$2, plan=$3, theme_id=$4, prefs=$5, saved_scenarios=$6, budgets=$7, updated_at=now() WHERE email=$1",
+            "UPDATE users SET name=$2, plan=$3, theme_id=$4, prefs=$5, saved_scenarios=$6, budgets=$7, holdings=$8, invoices=$9, month_history=$10, updated_at=now() WHERE email=$1",
         )
         .bind(&email)
         .bind(if name.is_empty() { &email } else { name })
@@ -324,6 +367,9 @@ async fn put_state(
         .bind(&prefs)
         .bind(&saved)
         .bind(&budgets)
+        .bind(&holdings)
+        .bind(&invoices)
+        .bind(&month_history)
         .execute(&mut *txn)
         .await?;
 

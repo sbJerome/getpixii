@@ -2,6 +2,17 @@
 
 All notable changes to getpixii.ai are documented here.
 
+## [1.0.2] - 2026-05-24
+
+### Added
+- All remaining visible data now lives in Postgres. Per-user `holdings`
+  (investments), `invoices`, and `monthHistory` are stored on the users row
+  (JSONB) and round-trip through `/api/state`.
+- New `catalog` table + `GET/PUT /api/catalog` for global reference data
+  (pricing plans, theme presets, institution catalog, landing stat band).
+  The frontend seeds the catalog from its own constants on first load, then
+  reads it back from the database (DB is the source of truth).
+
 ## [1.0.1] - 2026-05-24
 
 ### Fixed

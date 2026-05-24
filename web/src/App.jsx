@@ -438,7 +438,7 @@ const STYLES = `
 const CATS=["Income","Housing","Groceries","Dining","Transport","Utilities","Shopping","Health","Entertainment","Subscriptions","Coffee","Savings","Other"];
 const DISCRETIONARY=["Dining","Shopping","Entertainment","Coffee","Subscriptions"];
 
-const HOLDINGS=[
+let HOLDINGS=[
   {sym:"VTI",name:"US Total Market ETF",cls:"US Stock",shares:38,price:285.40,cost:9200,day:0.62,yield:1.3},
   {sym:"VXUS",name:"Intl Stock ETF",cls:"International",shares:90,price:64.10,cost:5400,day:-0.31,yield:2.9},
   {sym:"AAPL",name:"Apple Inc.",cls:"US Stock",shares:22,price:214.30,cost:3800,day:1.12,yield:0.5},
@@ -475,27 +475,28 @@ const seedTx=[
 const seedGoals=[{id:"g1",name:"Emergency Fund",target:12000,saved:8400},{id:"g2",name:"Japan Trip",target:4500,saved:1820},{id:"g3",name:"Down Payment",target:40000,saved:11200}];
 const seedBudgets={Housing:1650,Groceries:520,Dining:250,Transport:220,Shopping:200,Coffee:60,Entertainment:120,Health:120,Utilities:280};
 const BUDGET_TOTAL=Object.values(seedBudgets).reduce((s,v)=>s+v,0);
-const history=[{m:"Jan",income:5980,expense:4120},{m:"Feb",income:5400,expense:4680},{m:"Mar",income:6210,expense:4310},{m:"Apr",income:5400,expense:5020}];
+let history=[{m:"Jan",income:5980,expense:4120},{m:"Feb",income:5400,expense:4680},{m:"Mar",income:6210,expense:4310},{m:"Apr",income:5400,expense:5020}];
 const ICOBYTYPE={checking:Landmark,savings:PiggyBank,credit:CreditCard,investment:Building2};
-const INSTITUTIONS=[
+let INSTITUTIONS=[
   {id:"chase",name:"Chase",color:"#117ACA"},{id:"bofa",name:"Bank of America",color:"#E11B3C"},
   {id:"wells",name:"Wells Fargo",color:"#D71E2B"},{id:"amex",name:"American Express",color:"#2671B9"},
   {id:"ally",name:"Ally Bank",color:"#6A1B9A"},{id:"capone",name:"Capital One",color:"#D03027"},
   {id:"fidelity",name:"Fidelity",color:"#468A41"},{id:"schwab",name:"Charles Schwab",color:"#00A0DF"},
 ];
-const INST_ACCOUNTS={
+let INST_ACCOUNTS={
   chase:[{name:"Chase Total Checking",type:"checking",balance:3240.18},{name:"Chase Sapphire Reserve",type:"credit",balance:-842.50,limit:18000,apr:21.99},{name:"Chase Savings",type:"savings",balance:9600.00}],
   amex:[{name:"Amex Platinum",type:"credit",balance:-1980.44,limit:25000,apr:23.49},{name:"Amex High-Yield Savings",type:"savings",balance:14200.00}],
   fidelity:[{name:"Fidelity Brokerage",type:"investment",balance:22480.10},{name:"Fidelity Cash Mgmt",type:"checking",balance:1820.00}],
 };
 const instAccounts=(inst)=>INST_ACCOUNTS[inst.id]||[{name:inst.name+" Checking",type:"checking",balance:2480.00},{name:inst.name+" Savings",type:"savings",balance:6100.00}];
-const PLANS=[
+let PLANS=[
   {id:"free",name:"Free",price:0,blurb:"The essentials, forever",feats:["2 linked accounts","Manual budgets","30-day history","Basic insights"]},
   {id:"plus",name:"Plus",price:9,blurb:"For everyday optimizers",feats:["Unlimited accounts","AI Copilot","Forecasting & scenarios","Investments tracking","2-year history"]},
   {id:"pro",name:"Pro",price:19,blurb:"Full autonomy",feats:["Everything in Plus","All 6 AI Agents","Tax & FI planning","Reconciliation & books","Priority support"]},
 ];
-const INVOICES=[{date:"May 1, 2026",amt:9,status:"Paid"},{date:"Apr 1, 2026",amt:9,status:"Paid"},{date:"Mar 1, 2026",amt:9,status:"Paid"},{date:"Feb 1, 2026",amt:9,status:"Paid"}];
-const THEMES=[{"id": "light", "name": "Pixii Light", "type": "light", "vars": {"--canvas": "#EEF1F7", "--panel": "#FFFFFF", "--panel-2": "#F7F9FC", "--ink": "#0A0D18", "--ink-2": "#535D73", "--ink-3": "#8A93A8", "--faint": "#AAB2C4", "--line": "#E4E8F0", "--line-2": "#EEF1F6", "--primary": "#3F33F0", "--primary-2": "#6C5CFF", "--cyan": "#00C2D6", "--pri-fg": "#FFFFFF", "--up": "#0DA66B", "--up-bg": "#E2F6EE", "--down": "#E8453F", "--down-bg": "#FCE6E5", "--ai": "linear-gradient(125deg,#4F39FF 0%,#7C4DFF 45%,#00D5FF 100%)"}}, {"id": "dark", "name": "Pixii Dark", "type": "dark", "vars": {"--canvas": "#080B12", "--panel": "#121723", "--panel-2": "#1A2030", "--ink": "#EAEEF7", "--ink-2": "#9AA4BB", "--ink-3": "#697287", "--faint": "#4D5670", "--line": "#232B3B", "--line-2": "#1A2130", "--primary": "#7E6FFF", "--primary-2": "#9A8CFF", "--cyan": "#00C2D6", "--pri-fg": "#FFFFFF", "--up": "#2BD787", "--up-bg": "rgba(43,215,135,.14)", "--down": "#FF6259", "--down-bg": "rgba(255,98,89,.15)", "--ai": "linear-gradient(125deg,#4F39FF 0%,#7C4DFF 45%,#00D5FF 100%)"}}, {"id": "spectrum", "name": "Pixii Spectrum", "type": "dark", "vars": {"--canvas": "#222222", "--panel": "#2d2c2d", "--panel-2": "#373738", "--ink": "#f7f1ff", "--ink-2": "#8b888f", "--ink-3": "#525053", "--faint": "#414042", "--line": "#444345", "--line-2": "#333334", "--primary": "#948ae3", "--primary-2": "#5ad4e6", "--cyan": "#5ad4e6", "--pri-fg": "#222222", "--up": "#7bd88f", "--up-bg": "rgba(123,216,143,0.16)", "--down": "#fc618d", "--down-bg": "rgba(252,97,141,0.16)", "--ai": "linear-gradient(125deg, #948ae3 0%, #fc618d 45%, #5ad4e6 100%)"}}, {"id": "daylight", "name": "Pixii Daylight", "type": "light", "vars": {"--canvas": "#faf4f2", "--panel": "#fdfaf9", "--panel-2": "#fbf7f6", "--ink": "#29242a", "--ink-2": "#918c8e", "--ink-3": "#bfb9ba", "--faint": "#d4cece", "--line": "#d9d3d2", "--line-2": "#e9e3e2", "--primary": "#7058be", "--primary-2": "#1c8ca8", "--cyan": "#1c8ca8", "--pri-fg": "#ffffff", "--up": "#269d69", "--up-bg": "rgba(38,157,105,0.16)", "--down": "#e14775", "--down-bg": "rgba(225,71,117,0.16)", "--ai": "linear-gradient(125deg, #7058be 0%, #e14775 45%, #1c8ca8 100%)"}}];
+let INVOICES=[{date:"May 1, 2026",amt:9,status:"Paid"},{date:"Apr 1, 2026",amt:9,status:"Paid"},{date:"Mar 1, 2026",amt:9,status:"Paid"},{date:"Feb 1, 2026",amt:9,status:"Paid"}];
+let LANDING_STATS=[["$2.4B","tracked on Pixii"],["180k+","people optimizing"],["12,000","institutions supported"],["4.9★","average rating"]];
+let THEMES=[{"id": "light", "name": "Pixii Light", "type": "light", "vars": {"--canvas": "#EEF1F7", "--panel": "#FFFFFF", "--panel-2": "#F7F9FC", "--ink": "#0A0D18", "--ink-2": "#535D73", "--ink-3": "#8A93A8", "--faint": "#AAB2C4", "--line": "#E4E8F0", "--line-2": "#EEF1F6", "--primary": "#3F33F0", "--primary-2": "#6C5CFF", "--cyan": "#00C2D6", "--pri-fg": "#FFFFFF", "--up": "#0DA66B", "--up-bg": "#E2F6EE", "--down": "#E8453F", "--down-bg": "#FCE6E5", "--ai": "linear-gradient(125deg,#4F39FF 0%,#7C4DFF 45%,#00D5FF 100%)"}}, {"id": "dark", "name": "Pixii Dark", "type": "dark", "vars": {"--canvas": "#080B12", "--panel": "#121723", "--panel-2": "#1A2030", "--ink": "#EAEEF7", "--ink-2": "#9AA4BB", "--ink-3": "#697287", "--faint": "#4D5670", "--line": "#232B3B", "--line-2": "#1A2130", "--primary": "#7E6FFF", "--primary-2": "#9A8CFF", "--cyan": "#00C2D6", "--pri-fg": "#FFFFFF", "--up": "#2BD787", "--up-bg": "rgba(43,215,135,.14)", "--down": "#FF6259", "--down-bg": "rgba(255,98,89,.15)", "--ai": "linear-gradient(125deg,#4F39FF 0%,#7C4DFF 45%,#00D5FF 100%)"}}, {"id": "spectrum", "name": "Pixii Spectrum", "type": "dark", "vars": {"--canvas": "#222222", "--panel": "#2d2c2d", "--panel-2": "#373738", "--ink": "#f7f1ff", "--ink-2": "#8b888f", "--ink-3": "#525053", "--faint": "#414042", "--line": "#444345", "--line-2": "#333334", "--primary": "#948ae3", "--primary-2": "#5ad4e6", "--cyan": "#5ad4e6", "--pri-fg": "#222222", "--up": "#7bd88f", "--up-bg": "rgba(123,216,143,0.16)", "--down": "#fc618d", "--down-bg": "rgba(252,97,141,0.16)", "--ai": "linear-gradient(125deg, #948ae3 0%, #fc618d 45%, #5ad4e6 100%)"}}, {"id": "daylight", "name": "Pixii Daylight", "type": "light", "vars": {"--canvas": "#faf4f2", "--panel": "#fdfaf9", "--panel-2": "#fbf7f6", "--ink": "#29242a", "--ink-2": "#918c8e", "--ink-3": "#bfb9ba", "--faint": "#d4cece", "--line": "#d9d3d2", "--line-2": "#e9e3e2", "--primary": "#7058be", "--primary-2": "#1c8ca8", "--cyan": "#1c8ca8", "--pri-fg": "#ffffff", "--up": "#269d69", "--up-bg": "rgba(38,157,105,0.16)", "--down": "#e14775", "--down-bg": "rgba(225,71,117,0.16)", "--ai": "linear-gradient(125deg, #7058be 0%, #e14775 45%, #1c8ca8 100%)"}}];
 
 /* ---- persistence helpers (icons are component refs → strip on save, rehydrate on load) ---- */
 const AGENT_ICONS={cat:Cpu,radar:Radar,subs:Repeat,auto:PiggyBank,neg:Scissors,fcast:Activity};
@@ -570,6 +571,24 @@ export default function App(){
   const [themeId,setThemeId]=useState("light");
   const [auth,setAuth]=useState("landing");
   const [user,setUser]=useState({name:"Jordan Reyes",email:"jordan.reyes@email.com"});
+  const [,setDataVer]=useState(0);
+  useEffect(()=>{
+    let on=true;
+    api.getCatalog().then(cat=>{
+      if(!on) return;
+      if(cat && Array.isArray(cat.themes) && cat.themes.length){
+        if(Array.isArray(cat.plans)&&cat.plans.length) PLANS=cat.plans;
+        THEMES=cat.themes;
+        if(Array.isArray(cat.institutions)&&cat.institutions.length) INSTITUTIONS=cat.institutions;
+        if(cat.instAccounts&&typeof cat.instAccounts==="object") INST_ACCOUNTS=cat.instAccounts;
+        if(Array.isArray(cat.landingStats)&&cat.landingStats.length) LANDING_STATS=cat.landingStats;
+      } else {
+        api.putCatalog({plans:PLANS,themes:THEMES,institutions:INSTITUTIONS,instAccounts:INST_ACCOUNTS,landingStats:LANDING_STATS});
+      }
+      setDataVer(v=>v+1);
+    });
+    return ()=>{on=false;};
+  },[]);
   const active=THEMES.find(t=>t.id===themeId)||THEMES[0];
   const dark=active.type==="dark";
   const c={panel:active.vars["--panel"],ink:active.vars["--ink"],primary:active.vars["--primary"],axis:active.vars["--ink-3"],band:active.vars["--primary"]+"22"};
@@ -631,7 +650,7 @@ function Landing({ dark, toggleTheme, go }){
 
       {/* stat band */}
       <div className="statband">
-        {[["$2.4B","tracked on Pixii"],["180k+","people optimizing"],["12,000","institutions supported"],["4.9★","average rating"]].map(([v,l])=>(
+        {LANDING_STATS.map(([v,l])=>(
           <div className="st" key={l}><div className="stv">{v}</div><div className="stl">{l}</div></div>
         ))}
       </div>
@@ -960,6 +979,9 @@ function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser }
       if(Array.isArray(s.tx)) setTx(s.tx);
       if(Array.isArray(s.goals)) setGoals(s.goals);
       if(Array.isArray(s.agents)&&s.agents.length) setAgents(s.agents.map(hydrateAgent));
+      if(Array.isArray(s.holdings)&&s.holdings.length) HOLDINGS=s.holdings;
+      if(Array.isArray(s.invoices)&&s.invoices.length) INVOICES=s.invoices;
+      if(Array.isArray(s.monthHistory)&&s.monthHistory.length) history=s.monthHistory;
       if(s.prefs) setPrefs(p=>({...p,...s.prefs}));
       if(s.plan) setPlan(s.plan);
       if(Array.isArray(s.savedScenarios)) setSavedScenarios(s.savedScenarios);
@@ -973,6 +995,7 @@ function OS({ c, dark, toggleTheme, logout, themeId, setThemeId, user, setUser }
     if(!hydrated) return;
     const payload={
       name:user.name, plan, themeId, prefs, savedScenarios, budgets:seedBudgets,
+      holdings:HOLDINGS, invoices:INVOICES, monthHistory:history,
       accounts:accounts.map(stripAccount), tx, goals, agents:agents.map(stripAgent),
     };
     const id=setTimeout(()=>api.saveState(user.email,payload),600);
