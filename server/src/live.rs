@@ -9,6 +9,7 @@ use axum::{
     Json,
 };
 use serde_json::{json, Value};
+use sha2::{Digest, Sha256};
 use sqlx::Row;
 use std::collections::HashMap;
 
@@ -231,10 +232,12 @@ pub async fn plaid_link_token(headers: HeaderMap) -> impl IntoResponse {
         return (StatusCode::SERVICE_UNAVAILABLE, Json(json!({"error": "plaid not configured"}))).into_response();
     };
     let user = user_header(&headers);
+    // Plaid forbids PII (emails) in client_user_id — use a stable hash instead.
+    let client_user_id = hex::encode(Sha256::digest(user.as_bytes()))[..32].to_string();
     let payload = json!({
         "client_id": cid, "secret": secret,
         "client_name": "Pixii",
-        "user": {"client_user_id": user},
+        "user": {"client_user_id": client_user_id},
         "products": ["transactions"],
         "country_codes": ["US"],
         "language": "en"

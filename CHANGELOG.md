@@ -2,6 +2,24 @@
 
 All notable changes to getpixii.ai are documented here.
 
+## [1.2.3] - 2026-05-24
+
+### Added
+- SEO-friendly URLs + refresh-safe SPA routing (History API): `/`, `/login`,
+  `/register`, `/app`, `/app/<workspace>`. Per-route titles, canonical/OG tags,
+  `robots.txt`, `sitemap.xml`.
+- Configurable AI base URL (`AI_BASE_URL`) — copilot runs on the in-cluster
+  Meridian Claude proxy (claude-sonnet-4-6), no real key required.
+- **Live data online**: imported API keys into `getpixii-secrets` — markets
+  (Finnhub), news (NewsAPI), AI (proxy) and Plaid (sandbox) all verified live.
+
+### Fixed
+- SPA deep links return HTTP 200 (was 404); unknown `/api/*` returns 404 JSON.
+- Empty-data crashes (Sankey `tx` scope, undefined `intel.card`, AddModal
+  account default, NaN KPIs) — app now shows a clean "connect an account" state.
+- Plaid `link_token` no longer sends the email as `client_user_id` (Plaid
+  forbids PII); uses a stable SHA-256 hash instead.
+
 ## [1.1.0] - 2026-05-24
 
 ### Changed
