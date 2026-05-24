@@ -1,0 +1,25 @@
+name: build-and-push
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  image:
+    runs-on: docker
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        run: echo "${GHCR_TOKEN}" | docker login ghcr.io -u sbjerome --password-stdin
+        env:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+
+      - name: Build and push
+        run: |
+          docker build -t ghcr.io/sbjerome/getpixii:latest .
+          docker push ghcr.io/sbjerome/getpixii:latest
+
+      - name: Roll out
+        run: kubectl -n getpixii rollout restart deploy/getpixii || true
